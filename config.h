@@ -12,12 +12,10 @@
 // This prevents accidental repeats of the tap-hold keys when typing quickly.
 #define TAPPING_FORCE_HOLD_PER_KEY
 
-// This prevents short hold periods to be interpreted as individual taps when typing quickly.
-#define PERMISSIVE_HOLD
-
-
 // Other settings //
-#define COMBO_TERM 70
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+#define COMBO_TERM 50
 
 // The setting below defines how many times you need to tap a TT() to toggle the layer.
 #define TAPPING_TOGGLE 3
