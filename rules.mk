@@ -8,6 +8,7 @@ COMBO_ENABLE = yes
 NKRO_ENABLE = no
 LTO_ENABLE = no
 BOOTMAGIC_ENABLE = no
+STENO_ENABLE = yes
 
 # Load the necessary external C files if and only if
 # the associated config option has been enabled

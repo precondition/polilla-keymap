@@ -7,17 +7,35 @@ enum layer_names {
     _SYM,
     _NAV,
     _GNAV,
+#ifdef MOUSEKEY_ENABLE
     _MOUSE,
+#endif
+#ifdef STENO_ENABLE
+    _PLOVER,
+#endif
 };
 
 // Layer keys
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
 #define SYM MO(_SYM)
-#define MOUSE MO(_MOUSE)
-#define MS_CAPS LT(_MOUSE, KC_CAPS)
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define NAV_UND LT(_NAV, KC_F24)
+
+#ifdef MOUSEKEY_ENABLE
+#    define MOUSE MO(_MOUSE)
+#    define MS_CAPS LT(_MOUSE, KC_CAPS)
+#else
+#    define MOUSE KC_TRNS
+#    define MS_CAPS KC_CAPS
+#endif
+
+#ifdef STENO_ENABLE
+#    define PLOVER TG(_PLOVER)
+#else
+#    define PLOVER KC_TRNS
+#endif
+
 
 // Miscellaneous keyboard shortcuts in direct access
 #define UNDO LCTL(KC_Z)
@@ -75,11 +93,9 @@ enum custom_keycodes {
 #ifdef TAP_DANCE_ENABLE
 enum {
     DOT_TD = 0,
-    CA_CC_CV,
 };
 
 #define TD_DOT TD(DOT_TD)
-#define CACCCV TD(CA_CC_CV)
 #else
 #define TD_DOT KC_DOT
 #endif

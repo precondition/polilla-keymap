@@ -36,7 +36,6 @@ enum combo_events {
     JU_JUST,
     HV_HAVE,
     QK_QMK,
-    DELT_THIS,
     KB_KEYBOARD,
     WA_WHAT,
 
@@ -53,13 +52,6 @@ enum combo_events {
     // by substituting the inner index keys by vertical combos
     // of the main index column keys
     PT_B,
-    TD_V,
-    NH_K,
-    LN_J,
-    IET_M,
-    FS_G,
-    UE_EU,
-    NHI_KI,
 
     // This must be the last item in the enum.
     // This is used to automatically update the combo count.
@@ -87,7 +79,6 @@ const uint16_t PROGMEM K_B_COMBO[]      = {KC_K,     KC_B,    COMBO_END};
 const uint16_t PROGMEM BSPC_T_A_COMBO[] = {KC_BSPC,  HOME_T,  HOME_A,  COMBO_END};
 const uint16_t PROGMEM BSPC_D_N_COMBO[] = {KC_BSPC,  KC_D,    HOME_N,  COMBO_END};
 const uint16_t PROGMEM BSPC_I_T_COMBO[] = {KC_BSPC,  HOME_I,  HOME_T,  COMBO_END};
-const uint16_t PROGMEM DEL_T_COMBO[]    = {KC_DEL,   HOME_T,  COMBO_END};
 const uint16_t PROGMEM J_U_COMBO[]      = {KC_J,     KC_U,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]      = {KC_H,     KC_V,    COMBO_END};
 const uint16_t PROGMEM Q_K_COMBO[]      = {KC_Q,     KC_K,    COMBO_END};
@@ -98,12 +89,6 @@ const uint16_t PROGMEM U_Y_SCLN_COMBO[] = {KC_U,     KC_Y,    KC_SCLN, COMBO_END
 const uint16_t PROGMEM OS_SFT_COMBO[]   = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM Z_X_COMBO[]      = {KC_Z,     KC_X,    COMBO_END};
 const uint16_t PROGMEM P_T_COMBO[]      = {KC_P,     HOME_T,  COMBO_END};
-const uint16_t PROGMEM D_T_COMBO[]      = {KC_D,     HOME_T,  COMBO_END};
-const uint16_t PROGMEM N_H_COMBO[]      = {HOME_N,   KC_H,    COMBO_END};
-const uint16_t PROGMEM N_H_I_COMBO[]    = {HOME_N,   KC_H,    HOME_I,  COMBO_END};
-const uint16_t PROGMEM L_N_COMBO[]      = {KC_L,     HOME_N,  COMBO_END};
-const uint16_t PROGMEM F_S_COMBO[]      = {KC_F,     HOME_S,  COMBO_END};
-const uint16_t PROGMEM U_E_COMBO[]      = {KC_U,     HOME_E,  COMBO_END};
 
 combo_t key_combos[] = {
     [BSPCEV_EVERY] = COMBO_ACTION(BSPC_E_V_COMBO),
@@ -125,7 +110,6 @@ combo_t key_combos[] = {
     [BSPCTS_THIS]  = COMBO_ACTION(BSPC_T_S_COMBO),
     [BSPCDN_DONT]  = COMBO_ACTION(BSPC_D_N_COMBO),
     [BSPCIT_IN_THE]= COMBO_ACTION(BSPC_I_T_COMBO),
-    [DELT_THIS]    = COMBO_ACTION(DEL_T_COMBO),
     [JU_JUST]      = COMBO_ACTION(J_U_COMBO),
     [HV_HAVE]      = COMBO_ACTION(H_V_COMBO),
     [QK_QMK]       = COMBO_ACTION(Q_K_COMBO),
@@ -137,30 +121,7 @@ combo_t key_combos[] = {
     [YCLN_PRN]     = COMBO_ACTION(Y_SCLN_COMBO),
     [UYCLN_INDEX]  = COMBO_ACTION(U_Y_SCLN_COMBO),
     [PT_B]         = COMBO(P_T_COMBO, MOUSE),
-    [TD_V]         = COMBO(D_T_COMBO, KC_V),
-    [NH_K]         = COMBO(N_H_COMBO, KC_K),
-    [NHI_KI]       = COMBO_ACTION(N_H_I_COMBO),
-    [LN_J]         = COMBO(L_N_COMBO, KC_J),
-    [FS_G]         = COMBO(F_S_COMBO, KC_G),
-    [UE_EU]        = COMBO_ACTION(U_E_COMBO),
 };
-
-// 5074 bytes free without using steno_combo
-void steno_combo(const char *lowercase, const char *uppercase, const char *ctrlcase, bool pressed, uint8_t mod_state) {
-    if (pressed) {
-        if (mod_state & MOD_MASK_SHIFT) {
-            unregister_mods(MOD_MASK_SHIFT);
-            send_string(uppercase);
-            set_mods(mod_state);
-        } else if (ctrlcase && mod_state & MOD_MASK_CTRL) {
-            unregister_mods(MOD_MASK_CTRL);
-            send_string(ctrlcase);
-            set_mods(mod_state);
-        } else {
-            send_string(lowercase);
-        }
-    }
-}
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     // Process mod-taps before the combo is fired,
@@ -232,7 +193,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         break;
 
         case JU_JUST:
-        steno_combo("just", "Just", NULL, pressed, mod_state);
+            if (pressed) {
+                send_string("just");
+            }
         break;
 
         case HV_HAVE:
@@ -493,59 +456,28 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case NHI_KI:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    send_string("Ki");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string("ki");
-                }
-        }
-        break;
-
-        case UE_EU:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    send_string("Eu");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string("eu");
-                }
-        }
-        break;
-
-        case DELT_THIS:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    send_string("This");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string("this");
-                }
-        }
-        break;
-
         case WA_WHAT:
-            steno_combo("what", "What", NULL, pressed, mod_state);
+            if (pressed) {
+                send_string("what");
+            }
         break;
 
         case BSPCTS_THIS:
-            steno_combo("this", "This", NULL, pressed, mod_state);
+            if (pressed) {
+                send_string("this");
+            }
         break;
 
         case BSPCDN_DONT:
-            steno_combo("don't", "Don't", NULL, pressed, mod_state);
+            if (pressed) {
+                send_string("don't");
+            }
         break;
 
         case BSPCIT_IN_THE:
-            steno_combo("in the", "In the", NULL, pressed, mod_state);
+            if (pressed) {
+                send_string("in the");
+            }
         break;
     }
 };
