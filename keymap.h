@@ -87,6 +87,14 @@ enum custom_keycodes {
     // Macro for
     // $yi{
     YICODE,
+    // "Opening brace"
+    // Macro for
+    // {<enter>
+    O_BRACE,
+    // "Closing brace"
+    // Macro for
+    // }<enter>
+    C_BRACE,
     CAPS_WORD,
 };
 
