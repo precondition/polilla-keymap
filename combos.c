@@ -46,6 +46,7 @@ enum combo_events {
     UYCLN_INDEX,
     OS_SFT_CAPS,
     ZX_BSLS,
+    DOTSLASH_UPDIR,
 
     /* Vertical combos */
     // An attempt to radically remove all lateral movements
@@ -89,38 +90,40 @@ const uint16_t PROGMEM U_Y_SCLN_COMBO[] = {KC_U,     KC_Y,    KC_SCLN, COMBO_END
 const uint16_t PROGMEM OS_SFT_COMBO[]   = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM Z_X_COMBO[]      = {KC_Z,     KC_X,    COMBO_END};
 const uint16_t PROGMEM P_T_COMBO[]      = {KC_P,     HOME_T,  COMBO_END};
+const uint16_t PROGMEM DOT_SLASH_COMBO[]  = {TD_DOT,   KC_SLSH, COMBO_END};
 
 combo_t key_combos[] = {
-    [BSPCEV_EVERY] = COMBO_ACTION(BSPC_E_V_COMBO),
-    [BSPCU_YOU]    = COMBO_ACTION(BSPC_U_COMBO),
-    [BSPCA_AND]    = COMBO_ACTION(BSPC_A_COMBO),
-    [BSPCN_NOT]    = COMBO_ACTION(BSPC_N_COMBO),
-    [BSPCW_WITH]   = COMBO_ACTION(BSPC_W_COMBO),
-    [BSPCF_FOR]    = COMBO_ACTION(BSPC_F_COMBO),
-    [BSPCH_HERE]   = COMBO_ACTION(BSPC_H_COMBO),
-    [BSPCT_THE]    = COMBO_ACTION(BSPC_T_COMBO),
-    [BSPCM_MENT]   = COMBO_ACTION(BSPC_M_COMBO),
-    [BSPCG_ING]    = COMBO_ACTION(BSPC_G_COMBO),
-    [BSPCO_OUGH]   = COMBO_ACTION(BSPC_O_COMBO),
-    [BSPCI_ION]    = COMBO_ACTION(BSPC_I_COMBO),
-    [BSPCIS_IONS]  = COMBO_ACTION(BSPC_I_S_COMBO),
-    [BSPCTA_THAT]  = COMBO_ACTION(BSPC_T_A_COMBO),
-    [BSPCQ_QUE]    = COMBO_ACTION(BSPC_Q_COMBO),
-    [BSPCK_KEY]    = COMBO_ACTION(BSPC_K_COMBO),
-    [BSPCTS_THIS]  = COMBO_ACTION(BSPC_T_S_COMBO),
-    [BSPCDN_DONT]  = COMBO_ACTION(BSPC_D_N_COMBO),
-    [BSPCIT_IN_THE]= COMBO_ACTION(BSPC_I_T_COMBO),
-    [JU_JUST]      = COMBO_ACTION(J_U_COMBO),
-    [HV_HAVE]      = COMBO_ACTION(H_V_COMBO),
-    [QK_QMK]       = COMBO_ACTION(Q_K_COMBO),
-    [KB_KEYBOARD]  = COMBO_ACTION(K_B_COMBO),
-    [WA_WHAT]      = COMBO_ACTION(W_A_COMBO),
-    [OS_SFT_CAPS]  = COMBO(OS_SFT_COMBO, CAPS_WORD),
-    [ZX_BSLS]      = COMBO(Z_X_COMBO, KC_BSLASH),
-    [UY_PRN]       = COMBO_ACTION(U_Y_COMBO),
-    [YCLN_PRN]     = COMBO_ACTION(Y_SCLN_COMBO),
-    [UYCLN_INDEX]  = COMBO_ACTION(U_Y_SCLN_COMBO),
-    [PT_B]         = COMBO(P_T_COMBO, MOUSE),
+    [BSPCEV_EVERY]   = COMBO_ACTION(BSPC_E_V_COMBO),
+    [BSPCU_YOU]      = COMBO_ACTION(BSPC_U_COMBO),
+    [BSPCA_AND]      = COMBO_ACTION(BSPC_A_COMBO),
+    [BSPCN_NOT]      = COMBO_ACTION(BSPC_N_COMBO),
+    [BSPCW_WITH]     = COMBO_ACTION(BSPC_W_COMBO),
+    [BSPCF_FOR]      = COMBO_ACTION(BSPC_F_COMBO),
+    [BSPCH_HERE]     = COMBO_ACTION(BSPC_H_COMBO),
+    [BSPCT_THE]      = COMBO_ACTION(BSPC_T_COMBO),
+    [BSPCM_MENT]     = COMBO_ACTION(BSPC_M_COMBO),
+    [BSPCG_ING]      = COMBO_ACTION(BSPC_G_COMBO),
+    [BSPCO_OUGH]     = COMBO_ACTION(BSPC_O_COMBO),
+    [BSPCI_ION]      = COMBO_ACTION(BSPC_I_COMBO),
+    [BSPCIS_IONS]    = COMBO_ACTION(BSPC_I_S_COMBO),
+    [BSPCTA_THAT]    = COMBO_ACTION(BSPC_T_A_COMBO),
+    [BSPCQ_QUE]      = COMBO_ACTION(BSPC_Q_COMBO),
+    [BSPCK_KEY]      = COMBO_ACTION(BSPC_K_COMBO),
+    [BSPCTS_THIS]    = COMBO_ACTION(BSPC_T_S_COMBO),
+    [BSPCDN_DONT]    = COMBO_ACTION(BSPC_D_N_COMBO),
+    [BSPCIT_IN_THE]  = COMBO_ACTION(BSPC_I_T_COMBO),
+    [JU_JUST]        = COMBO_ACTION(J_U_COMBO),
+    [HV_HAVE]        = COMBO_ACTION(H_V_COMBO),
+    [QK_QMK]         = COMBO_ACTION(Q_K_COMBO),
+    [KB_KEYBOARD]    = COMBO_ACTION(K_B_COMBO),
+    [WA_WHAT]        = COMBO_ACTION(W_A_COMBO),
+    [OS_SFT_CAPS]    = COMBO(OS_SFT_COMBO, CAPS_WORD),
+    [ZX_BSLS]        = COMBO(Z_X_COMBO, KC_BSLASH),
+    [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
+    [UY_PRN]         = COMBO_ACTION(U_Y_COMBO),
+    [YCLN_PRN]       = COMBO_ACTION(Y_SCLN_COMBO),
+    [UYCLN_INDEX]    = COMBO_ACTION(U_Y_SCLN_COMBO),
+    [PT_B]           = COMBO(P_T_COMBO, MOUSE),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -477,6 +480,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case BSPCIT_IN_THE:
             if (pressed) {
                 send_string("in the");
+            }
+        break;
+
+        case DOTSLASH_UPDIR:
+            if (pressed) {
+                send_string("../");
             }
         break;
     }
