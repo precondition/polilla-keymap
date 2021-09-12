@@ -47,6 +47,8 @@ enum combo_events {
     OS_SFT_CAPS,
     ZX_BSLS,
     DOTSLASH_UPDIR,
+    ZEROEIGHT_COMMA,
+    EIGHTNINE_DOT,
 
     /* Vertical combos */
     // An attempt to radically remove all lateral movements
@@ -91,6 +93,8 @@ const uint16_t PROGMEM OS_SFT_COMBO[]   = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM Z_X_COMBO[]      = {KC_Z,     KC_X,    COMBO_END};
 const uint16_t PROGMEM P_T_COMBO[]      = {KC_P,     HOME_T,  COMBO_END};
 const uint16_t PROGMEM DOT_SLASH_COMBO[]  = {TD_DOT,   KC_SLSH, COMBO_END};
+const uint16_t PROGMEM ZERO_EIGHT_COMBO[] = {KC_0,     KC_8,    COMBO_END};
+const uint16_t PROGMEM EIGHT_NINE_COMBO[] = {KC_8,     KC_9,    COMBO_END};
 
 combo_t key_combos[] = {
     [BSPCEV_EVERY]   = COMBO_ACTION(BSPC_E_V_COMBO),
@@ -120,6 +124,8 @@ combo_t key_combos[] = {
     [OS_SFT_CAPS]    = COMBO(OS_SFT_COMBO, CAPS_WORD),
     [ZX_BSLS]        = COMBO(Z_X_COMBO, KC_BSLASH),
     [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
+    [ZEROEIGHT_COMMA]= COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
+    [EIGHTNINE_DOT]  = COMBO(EIGHT_NINE_COMBO, KC_DOT),
     [UY_PRN]         = COMBO_ACTION(U_Y_COMBO),
     [YCLN_PRN]       = COMBO_ACTION(Y_SCLN_COMBO),
     [UYCLN_INDEX]    = COMBO_ACTION(U_Y_SCLN_COMBO),
