@@ -175,6 +175,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
+    case KC_SPC:
+        if (oneshot_mod_state & MOD_MASK_SHIFT) {
+            if (record->event.pressed) {
+                tap_code(KC_MINS); // The one-shot shift will convert it to an underscore
+            }
+            return false;
+        }
+        return true;
+
     case KC_BSPC:
         {
         static bool delkey_registered;
