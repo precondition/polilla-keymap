@@ -43,7 +43,7 @@ enum combo_events {
     // Combos for which the output isn't one or more alphanumeric characters
     UYCLN_INDEX,
     OS_SFT_CAPS,
-    ZX_BSLS,
+    REPEATX_BSLS,
     DOTSLASH_UPDIR,
     ZEROEIGHT_COMMA,
     EIGHTNINE_DOT,
@@ -60,34 +60,34 @@ enum combo_events {
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM BSPC_E_V_COMBO[] = {KC_BSPC,  HOME_E,  KC_V,    COMBO_END};
-const uint16_t PROGMEM BSPC_U_COMBO[]   = {KC_BSPC,  KC_U,    COMBO_END};
-const uint16_t PROGMEM BSPC_A_COMBO[]   = {KC_BSPC,  HOME_A,  COMBO_END};
-const uint16_t PROGMEM BSPC_N_COMBO[]   = {KC_BSPC,  HOME_N,  COMBO_END};
-const uint16_t PROGMEM BSPC_W_COMBO[]   = {KC_BSPC,  KC_W,    COMBO_END};
-const uint16_t PROGMEM BSPC_F_COMBO[]   = {KC_BSPC,  KC_F,    COMBO_END};
-const uint16_t PROGMEM BSPC_H_COMBO[]   = {KC_BSPC,  KC_H,    COMBO_END};
-const uint16_t PROGMEM BSPC_T_COMBO[]   = {KC_BSPC,  HOME_T,  COMBO_END};
-const uint16_t PROGMEM BSPC_M_COMBO[]   = {KC_BSPC,  KC_M,    COMBO_END};
-const uint16_t PROGMEM BSPC_G_COMBO[]   = {KC_BSPC,  KC_G,    COMBO_END};
-const uint16_t PROGMEM BSPC_O_COMBO[]   = {KC_BSPC,  HOME_O,  COMBO_END};
-const uint16_t PROGMEM BSPC_I_COMBO[]   = {KC_BSPC,  HOME_I,  COMBO_END};
-const uint16_t PROGMEM BSPC_I_S_COMBO[] = {KC_BSPC,  HOME_I,  HOME_S,  COMBO_END};
-const uint16_t PROGMEM BSPC_Q_COMBO[]   = {KC_BSPC,  KC_Q,    COMBO_END};
-const uint16_t PROGMEM BSPC_K_COMBO[]   = {KC_BSPC,  KC_K,    COMBO_END};
-const uint16_t PROGMEM BSPC_T_S_COMBO[] = {KC_BSPC,  HOME_T,  HOME_S,  COMBO_END};
-const uint16_t PROGMEM K_B_COMBO[]      = {KC_K,     KC_B,    COMBO_END};
-const uint16_t PROGMEM BSPC_T_A_COMBO[] = {KC_BSPC,  HOME_T,  HOME_A,  COMBO_END};
-const uint16_t PROGMEM BSPC_D_N_COMBO[] = {KC_BSPC,  KC_D,    HOME_N,  COMBO_END};
-const uint16_t PROGMEM BSPC_I_T_COMBO[] = {KC_BSPC,  HOME_I,  HOME_T,  COMBO_END};
-const uint16_t PROGMEM J_U_COMBO[]      = {KC_J,     KC_U,    COMBO_END};
-const uint16_t PROGMEM H_V_COMBO[]      = {KC_H,     KC_V,    COMBO_END};
-const uint16_t PROGMEM Q_K_COMBO[]      = {KC_Q,     KC_K,    COMBO_END};
-const uint16_t PROGMEM W_A_COMBO[]      = {KC_W,     HOME_A,  COMBO_END};
-const uint16_t PROGMEM U_Y_SCLN_COMBO[] = {KC_U,     KC_Y,    KC_SCLN, COMBO_END};
-const uint16_t PROGMEM OS_SFT_COMBO[]   = {OS_LSFT,  OS_RSFT, COMBO_END};
-const uint16_t PROGMEM Z_X_COMBO[]      = {KC_Z,     KC_X,    COMBO_END};
-const uint16_t PROGMEM P_T_COMBO[]      = {KC_P,     HOME_T,  COMBO_END};
+const uint16_t PROGMEM BSPC_E_V_COMBO[]   = {KC_BSPC,  HOME_E,  KC_V,    COMBO_END};
+const uint16_t PROGMEM BSPC_U_COMBO[]     = {KC_BSPC,  KC_U,    COMBO_END};
+const uint16_t PROGMEM BSPC_A_COMBO[]     = {KC_BSPC,  HOME_A,  COMBO_END};
+const uint16_t PROGMEM BSPC_N_COMBO[]     = {KC_BSPC,  HOME_N,  COMBO_END};
+const uint16_t PROGMEM BSPC_W_COMBO[]     = {KC_BSPC,  KC_W,    COMBO_END};
+const uint16_t PROGMEM BSPC_F_COMBO[]     = {KC_BSPC,  KC_F,    COMBO_END};
+const uint16_t PROGMEM BSPC_H_COMBO[]     = {KC_BSPC,  KC_H,    COMBO_END};
+const uint16_t PROGMEM BSPC_T_COMBO[]     = {KC_BSPC,  HOME_T,  COMBO_END};
+const uint16_t PROGMEM BSPC_M_COMBO[]     = {KC_BSPC,  KC_M,    COMBO_END};
+const uint16_t PROGMEM BSPC_G_COMBO[]     = {KC_BSPC,  KC_G,    COMBO_END};
+const uint16_t PROGMEM BSPC_O_COMBO[]     = {KC_BSPC,  HOME_O,  COMBO_END};
+const uint16_t PROGMEM BSPC_I_COMBO[]     = {KC_BSPC,  HOME_I,  COMBO_END};
+const uint16_t PROGMEM BSPC_I_S_COMBO[]   = {KC_BSPC,  HOME_I,  HOME_S,  COMBO_END};
+const uint16_t PROGMEM BSPC_Q_COMBO[]     = {KC_BSPC,  KC_Q,    COMBO_END};
+const uint16_t PROGMEM BSPC_K_COMBO[]     = {KC_BSPC,  KC_K,    COMBO_END};
+const uint16_t PROGMEM BSPC_T_S_COMBO[]   = {KC_BSPC,  HOME_T,  HOME_S,  COMBO_END};
+const uint16_t PROGMEM K_B_COMBO[]        = {KC_K,     KC_B,    COMBO_END};
+const uint16_t PROGMEM BSPC_T_A_COMBO[]   = {KC_BSPC,  HOME_T,  HOME_A,  COMBO_END};
+const uint16_t PROGMEM BSPC_D_N_COMBO[]   = {KC_BSPC,  KC_D,    HOME_N,  COMBO_END};
+const uint16_t PROGMEM BSPC_I_T_COMBO[]   = {KC_BSPC,  HOME_I,  HOME_T,  COMBO_END};
+const uint16_t PROGMEM J_U_COMBO[]        = {KC_J,     KC_U,    COMBO_END};
+const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
+const uint16_t PROGMEM Q_K_COMBO[]        = {KC_Q,     KC_K,    COMBO_END};
+const uint16_t PROGMEM W_A_COMBO[]        = {KC_W,     HOME_A,  COMBO_END};
+const uint16_t PROGMEM U_Y_SCLN_COMBO[]   = {KC_U,     KC_Y,    KC_SCLN, COMBO_END};
+const uint16_t PROGMEM OS_SFT_COMBO[]     = {OS_LSFT,  OS_RSFT, COMBO_END};
+const uint16_t PROGMEM REPEAT_X_COMBO[]   = {REPEAT,   KC_X,    COMBO_END};
+const uint16_t PROGMEM P_T_COMBO[]        = {KC_P,     HOME_T,  COMBO_END};
 const uint16_t PROGMEM DOT_SLASH_COMBO[]  = {TD_DOT,   KC_SLSH, COMBO_END};
 const uint16_t PROGMEM ZERO_EIGHT_COMBO[] = {KC_0,     KC_8,    COMBO_END};
 const uint16_t PROGMEM EIGHT_NINE_COMBO[] = {KC_8,     KC_9,    COMBO_END};
@@ -118,7 +118,7 @@ combo_t key_combos[] = {
     [KB_KEYBOARD]    = COMBO_ACTION(K_B_COMBO),
     [WA_WHAT]        = COMBO_ACTION(W_A_COMBO),
     [OS_SFT_CAPS]    = COMBO(OS_SFT_COMBO, CAPS_WORD),
-    [ZX_BSLS]        = COMBO(Z_X_COMBO, KC_BSLASH),
+    [REPEATX_BSLS]   = COMBO(REPEAT_X_COMBO, KC_BSLASH),
     [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
     [ZEROEIGHT_COMMA]= COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
     [EIGHTNINE_DOT]  = COMBO(EIGHT_NINE_COMBO, KC_DOT),
