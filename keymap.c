@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                 KC_CIRC,KC_AMPR,KC_ASTR,KC_EQL ,KC_PLUS, KC_GRV,
         GUILL_L, KC_LT ,KC_LBRC,KC_RBRC, KC_GT ,GUILL_R, PLOVER, _______,O_BRACE,KC_LCBR,KC_LPRN,KC_RPRN,KC_RCBR,C_BRACE,
 
-                        _______,_______,NAV_UND,_______,_______, _______,_______,_______,KC_COMM, KC_DOT
+                        _______,_______,  NAV  ,_______,_______, _______,_______,_______,KC_COMM, KC_DOT
   ),
 
   [_NAV] = LAYOUT(
@@ -380,19 +380,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
           send_string("$yi{");
           return false;
-      }
-      break;
-
-    case NAV_UND:
-      if (record->tap.count > 0) {
-        if (record->event.pressed) {
-          // send advanced keycode, etc.
-          register_code16(KC_UNDS);
-        } else {
-          unregister_code16(KC_UNDS);
-        }
-        // do not continue with default tap action if the MT was pressed or released, but not held
-        return false;
       }
       break;
 

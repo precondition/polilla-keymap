@@ -16,11 +16,11 @@ enum layer_names {
 };
 
 // Layer keys
+#define NAV MO(_NAV)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
 #define SYM MO(_SYM)
 #define SYM_ENT LT(_SYM, KC_ENT)
-#define NAV_UND LT(_NAV, KC_F24)
 
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSE MO(_MOUSE)
