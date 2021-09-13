@@ -347,6 +347,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
 
+    case OS_LSFT:
+      if (record->event.pressed && record->tap.count == 0 && (oneshot_mod_state & MOD_BIT(KC_RSFT))) {
+        del_oneshot_mods(MOD_BIT(KC_RSFT));
+      }
+      return true;
+
+    case OS_RSFT:
+      if (record->event.pressed && record->tap.count == 0 && (oneshot_mod_state & MOD_BIT(KC_LSFT))) {
+        del_oneshot_mods(MOD_BIT(KC_LSFT));
+      }
+      return true;
+
     }
     return true;
 };
