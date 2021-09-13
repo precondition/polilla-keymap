@@ -41,8 +41,6 @@ enum combo_events {
 
     /* Non-alphanumeric combos */
     // Combos for which the output isn't one or more alphanumeric characters
-    UY_PRN,
-    YCLN_PRN,
     UYCLN_INDEX,
     OS_SFT_CAPS,
     ZX_BSLS,
@@ -86,8 +84,6 @@ const uint16_t PROGMEM J_U_COMBO[]      = {KC_J,     KC_U,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]      = {KC_H,     KC_V,    COMBO_END};
 const uint16_t PROGMEM Q_K_COMBO[]      = {KC_Q,     KC_K,    COMBO_END};
 const uint16_t PROGMEM W_A_COMBO[]      = {KC_W,     HOME_A,  COMBO_END};
-const uint16_t PROGMEM U_Y_COMBO[]      = {KC_U,     KC_Y,    COMBO_END};
-const uint16_t PROGMEM Y_SCLN_COMBO[]   = {KC_Y,     KC_SCLN, COMBO_END};
 const uint16_t PROGMEM U_Y_SCLN_COMBO[] = {KC_U,     KC_Y,    KC_SCLN, COMBO_END};
 const uint16_t PROGMEM OS_SFT_COMBO[]   = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM Z_X_COMBO[]      = {KC_Z,     KC_X,    COMBO_END};
@@ -126,8 +122,6 @@ combo_t key_combos[] = {
     [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
     [ZEROEIGHT_COMMA]= COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
     [EIGHTNINE_DOT]  = COMBO(EIGHT_NINE_COMBO, KC_DOT),
-    [UY_PRN]         = COMBO_ACTION(U_Y_COMBO),
-    [YCLN_PRN]       = COMBO_ACTION(Y_SCLN_COMBO),
     [UYCLN_INDEX]    = COMBO_ACTION(U_Y_SCLN_COMBO),
     [PT_B]           = COMBO(P_T_COMBO, MOUSE),
 };
@@ -141,48 +135,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     uint8_t mod_state = get_mods();
     uint8_t oneshot_mod_state = get_oneshot_mods();
     switch(combo_index) {
-        case UY_PRN:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    // First canceling both shifts so that shift isn't applied
-                    // to the KC_LBRC keycode since that would result in
-                    // a "{" instead of a "[".
-                    del_mods(MOD_MASK_SHIFT);
-                    send_string("[");
-                    // "resuming" *the* shift so that you can hold shift
-                    // and the square brackets combo still works without
-                    // having to re-press shift every time.
-                    set_mods(mod_state);
-                }
-                else if (mod_state & MOD_MASK_CTRL) {
-                    del_mods(MOD_MASK_CTRL);
-                    send_string("{");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string("(");
-                }
-            }
-            break;
-
-        case YCLN_PRN:
-            if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    send_string("]");
-                    set_mods(mod_state);
-                }
-                else if (mod_state & MOD_MASK_CTRL) {
-                    del_mods(MOD_MASK_CTRL);
-                    send_string("}");
-                    set_mods(mod_state);
-                }
-                else {
-                    send_string(")");
-                }
-        }
-        break;
-
         case UYCLN_INDEX:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {

@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
       KC_BSLASH, KC_Z  , KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
 
-                      KC_BSLASH,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
+                      OSL(_GNAV),C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
   ),
 
   [_SYM] = LAYOUT(
@@ -350,16 +350,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 };
-
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case NAV_TAB:
-        case HOME_R:
-            return false;
-        default:
-            return true;
-    }
-}
 
 #ifdef HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
