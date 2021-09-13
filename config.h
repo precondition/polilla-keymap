@@ -10,7 +10,7 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 
 // This prevents accidental repeats of the tap-hold keys when typing quickly.
-#define TAPPING_FORCE_HOLD_PER_KEY
+#define TAPPING_FORCE_HOLD
 
 // Other settings //
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
