@@ -117,8 +117,8 @@ combo_t key_combos[] = {
     [QK_QMK]         = COMBO_ACTION(Q_K_COMBO),
     [KB_KEYBOARD]    = COMBO_ACTION(K_B_COMBO),
     [WA_WHAT]        = COMBO_ACTION(W_A_COMBO),
-    [OS_SFT_CAPS]    = COMBO(OS_SFT_COMBO, CAPS_WORD),
-    [REPEATX_BSLS]   = COMBO(REPEAT_X_COMBO, KC_BSLASH),
+    [OS_SFT_CAPS]    = COMBO_ACTION(OS_SFT_COMBO),
+    [REPEATX_BSLS]   = COMBO_ACTION(REPEAT_X_COMBO),
     [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
     [ZEROEIGHT_COMMA]= COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
     [EIGHTNINE_DOT]  = COMBO(EIGHT_NINE_COMBO, KC_DOT),
@@ -135,6 +135,28 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     uint8_t mod_state = get_mods();
     uint8_t oneshot_mod_state = get_oneshot_mods();
     switch(combo_index) {
+        case REPEATX_BSLS:
+            if (pressed) {
+                register_code(KC_BSLASH);
+            } else {
+                unregister_code(KC_BSLASH);
+            }
+        break;
+
+        case OS_SFT_CAPS:
+            // Toggle `caps_word_on`
+            if (pressed) {
+                if (caps_word_on) {
+                    caps_word_disable();
+                    return;
+                } else {
+                    caps_word_enable();
+                    return;
+                }
+            }
+            break;
+
+
         case UYCLN_INDEX:
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
