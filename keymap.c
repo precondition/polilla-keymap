@@ -121,16 +121,16 @@ void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
                     }
                 }
             // Keycodes that enable caps word but shouldn't get shifted
-            case KC_MINS:
-            case KC_BSPC:
-            case KC_UNDS:
-            case KC_F24: /* The dummy keycode used in NAV_UND */
-            case KC_PIPE:
             case CAPS_WORD:
+            case KC_BSPC:
+            case KC_LPRN:
+            case KC_MINS:
+            case KC_PIPE:
+            case KC_RPRN:
+            case KC_UNDS:
             case OS_LSFT:
             case OS_RSFT:
-            case KC_LPRN:
-            case KC_RPRN:
+            case REPEAT:
                 // If chording mods, disable caps word
                 if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
                     caps_word_disable();
