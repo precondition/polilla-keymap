@@ -351,6 +351,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case NAV_TAB:
+        case HOME_R:
+            return false;
+        default:
+            return true;
+    }
+}
+
 #ifdef HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
