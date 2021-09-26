@@ -63,7 +63,7 @@ enum layer_names {
 // The other common grave accented letters are custom keycodes
 // And the rest of other accented letters are accessed using dead keys
 #define E_ACUTE ALGR(KC_E)
-#define C_CDILA ALGR(KC_COMMA)
+#define C_CDILA LT(_NAV, ALGR(KC_COMMA))
 // Useful dead keys for French
 #define DED_CIR ALGR(KC_6)
 #define DED_UML S(ALGR(KC_QUOT))

@@ -395,8 +395,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return true;
 
+    case C_CDILA:
+    if (record->event.pressed && record->tap.count > 0) {
+        tap_code16(ALGR(KC_COMMA));
+        return false;
     }
     return true;
+
+    }
+    return true;
+
 };
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
