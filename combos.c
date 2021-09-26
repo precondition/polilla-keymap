@@ -161,23 +161,23 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("[1]");
+                    SEND_STRING("[1]");
                     set_mods(mod_state);
                 }
                 else if (mod_state & MOD_MASK_CTRL) {
                     del_mods(MOD_MASK_CTRL);
-                    send_string("[0]");
+                    SEND_STRING("[0]");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("[i]");
+                    SEND_STRING("[i]");
                 }
         }
         break;
 
         case JU_JUST:
             if (pressed) {
-                send_string("just");
+                SEND_STRING("just");
             }
         break;
 
@@ -185,11 +185,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Have");
+                    SEND_STRING("Have");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("have");
+                    SEND_STRING("have");
                 }
         }
         break;
@@ -199,11 +199,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 if (mod_state & MOD_MASK_SHIFT || oneshot_mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
                     del_oneshot_mods(MOD_MASK_SHIFT);
-                    send_string("QMK");
+                    SEND_STRING("QMK");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("qmk");
+                    SEND_STRING("qmk");
                 }
         }
         break;
@@ -212,11 +212,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Every");
+                    SEND_STRING("Every");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("every");
+                    SEND_STRING("every");
                 }
         }
         break;
@@ -225,11 +225,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("You");
+                    SEND_STRING("You");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("you");
+                    SEND_STRING("you");
                 }
         }
         break;
@@ -238,11 +238,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("And");
+                    SEND_STRING("And");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("and");
+                    SEND_STRING("and");
                 }
         }
         break;
@@ -251,16 +251,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Not");
+                    SEND_STRING("Not");
                     set_mods(mod_state);
                 }
                 else if (mod_state & MOD_MASK_CTRL) {
                     del_mods(MOD_MASK_CTRL);
-                    send_string("n't");
+                    SEND_STRING("n't");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("not");
+                    SEND_STRING("not");
                 }
         }
         break;
@@ -269,11 +269,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("With");
+                    SEND_STRING("With");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("with");
+                    SEND_STRING("with");
                 }
         }
         break;
@@ -282,11 +282,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("For");
+                    SEND_STRING("For");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("for");
+                    SEND_STRING("for");
                 }
         }
         break;
@@ -295,11 +295,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Here");
+                    SEND_STRING("Here");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("here");
+                    SEND_STRING("here");
                 }
         }
         break;
@@ -308,11 +308,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("The");
+                    SEND_STRING("The");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("the");
+                    SEND_STRING("the");
                 }
         }
         break;
@@ -321,11 +321,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Ment");
+                    SEND_STRING("Ment");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("ment");
+                    SEND_STRING("ment");
                 }
         }
         break;
@@ -334,11 +334,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Ing");
+                    SEND_STRING("Ing");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("ing");
+                    SEND_STRING("ing");
                 }
         }
         break;
@@ -347,16 +347,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_CTRL) {
                     del_mods(MOD_MASK_CTRL);
-                    send_string("ould");
+                    SEND_STRING("ould");
                     set_mods(mod_state);
                 }
                 else if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Ough");
+                    SEND_STRING("Ough");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("ough");
+                    SEND_STRING("ough");
                 }
         }
         break;
@@ -365,11 +365,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Ion");
+                    SEND_STRING("Ion");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("ion");
+                    SEND_STRING("ion");
                 }
         }
         break;
@@ -378,11 +378,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Ions");
+                    SEND_STRING("Ions");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("ions");
+                    SEND_STRING("ions");
                 }
         }
         break;
@@ -391,11 +391,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("That");
+                    SEND_STRING("That");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("that");
+                    SEND_STRING("that");
                 }
         }
         break;
@@ -404,11 +404,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Que");
+                    SEND_STRING("Que");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("que");
+                    SEND_STRING("que");
                 }
         }
         break;
@@ -417,11 +417,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Key");
+                    SEND_STRING("Key");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("key");
+                    SEND_STRING("key");
                 }
         }
         break;
@@ -430,42 +430,42 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             if (pressed) {
                 if (mod_state & MOD_MASK_SHIFT) {
                     del_mods(MOD_MASK_SHIFT);
-                    send_string("Keyboard");
+                    SEND_STRING("Keyboard");
                     set_mods(mod_state);
                 }
                 else {
-                    send_string("keyboard");
+                    SEND_STRING("keyboard");
                 }
         }
         break;
 
         case WA_WHAT:
             if (pressed) {
-                send_string("what");
+                SEND_STRING("what");
             }
         break;
 
         case BSPCTS_THIS:
             if (pressed) {
-                send_string("this");
+                SEND_STRING("this");
             }
         break;
 
         case BSPCDN_DONT:
             if (pressed) {
-                send_string("don't");
+                SEND_STRING("don't");
             }
         break;
 
         case BSPCIT_IN_THE:
             if (pressed) {
-                send_string("in the");
+                SEND_STRING("in the");
             }
         break;
 
         case DOTSLASH_UPDIR:
             if (pressed) {
-                send_string("../");
+                SEND_STRING("../");
             }
         break;
     }
