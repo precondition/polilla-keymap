@@ -233,12 +233,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return true;
 
-    case KC_ESC:
-        if (record->event.pressed) {
-            caps_word_disable();
-        }
-        return true;
-
     case KC_BSPC:
         {
         static bool delkey_registered;
