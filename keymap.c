@@ -74,7 +74,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // CAPS_WORD: A "smart" Caps Lock key that only capitalizes the next identifier you type
 // and then toggles off Caps Lock automatically when you're done.
-bool caps_word_on;
 void caps_word_enable(void) {
     caps_word_on = true;
     if (!(host_keyboard_led_state().caps_lock)) {
@@ -94,7 +93,7 @@ void caps_word_disable(void) {
 // Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
 #define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
 
-void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
+static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     // Update caps word state
     if (caps_word_on) {
         switch (keycode) {
@@ -146,9 +145,9 @@ void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     }
 }
 
-uint16_t last_keycode = KC_NO;
-uint8_t last_modifier = 0;
-void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
+static uint16_t last_keycode = KC_NO;
+static uint8_t last_modifier = 0;
+static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
     if (keycode != REPEAT) {
         // Early return when holding down a pure layer key
         // to retain modifiers
