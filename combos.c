@@ -183,15 +183,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case HV_HAVE:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Have");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("have");
-                }
-        }
+                SEND_STRING("have");
+            }
         break;
 
         case QK_QMK:
@@ -210,51 +203,25 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case BSPCEV_EVERY:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Every");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("every");
-                }
-        }
+                SEND_STRING("every");
+            }
         break;
 
         case BSPCU_YOU:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("You");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("you");
-                }
-        }
+                SEND_STRING("you");
+            }
         break;
 
         case BSPCA_AND:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("And");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("and");
-                }
-        }
+                SEND_STRING("and");
+            }
         break;
 
         case BSPCN_NOT:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Not");
-                    set_mods(mod_state);
-                }
-                else if (mod_state & MOD_MASK_CTRL) {
+                if (mod_state & MOD_MASK_CTRL) {
                     del_mods(MOD_MASK_CTRL);
                     SEND_STRING("n't");
                     set_mods(mod_state);
@@ -267,176 +234,80 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case BSPCW_WITH:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("With");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("with");
-                }
-        }
+                SEND_STRING("with");
+            }
         break;
 
         case BSPCF_FOR:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("For");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("for");
-                }
-        }
+                SEND_STRING("for");
+            }
         break;
 
         case BSPCH_HERE:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Here");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("here");
-                }
-        }
+                SEND_STRING("here");
+            }
         break;
 
         case BSPCT_THE:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("The");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("the");
-                }
-        }
+                SEND_STRING("the");
+            }
         break;
 
         case BSPCM_MENT:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Ment");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("ment");
-                }
-        }
+                SEND_STRING("ment");
+            }
         break;
 
         case BSPCG_ING:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Ing");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("ing");
-                }
-        }
+                SEND_STRING("ing");
+            }
         break;
 
         case BSPCO_OUGH:
             if (pressed) {
-                if (mod_state & MOD_MASK_CTRL) {
-                    del_mods(MOD_MASK_CTRL);
-                    SEND_STRING("ould");
-                    set_mods(mod_state);
-                }
-                else if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Ough");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("ough");
-                }
-        }
+                SEND_STRING("ough");
+            }
         break;
 
         case BSPCI_ION:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Ion");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("ion");
-                }
-        }
+                SEND_STRING("ion");
+            }
         break;
 
         case BSPCIS_IONS:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Ions");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("ions");
-                }
-        }
+                SEND_STRING("ions");
+            }
         break;
 
         case BSPCTA_THAT:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("That");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("that");
-                }
-        }
+                SEND_STRING("that");
+            }
         break;
 
         case BSPCQ_QUE:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Que");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("que");
-                }
-        }
+                SEND_STRING("que");
+            }
         break;
 
         case BSPCK_KEY:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Key");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("key");
-                }
-        }
+                SEND_STRING("key");
+            }
         break;
 
         case KB_KEYBOARD:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("Keyboard");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("keyboard");
-                }
-        }
+                SEND_STRING("keyboard");
+            }
         break;
 
         case WA_WHAT:
