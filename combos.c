@@ -270,7 +270,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
         case BSPCO_OUGH:
             if (pressed) {
-                SEND_STRING("ough");
+                if (mod_state & MOD_MASK_CTRL) {
+                    del_mods(MOD_MASK_CTRL);
+                    SEND_STRING("ould");
+                    set_mods(mod_state);
+                } else{
+                    SEND_STRING("ough");
+                }
             }
         break;
 
