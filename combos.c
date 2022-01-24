@@ -47,12 +47,7 @@ enum combo_events {
     DOTSLASH_UPDIR,
     ZEROEIGHT_COMMA,
     EIGHTNINE_DOT,
-
-    /* Vertical combos */
-    // An attempt to radically remove all lateral movements
-    // by substituting the inner index keys by vertical combos
-    // of the main index column keys
-    PT_B,
+    PT_MOUSE,
 
     // This must be the last item in the enum.
     // This is used to automatically update the combo count.
@@ -93,69 +88,48 @@ const uint16_t PROGMEM ZERO_EIGHT_COMBO[] = {KC_0,     KC_8,    COMBO_END};
 const uint16_t PROGMEM EIGHT_NINE_COMBO[] = {KC_8,     KC_9,    COMBO_END};
 
 combo_t key_combos[] = {
-    [BSPCEV_EVERY]   = COMBO_ACTION(BSPC_E_V_COMBO),
-    [BSPCU_YOU]      = COMBO_ACTION(BSPC_U_COMBO),
-    [BSPCA_AND]      = COMBO_ACTION(BSPC_A_COMBO),
-    [BSPCN_NOT]      = COMBO_ACTION(BSPC_N_COMBO),
-    [BSPCW_WITH]     = COMBO_ACTION(BSPC_W_COMBO),
-    [BSPCF_FOR]      = COMBO_ACTION(BSPC_F_COMBO),
-    [BSPCH_HERE]     = COMBO_ACTION(BSPC_H_COMBO),
-    [BSPCT_THE]      = COMBO_ACTION(BSPC_T_COMBO),
-    [BSPCM_MENT]     = COMBO_ACTION(BSPC_M_COMBO),
-    [BSPCG_ING]      = COMBO_ACTION(BSPC_G_COMBO),
-    [BSPCO_OUGH]     = COMBO_ACTION(BSPC_O_COMBO),
-    [BSPCI_ION]      = COMBO_ACTION(BSPC_I_COMBO),
-    [BSPCIS_IONS]    = COMBO_ACTION(BSPC_I_S_COMBO),
-    [BSPCTA_THAT]    = COMBO_ACTION(BSPC_T_A_COMBO),
-    [BSPCQ_QUE]      = COMBO_ACTION(BSPC_Q_COMBO),
-    [BSPCK_KEY]      = COMBO_ACTION(BSPC_K_COMBO),
-    [BSPCTS_THIS]    = COMBO_ACTION(BSPC_T_S_COMBO),
-    [BSPCDN_DONT]    = COMBO_ACTION(BSPC_D_N_COMBO),
-    [BSPCIT_IN_THE]  = COMBO_ACTION(BSPC_I_T_COMBO),
-    [JU_JUST]        = COMBO_ACTION(J_U_COMBO),
-    [HV_HAVE]        = COMBO_ACTION(H_V_COMBO),
-    [QK_QMK]         = COMBO_ACTION(Q_K_COMBO),
-    [KB_KEYBOARD]    = COMBO_ACTION(K_B_COMBO),
-    [WA_WHAT]        = COMBO_ACTION(W_A_COMBO),
-    [OS_SFT_CAPS]    = COMBO_ACTION(OS_SFT_COMBO),
-    [REPEATX_BSLS]   = COMBO_ACTION(REPEAT_X_COMBO),
-    [DOTSLASH_UPDIR] = COMBO_ACTION(DOT_SLASH_COMBO),
-    [ZEROEIGHT_COMMA]= COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
-    [EIGHTNINE_DOT]  = COMBO(EIGHT_NINE_COMBO, KC_DOT),
-    [UYCLN_INDEX]    = COMBO_ACTION(U_Y_SCLN_COMBO),
-    [PT_B]           = COMBO(P_T_COMBO, MOUSE),
+    [BSPCEV_EVERY]    = COMBO_ACTION(BSPC_E_V_COMBO),
+    [BSPCU_YOU]       = COMBO_ACTION(BSPC_U_COMBO),
+    [BSPCA_AND]       = COMBO_ACTION(BSPC_A_COMBO),
+    [BSPCN_NOT]       = COMBO_ACTION(BSPC_N_COMBO),
+    [BSPCW_WITH]      = COMBO_ACTION(BSPC_W_COMBO),
+    [BSPCF_FOR]       = COMBO_ACTION(BSPC_F_COMBO),
+    [BSPCH_HERE]      = COMBO_ACTION(BSPC_H_COMBO),
+    [BSPCT_THE]       = COMBO_ACTION(BSPC_T_COMBO),
+    [BSPCM_MENT]      = COMBO_ACTION(BSPC_M_COMBO),
+    [BSPCG_ING]       = COMBO_ACTION(BSPC_G_COMBO),
+    [BSPCO_OUGH]      = COMBO_ACTION(BSPC_O_COMBO),
+    [BSPCI_ION]       = COMBO_ACTION(BSPC_I_COMBO),
+    [BSPCIS_IONS]     = COMBO_ACTION(BSPC_I_S_COMBO),
+    [BSPCTA_THAT]     = COMBO_ACTION(BSPC_T_A_COMBO),
+    [BSPCQ_QUE]       = COMBO_ACTION(BSPC_Q_COMBO),
+    [BSPCK_KEY]       = COMBO_ACTION(BSPC_K_COMBO),
+    [BSPCTS_THIS]     = COMBO_ACTION(BSPC_T_S_COMBO),
+    [BSPCDN_DONT]     = COMBO_ACTION(BSPC_D_N_COMBO),
+    [BSPCIT_IN_THE]   = COMBO_ACTION(BSPC_I_T_COMBO),
+    [JU_JUST]         = COMBO_ACTION(J_U_COMBO),
+    [HV_HAVE]         = COMBO_ACTION(H_V_COMBO),
+    [QK_QMK]          = COMBO_ACTION(Q_K_COMBO),
+    [KB_KEYBOARD]     = COMBO_ACTION(K_B_COMBO),
+    [WA_WHAT]         = COMBO_ACTION(W_A_COMBO),
+    [OS_SFT_CAPS]     = COMBO(OS_SFT_COMBO, CAPS_WORD),
+    [REPEATX_BSLS]    = COMBO(REPEAT_X_COMBO, KC_BSLASH),
+    [DOTSLASH_UPDIR]  = COMBO_ACTION(DOT_SLASH_COMBO),
+    [ZEROEIGHT_COMMA] = COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
+    [EIGHTNINE_DOT]   = COMBO(EIGHT_NINE_COMBO, KC_DOT),
+    [UYCLN_INDEX]     = COMBO_ACTION(U_Y_SCLN_COMBO),
+    [PT_MOUSE]        = COMBO(P_T_COMBO, MOUSE),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     // Process mod-taps before the combo is fired,
     // this helps making modifier-aware combos,
-    // like UY_PRN or BSPCN_NOT, more fluid
+    // like UYCLN_INDEX or BSPCN_NOT, more fluid
     // when I use them with home row mods.
     action_tapping_process((keyrecord_t){});
     uint8_t mod_state = get_mods();
     uint8_t oneshot_mod_state = get_oneshot_mods();
     switch(combo_index) {
-        case REPEATX_BSLS:
-            if (pressed) {
-                register_code(KC_BSLASH);
-            } else {
-                unregister_code(KC_BSLASH);
-            }
-        break;
-
-        case OS_SFT_CAPS:
-            // Toggle `caps_word_on`
-            if (pressed) {
-                if (caps_word_on) {
-                    caps_word_disable();
-                    return;
-                } else {
-                    caps_word_enable();
-                    return;
-                }
-            }
-            break;
-
 
         case UYCLN_INDEX:
             if (pressed) {
@@ -274,7 +248,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                     del_mods(MOD_MASK_CTRL);
                     SEND_STRING("ould");
                     set_mods(mod_state);
-                } else{
+                } else {
                     SEND_STRING("ough");
                 }
             }
