@@ -3,6 +3,10 @@
 
 #include QMK_KEYBOARD_H
 
+#ifdef CONSOLE_ENABLE
+#include "print.h"
+#endif
+
 #ifdef STENO_ENABLE
 #include "keymap_steno.h"
 #endif
@@ -18,7 +22,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
 
-                      CAPS_WORD,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
+                         GAMING,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
+  ),
+
+  [_GAMING] = LAYOUT(
+           KC_1, KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
+        KC_LALT, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_SCLN,KC_MINS,
+         KC_ESC, KC_A  , KC_R  , KC_S  , KC_T  , KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
+        KC_LCTL, KC_Z  , KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
+
+                         GAMING,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
   ),
 
   [_SYM] = LAYOUT(
@@ -196,10 +209,14 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
-    uprintf("0x%04X,%u,%u,%u\n",
+    uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
          keycode,
          record->event.key.row,
          record->event.key.col,
+         get_highest_layer(layer_state),
+         record->event.pressed,
+         get_mods(),
+         get_oneshot_mods(),
          record->tap.count
          );
 #endif

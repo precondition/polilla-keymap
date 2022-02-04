@@ -5,12 +5,13 @@ KEY_LOCK_ENABLE = no
 MOUSEKEY_ENABLE = yes
 TAP_DANCE_ENABLE = yes
 COMBO_ENABLE = yes
-NKRO_ENABLE = no
+NKRO_ENABLE = yes
 LTO_ENABLE = yes
 BOOTMAGIC_ENABLE = no
 STENO_ENABLE = yes
 GRAVE_ESC_ENABLE = no
 SPACE_CADET_ENABLE = no
+AUTO_SHIFT_ENABLE = no
 
 # Load the necessary external C files if and only if
 # the associated config option has been enabled

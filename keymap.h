@@ -4,6 +4,7 @@
 
 enum layer_names {
     _COLEMAK_DH,
+    _GAMING,
     _SYM,
     _NAV,
     _GNAV,
@@ -21,6 +22,7 @@ enum layer_names {
 #define GNAV MO(_GNAV)
 #define SYM MO(_SYM)
 #define SYM_ENT LT(_SYM, KC_ENT)
+#define GAMING TG(_GAMING)
 
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSE MO(_MOUSE)

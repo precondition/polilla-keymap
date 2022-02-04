@@ -15,11 +15,13 @@
 // Other settings //
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-#define COMBO_TERM 50
+#define COMBO_TERM 30
 
 // Limits the max. amount of layers to 8 to save firmware memory.
 #define LAYER_STATE_8BIT
 
+
+#define TAP_CODE_DELAY 10
 
 // Save firmware space
 #ifndef NO_DEBUG
@@ -29,6 +31,8 @@
 #define NO_PRINT
 #endif // !NO_PRINT
 
+
+#define FORCE_NKRO
 // Shamelessly stolen mouse key settings from @pierrechevalier83 //
 
 // Set the mouse settings to a comfortable speed/accuracy trade-off
