@@ -232,10 +232,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             if (caps_word_on) {
                 caps_word_disable();
-                return false;
             } else {
                 caps_word_enable();
-                return false;
             }
         }
         return false;
@@ -303,7 +301,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if (mod_state & MOD_MASK_SHIFT || oneshot_mod_state & MOD_MASK_SHIFT) {
             del_mods(MOD_MASK_SHIFT);
             del_oneshot_mods(MOD_MASK_SHIFT);
-            send_string("=>");
+            SEND_STRING("=>");
             set_mods(mod_state);
           } else {
             SEND_STRING("->");
@@ -394,7 +392,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case YICODE:
       if (record->event.pressed) {
-          send_string("$yi{");
+          SEND_STRING("$yi{");
           return false;
       }
       break;
@@ -446,9 +444,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 }
 #endif
 
-/*
- * Per key tapping term settings
- */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_O:
@@ -460,9 +455,3 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 };
-
-#ifdef STENO_ENABLE
-void matrix_init_user() {
-  steno_set_mode(STENO_MODE_GEMINI);
-}
-#endif
