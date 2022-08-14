@@ -98,7 +98,7 @@ enum custom_keycodes {
     // Macro for
     // }<enter>
     C_BRACE,
-    CAPS_WORD,
+    CAPS_WORD_LOCK,
 };
 
 #ifdef TAP_DANCE_ENABLE
