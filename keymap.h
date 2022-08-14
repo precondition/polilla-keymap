@@ -99,6 +99,14 @@ enum custom_keycodes {
     // }<enter>
     C_BRACE,
     CAPS_WORD_LOCK,
+    // "Opening Bracket-Quote"
+    // Macro for
+    // ["
+    O_BRQOT,
+    // "Closing Bracket-Quote"
+    // Macro for
+    // "]
+    C_BRQOT,
 };
 
 #ifdef TAP_DANCE_ENABLE

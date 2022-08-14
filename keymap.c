@@ -17,7 +17,7 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK_DH] = LAYOUT(
-           REDO, UNDO  ,KC_WH_U,KC_WH_D, KC_F4 , KC_F5 ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
+           REDO, UNDO  , KC_GRV,KC_DQUO,KC_F4 , KC_F5 ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
         A_GRAVE, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_SCLN,KC_MINS,
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
@@ -36,9 +36,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM] = LAYOUT(
         KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                 KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
-        KC_DOT , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
-        KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                 KC_CIRC,KC_AMPR,KC_ASTR,KC_EQL ,KC_PLUS, KC_GRV,
-        GUILL_L, KC_LT ,KC_LBRC,KC_RBRC, KC_GT ,GUILL_R, PLOVER, _______,O_BRACE,KC_LCBR,KC_LPRN,KC_RPRN,KC_RCBR,C_BRACE,
+           KC_X, KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
+        GUILL_L,O_BRQOT,KC_LBRC,KC_RBRC,C_BRQOT,GUILL_R,                 O_BRACE,KC_LCBR,KC_LPRN,KC_RPRN,KC_RCBR,C_BRACE,
+        KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC, PLOVER, _______,KC_CIRC,KC_AMPR,KC_ASTR,KC_EQL ,KC_PLUS, KC_GRV,
 
                         _______,_______,  NAV  ,_______,_______, _______,_______,_______,KC_COMM, KC_DOT
   ),
@@ -357,6 +357,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code(COMPOSE);
             tap_code16(KC_LT);
             tap_code16(KC_LT);
+            tap_code(COMPOSE);
+            tap_code(KC_SPACE);
+            tap_code(KC_SPACE);
         }
       break;
 
@@ -365,6 +368,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code(COMPOSE);
             tap_code16(KC_GT);
             tap_code16(KC_GT);
+            tap_code(COMPOSE);
+            tap_code(KC_SPACE);
+            tap_code(KC_SPACE);
         }
       break;
 
@@ -379,7 +385,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case O_BRACE:
       if (record->event.pressed) {
-          tap_code16(KC_LCBR);
+          tap_code16(KC_LEFT_CURLY_BRACE);
           tap_code(KC_ENTER);
           return false;
       }
@@ -387,11 +393,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case C_BRACE:
       if (record->event.pressed) {
-          tap_code16(KC_RCBR);
+          tap_code16(KC_RIGHT_CURLY_BRACE);
           tap_code(KC_ENTER);
           return false;
       }
       break;
+
+    case O_BRQOT:
+        if (record->event.pressed) {
+            tap_code(KC_LEFT_BRACKET);
+            tap_code16(KC_DOUBLE_QUOTE);
+        }
+        return false;
+
+    case C_BRQOT:
+        if (record->event.pressed) {
+            tap_code16(KC_DOUBLE_QUOTE);
+            tap_code(KC_RIGHT_BRACKET);
+        }
+        return false;
 
     case YICODE:
       if (record->event.pressed) {
