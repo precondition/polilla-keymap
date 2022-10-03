@@ -366,11 +366,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case GUILL_R:
         if (record->event.pressed) {
             tap_code(COMPOSE);
-            tap_code16(KC_GT);
-            tap_code16(KC_GT);
+            tap_code(KC_SPACE);
+            tap_code(KC_SPACE);
             tap_code(COMPOSE);
-            tap_code(KC_SPACE);
-            tap_code(KC_SPACE);
+            tap_code16(KC_GT);
+            tap_code16(KC_GT);
         }
       break;
 
