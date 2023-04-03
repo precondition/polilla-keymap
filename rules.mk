@@ -15,6 +15,8 @@ KEY_LOCK_ENABLE = no
 MAGIC_ENABLE = no
 SPACE_CADET_ENABLE = no
 
+CFLAGS += -save-temps=obj
+
 # Load the necessary external C files if and only if
 # the associated config option has been enabled
 ifeq ($(strip $(COMBO_ENABLE)), yes)
