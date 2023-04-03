@@ -27,6 +27,7 @@ enum combo_events {
     BSPCTS_THIS,
     BSPCDN_DONT,
     BSPCIT_IN_THE,
+    BSPCAR_ARR,
 
     /* Other steno-lite combos */
     // Additional steno-lite combos for common words and n-grams
@@ -75,6 +76,7 @@ const uint16_t PROGMEM K_B_COMBO[]        = {KC_K,     KC_B,    COMBO_END};
 const uint16_t PROGMEM BSPC_T_A_COMBO[]   = {KC_BSPC,  HOME_T,  HOME_A,  COMBO_END};
 const uint16_t PROGMEM BSPC_D_N_COMBO[]   = {KC_BSPC,  KC_D,    HOME_N,  COMBO_END};
 const uint16_t PROGMEM BSPC_I_T_COMBO[]   = {KC_BSPC,  HOME_I,  HOME_T,  COMBO_END};
+const uint16_t PROGMEM BSPC_A_R_COMBO[]   = {KC_BSPC,  HOME_A,  HOME_R,  COMBO_END};
 const uint16_t PROGMEM J_U_COMBO[]        = {KC_J,     KC_U,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
 const uint16_t PROGMEM Q_K_COMBO[]        = {KC_Q,     KC_K,    COMBO_END};
@@ -107,13 +109,14 @@ combo_t key_combos[] = {
     [BSPCTS_THIS]     = COMBO_ACTION(BSPC_T_S_COMBO),
     [BSPCDN_DONT]     = COMBO_ACTION(BSPC_D_N_COMBO),
     [BSPCIT_IN_THE]   = COMBO_ACTION(BSPC_I_T_COMBO),
+    [BSPCAR_ARR]      = COMBO_ACTION(BSPC_A_R_COMBO),
     [JU_JUST]         = COMBO_ACTION(J_U_COMBO),
     [HV_HAVE]         = COMBO_ACTION(H_V_COMBO),
     [QK_QMK]          = COMBO_ACTION(Q_K_COMBO),
     [KB_KEYBOARD]     = COMBO_ACTION(K_B_COMBO),
     [WA_WHAT]         = COMBO_ACTION(W_A_COMBO),
     [OS_SFT_CAPS]     = COMBO(OS_SFT_COMBO, CAPS_WORD_LOCK),
-    [REPEATX_BSLS]    = COMBO(REPEAT_X_COMBO, KC_BSLASH),
+    [REPEATX_BSLS]    = COMBO(REPEAT_X_COMBO, KC_BACKSLASH),
     [DOTSLASH_UPDIR]  = COMBO_ACTION(DOT_SLASH_COMBO),
     [ZEROEIGHT_COMMA] = COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
     [EIGHTNINE_DOT]   = COMBO(EIGHT_NINE_COMBO, KC_DOT),
@@ -311,6 +314,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case BSPCIT_IN_THE:
             if (pressed) {
                 SEND_STRING("in the");
+            }
+        break;
+
+        case BSPCAR_ARR:
+            if (pressed) {
+                SEND_STRING("arr");
             }
         break;
 
