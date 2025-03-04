@@ -12,6 +12,8 @@
 #endif
 #include "keymap_japanese.h"
 
+#include "version.h"
+
 // All custom keycodes and aliases can be found in keymap.h
 #include "keymap.h"
 
@@ -79,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,                 _______,KC_WBAK,KC_MS_U,KC_WFWD,_______,_______,
         _______,KC_LGUI,KC_LALT,KC_LSFT,KC_LCTL,_______,                 _______,KC_MS_L,KC_MS_D,KC_MS_R,_______,_______,
-        _______,_______,_______,_______,_______,_______,_______, _______,_______,KC_BTN3,KC_WH_U,KC_WH_D,_______,_______,
+        _______,_______,_______,_______,_______,QK_VERS,_______, _______,_______,KC_BTN3,KC_WH_U,KC_WH_D,_______,_______,
 
                         _______,_______,_______,_______,_______, KC_BTN3,KC_BTN1,KC_BTN2,_______,_______
     )
@@ -439,6 +441,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     return true;
+
+    case QK_VERS:
+        if (record->event.pressed) {
+            SEND_STRING_DELAY(
+                    QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION "(" QMK_GIT_HASH ")" \
+                    ", Built on; " QMK_BUILDDATE,
+                    0);
+        }
+        return false;
 
     }
     return true;
