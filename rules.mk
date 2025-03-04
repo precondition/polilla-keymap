@@ -20,8 +20,5 @@ CFLAGS += -save-temps=obj
 # Load the necessary external C files if and only if
 # the associated config option has been enabled
 ifeq ($(strip $(COMBO_ENABLE)), yes)
-	SRC += combos.c
-endif
-ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
-	SRC += tapdance.c
+	INTROSPECTION_KEYMAP_C += combos.c
 endif
