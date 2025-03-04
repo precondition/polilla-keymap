@@ -102,9 +102,11 @@ void caps_word_disable(void) {
     }
 }
 
-// Used to extract the basic tapping keycode from a dual-role key.
-// Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
-#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+inline uint8_t get_tap_kc(uint16_t dual_role_key) {
+    // Used to extract the basic tapping keycode from a dual-role key.
+    // Example: get_tap_kc(MT(MOD_RSFT, KC_E)) == KC_E
+    return dual_role_key & 0xFF;
+}
 
 static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     // Nothing to process if caps_word isn't on
@@ -119,7 +121,7 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             // Earlier return if this has not been considered tapped yet
             if (record->tap.count == 0) { return; }
             // Get the base tapping keycode of a mod- or layer-tap key
-            keycode = GET_TAP_KC(keycode);
+            keycode = get_tap_kc(keycode);
             break;
         default:
             break;
@@ -184,7 +186,7 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 if (record->event.pressed) {
-                    last_keycode = GET_TAP_KC(keycode);
+                    last_keycode = get_tap_kc(keycode);
                 }
                 break;
             case TD_DOT:
