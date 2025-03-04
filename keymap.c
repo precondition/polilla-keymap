@@ -220,11 +220,12 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
-    uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
+    const bool is_combo = record->event.type == COMBO_EVENT;
+    uprintf("0x%04X\t%u\t%u\t0x%X\t%u\t0x%02X\t0x%02X\t%u\n",
          keycode,
-         record->event.key.row,
-         record->event.key.col,
-         get_highest_layer(layer_state),
+         is_combo ? 254 : record->event.key.row,
+         is_combo ? 254 : record->event.key.col,
+         layer_state|default_layer_state,
          record->event.pressed,
          get_mods(),
          get_oneshot_mods(),
