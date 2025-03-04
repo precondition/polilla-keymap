@@ -170,8 +170,8 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
 }
 
 static uint16_t last_keycode = KC_NO;
-static uint8_t last_modifier = 0;
 static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
+    static uint8_t last_modifier = 0;
     if (keycode != REPEAT) {
         // Early return when holding down a pure layer key
         // to retain modifiers
@@ -186,7 +186,7 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
                 return;
         }
         if (record->event.pressed) {
-            last_modifier = get_oneshot_mods() > get_mods() ? get_oneshot_mods() : get_mods();
+            last_modifier = get_oneshot_mods() | get_mods();
         }
         switch (keycode) {
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
@@ -234,8 +234,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     process_caps_word(keycode, record);
     process_repeat_key(keycode, record);
 
-    uint8_t mod_state = get_mods();
-    uint8_t oneshot_mod_state = get_oneshot_mods();
+    const uint8_t mod_state = get_mods();
+    const uint8_t oneshot_mod_state = get_oneshot_mods();
     switch (keycode) {
 
     case CAPS_WORD_LOCK:
@@ -477,6 +477,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 }
 #endif
 
+#ifdef TAPPING_TERM_PER_KEY
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_O:
@@ -488,7 +489,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 };
-
+#endif
 
 /// Tap Dances ///
 #ifdef TAP_DANCE_ENABLE
