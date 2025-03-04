@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK_DH] = LAYOUT(
            UNDO, REDO  , KC_GRV,KC_DQUO,KC_F4 , KC_F5 ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
-        A_GRAVE, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_SCLN,KC_MINS,
+        A_GRAVE, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_COLN,KC_MINS,
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
 
@@ -424,8 +424,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case COUTLN:
         if (record->event.pressed) {
-            // ; and : keysyms are swapped on my OS layout
-            SEND_STRING_DELAY("std;;cout <<  << \"\\n\":", 10);
+            SEND_STRING_DELAY("std::cout <<  << \"\\n\";", 10);
             for (int i = 0; i < 9; ++i)  {
                 tap_code(KC_LEFT);
             }
@@ -443,7 +442,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             SEND_STRING_DELAY(
                     QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION "(" QMK_GIT_HASH ")" \
-                    ", Built on; " QMK_BUILDDATE,
+                    ", Built on: " QMK_BUILDDATE,
                     0);
         }
         return false;
@@ -540,5 +539,13 @@ void sentence_end_finished (tap_dance_state_t *state, void *user_data) {
 
 tap_dance_action_t tap_dance_actions[] = {
     [DOT_TD] = ACTION_TAP_DANCE_FN_ADVANCED(sentence_end, NULL, NULL),
+};
+#endif
+
+#ifdef KEY_OVERRIDE_ENABLE
+const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
+
+const key_override_t *key_overrides[] = {
+	&colon_key_override
 };
 #endif
