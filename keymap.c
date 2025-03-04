@@ -7,9 +7,6 @@
 #include "print.h"
 #endif
 
-#ifdef STENO_ENABLE
-#include "keymap_steno.h"
-#endif
 #include "keymap_japanese.h"
 
 #include "version.h"
