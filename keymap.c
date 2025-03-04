@@ -452,6 +452,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
+#ifdef QUICK_TAP_TERM_PER_KEY
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HOME_R:
@@ -462,6 +463,7 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
             return 16;
     }
 }
+#endif
 
 #ifdef HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
