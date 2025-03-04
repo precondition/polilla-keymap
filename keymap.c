@@ -453,16 +453,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     }
     return true;
-
 };
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case NAV_TAB:
         case HOME_R:
-            return false;
+            return GET_TAPPING_TERM(keycode, record);
+        case NAV_TAB:
+            return 100;
         default:
-            return true;
+            return 16;
     }
 }
 
