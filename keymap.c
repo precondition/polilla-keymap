@@ -329,7 +329,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_J);
         }
-	  break;
+      break;
 
     case G_UP:
         if (record->event.pressed) {
@@ -339,7 +339,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_K);
         }
-	  break;
+      break;
 
     case G_HOME:
         if (record->event.pressed) {
@@ -349,7 +349,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_0);
         }
-	  break;
+      break;
 
     case G_END:
         if (record->event.pressed) {
@@ -359,28 +359,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code16(KC_DLR);
         }
-		break;
+        break;
 
     case GUILL_L:
-        if (record->event.pressed) {
-            tap_code(COMPOSE);
-            tap_code16(KC_LT);
-            tap_code16(KC_LT);
-            tap_code(COMPOSE);
-            tap_code(KC_SPACE);
-            tap_code(KC_SPACE);
-        }
+      if (record->event.pressed) {
+          tap_code(COMPOSE);
+          tap_code16(KC_LT);
+          tap_code16(KC_LT);
+          tap_code(COMPOSE);
+          tap_code(KC_SPACE);
+          tap_code(KC_SPACE);
+      }
       break;
 
     case GUILL_R:
-        if (record->event.pressed) {
-            tap_code(COMPOSE);
-            tap_code(KC_SPACE);
-            tap_code(KC_SPACE);
-            tap_code(COMPOSE);
-            tap_code16(KC_GT);
-            tap_code16(KC_GT);
-        }
+      if (record->event.pressed) {
+          tap_code(COMPOSE);
+          tap_code(KC_SPACE);
+          tap_code(KC_SPACE);
+          tap_code(COMPOSE);
+          tap_code16(KC_GT);
+          tap_code16(KC_GT);
+      }
       break;
 
     case UPDIR:
@@ -546,6 +546,6 @@ tap_dance_action_t tap_dance_actions[] = {
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
 
 const key_override_t *key_overrides[] = {
-	&colon_key_override
+    &colon_key_override
 };
 #endif
