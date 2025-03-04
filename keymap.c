@@ -130,6 +130,10 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     switch (keycode) {
         // Keycodes to shift
         case KC_A ... KC_Z:
+        case A_GRAVE:
+        case E_ACUTE:
+        case E_GRAVE:
+        case C_CDILA:
             if (record->event.pressed) {
                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_disable();
@@ -140,6 +144,8 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             }
         // Keycodes that enable caps word but shouldn't get shifted
         case CAPS_WORD_LOCK:
+        case DED_CIR:
+        case DED_UML:
         case KC_BSPC:
         case KC_LPRN:
         case KC_MINS:
