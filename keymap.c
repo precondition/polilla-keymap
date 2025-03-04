@@ -11,8 +11,8 @@
 
 #include "version.h"
 
-// All custom keycodes and aliases can be found in keymap.h
-#include "keymap.h"
+// All custom keycodes and aliases can be found in precondition_keymap.h
+#include "precondition_keymap.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
