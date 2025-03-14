@@ -17,12 +17,12 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK_DH] = LAYOUT(
-           UNDO, REDO  , KC_GRV,KC_DQUO,KC_F4 , KC_F5 ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
+           UNDO, REDO  , KC_GRV, BNAV  , KC_F4 , KC_F5 ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
         A_GRAVE, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_COLN,KC_MINS,
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
 
-                         GAMING,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,C(KC_B)
+                         GAMING,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,TG_MIC
   ),
 
   [_GAMING] = LAYOUT(
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT(
         KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                 KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 , KC_F11,
-        _______,_______,KC_NUM,KC_SCRL,KC_INS ,_______,                 _______,KC_PGUP, KC_UP ,KC_PGDN,_______,KC_MUTE,
+        _______,_______, KC_NUM,KC_SCRL,KC_INS ,  BNAV ,                 _______,KC_PGUP, KC_UP ,KC_PGDN,_______,KC_MUTE,
         MS_CAPS,KC_LGUI,KC_LALT,KC_LSFT,KC_LCTL,  GNAV ,                 KC_HOME,KC_LEFT,KC_DOWN,KC_RGHT,KC_END ,KC_VOLU,
         _______, COUTLN,C(KC_A),C(KC_C),C(KC_V),_______,_______, KC_BRIU,_______,KC_PSCR,KC_LCBR,KC_RCBR,KC_INS ,KC_VOLD,
 
@@ -61,6 +61,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
     ),
 
+    [_BNAV] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,B_PREV , B_UP  , B_NEXT,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______, B_LEFT, B_DOWN,B_RIGHT, B_VERT,_______,
+        _______,_______,_______,_______,_______,_______,_______, _______,B_PASTE,B_CPY_M,B_CREAT,B_CLOSE,B_HORIZ, B_ZOOM,
+
+                        _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
+    ),
 
 #ifdef STENO_ENABLE
     [_PLOVER] = LAYOUT(
@@ -437,6 +445,102 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION "(" QMK_GIT_HASH ")" \
                     ", Built on: " QMK_BUILDDATE,
                     0);
+        }
+        return false;
+
+
+    // tmux window navigation
+    case B_CREAT:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_C);
+        }
+        return false;
+
+    case B_PREV:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_P);
+        }
+        return false;
+
+    case B_NEXT:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_N);
+        }
+        return false;
+
+    // tmux pane navigation
+    case B_VERT:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code16(KC_PERCENT);
+        }
+        return false;
+
+    case B_HORIZ:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code16(KC_DOUBLE_QUOTE);
+        }
+        return false;
+    case B_UP:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_UP);
+        }
+        return false;
+
+    case B_LEFT:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_LEFT);
+        }
+        return false;
+
+    case B_DOWN:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_DOWN);
+        }
+        return false;
+
+    case B_RIGHT:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_RIGHT);
+        }
+        return false;
+
+    // tmux copy mode and paste buffer
+    case B_PASTE:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_RIGHT_BRACKET);
+        }
+        return false;
+
+    case B_CPY_M:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_LEFT_BRACKET);
+        }
+        return false;
+
+    // tmux zoom
+    case B_ZOOM:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_Z);
+        }
+        return false;
+
+    // tmux clone pane
+    case B_CLOSE:
+        if (record->event.pressed) {
+            tap_code16(TMUX_PREFIX_KEY);
+            tap_code(KC_X);
         }
         return false;
 
