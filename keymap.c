@@ -290,7 +290,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code16(ALGR(KC_GRV));
+             tap_code(KC_GRV);
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
              tap_code(KC_A);
@@ -301,7 +301,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code16(ALGR(KC_GRV));
+             tap_code(KC_GRV);
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
              tap_code(KC_E);
@@ -430,13 +430,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         return false;
-
-    case C_CDILA:
-    if (record->event.pressed && record->tap.count > 0) {
-        tap_code16(ALGR(KC_COMMA));
-        return false;
-    }
-    return true;
 
     case QK_VERS:
         if (record->event.pressed) {
