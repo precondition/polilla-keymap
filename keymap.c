@@ -545,6 +545,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
 
+    // Set a separate keycode for dead circumflex
+    case DED_CIR:
+        if (record->event.pressed) {
+            register_code16(KC_CIRCUMFLEX);
+        } else {
+            register_code16(KC_CIRCUMFLEX);
+        }
+        return true;
+
     }
     return true;
 };

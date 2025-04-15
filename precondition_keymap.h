@@ -69,7 +69,6 @@ enum layer_names {
 #define E_ACUTE ALGR(KC_E)
 #define C_CDILA ALGR(KC_COMMA)
 // Useful dead keys for French
-#define DED_CIR KC_CIRC
 #define DED_UML KC_DOUBLE_QUOTE
 
 #define TMUX_PREFIX_KEY C(KC_B)
@@ -132,6 +131,10 @@ enum custom_keycodes {
     B_ZOOM,
     // tmux close pane
     B_CLOSE,
+    // Dead circumflex
+    // The same as KC_CIRCUMFLEX on US intl but setting it as a separate
+    // keycode helps to exclude it from `post_process_record_user`
+    DED_CIR,
 };
 
 #ifdef TAP_DANCE_ENABLE
