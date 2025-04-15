@@ -218,6 +218,18 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
         if (record->event.pressed) {
             register_mods(last_modifier);
             register_code16(last_keycode);
+
+            if (base_dead_keys) {
+                switch (last_keycode) {
+                    case KC_QUOTE:
+                    case KC_DOUBLE_QUOTE:
+                    case KC_TILDE:
+                    case KC_GRAVE:
+                    case KC_CIRCUMFLEX:
+                        tap_code(KC_SPACE);
+                }
+            }
+
         } else {
             unregister_code16(last_keycode);
             unregister_mods(last_modifier);
@@ -421,12 +433,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             tap_code(KC_LEFT_BRACKET);
             tap_code16(KC_DOUBLE_QUOTE);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
         }
         return false;
 
     case C_BRQOT:
         if (record->event.pressed) {
             tap_code16(KC_DOUBLE_QUOTE);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
             tap_code(KC_RIGHT_BRACKET);
         }
         return false;
@@ -484,6 +502,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             tap_code16(TMUX_PREFIX_KEY);
             tap_code16(KC_DOUBLE_QUOTE);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
         }
         return false;
     case B_UP:
