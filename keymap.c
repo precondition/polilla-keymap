@@ -583,6 +583,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return true;
 
+    case A_GRAVE:
+        if (record->event.pressed) {
+            register_weak_mods(MOD_BIT(KC_RALT));
+            wait_ms(10);
+            register_code(KC_A);
+        } else {
+            unregister_code(KC_A);
+            unregister_weak_mods(MOD_BIT(KC_RALT));
+        }
+        return false;
+
+
+    case E_ACUTE:
+        if (record->event.pressed) {
+            register_weak_mods(MOD_BIT(KC_RALT));
+            wait_ms(10);
+            register_code(KC_E);
+        } else {
+            unregister_code(KC_E);
+            unregister_weak_mods(MOD_BIT(KC_RALT));
+        }
+        return false;
+
     }
     return true;
 };
