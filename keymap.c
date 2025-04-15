@@ -554,6 +554,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return true;
 
+    case DED_UML:
+        if (record->event.pressed) {
+            register_code16(KC_DOUBLE_QUOTE);
+        } else {
+            unregister_code16(KC_DOUBLE_QUOTE);
+        }
+        return true;
+
     }
     return true;
 };

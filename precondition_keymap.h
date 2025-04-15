@@ -68,8 +68,6 @@ enum layer_names {
 // And the rest of other accented letters are accessed using dead keys
 #define E_ACUTE ALGR(KC_E)
 #define C_CDILA ALGR(KC_COMMA)
-// Useful dead keys for French
-#define DED_UML KC_DOUBLE_QUOTE
 
 #define TMUX_PREFIX_KEY C(KC_B)
 
@@ -131,10 +129,15 @@ enum custom_keycodes {
     B_ZOOM,
     // tmux close pane
     B_CLOSE,
-    // Dead circumflex
-    // The same as KC_CIRCUMFLEX on US intl but setting it as a separate
-    // keycode helps to exclude it from `post_process_record_user`
+    // Useful dead keys for French
+    //  Dead circumflex
+    //  The same as KC_CIRCUMFLEX on US intl but setting it as a separate
+    //  keycode helps to exclude it from `post_process_record_user`.
     DED_CIR,
+    //  Dead Umlaut
+    //  The same as KC_DOUBLE_QUOTE on US intl but setting it as a separate
+    //  keycode helps to exclude it from `post_process_record_user`.
+    DED_UML,
 };
 
 #ifdef TAP_DANCE_ENABLE
