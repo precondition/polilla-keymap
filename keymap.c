@@ -92,6 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+bool base_dead_keys = true;
 
 // CAPS_WORD_LOCK: A "smart" Caps Lock key that only capitalizes the next identifier you type
 // and then toggles off Caps Lock automatically when you're done.
@@ -238,7 +239,6 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 }
 
 
-bool base_dead_keys = true;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
