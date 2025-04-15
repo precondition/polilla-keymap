@@ -583,13 +583,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return true;
 
-    case A_GRAVE:
+    case C_CDILA:
         if (record->event.pressed) {
             register_weak_mods(MOD_BIT(KC_RALT));
             wait_ms(10);
-            register_code(KC_A);
+            register_code(KC_COMMA);
         } else {
-            unregister_code(KC_A);
+            unregister_code(KC_COMMA);
             unregister_weak_mods(MOD_BIT(KC_RALT));
         }
         return false;
