@@ -19,7 +19,7 @@
 #define LAYER_STATE_32BIT
 
 
-#define TAP_CODE_DELAY 10
+#define TAP_CODE_DELAY 30
 
 // Save firmware space
 #ifndef NO_DEBUG

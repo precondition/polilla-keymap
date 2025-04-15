@@ -299,10 +299,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code(KC_GRV);
+             tap_code_delay(KC_GRV, 30);
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
-             tap_code(KC_A);
+             tap_code_delay(KC_A, 30);
          }
          return false;
 
@@ -310,10 +310,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code(KC_GRV);
+             tap_code_delay(KC_GRV, 30);
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
-             tap_code(KC_E);
+             tap_code_delay(KC_E, 30);
          }
          return false;
 
