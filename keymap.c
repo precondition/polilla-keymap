@@ -226,6 +226,7 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 }
 
 
+bool base_dead_keys = true;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
@@ -547,6 +548,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 };
+
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_QUOTE:
+        case KC_DOUBLE_QUOTE:
+        case KC_TILDE:
+        case KC_GRAVE:
+        case KC_CIRCUMFLEX:
+            if (base_dead_keys && record->event.pressed) {
+                tap_code(KC_SPACE);
+            }
+            break;
+
+    }
+}
 
 #ifdef QUICK_TAP_TERM_PER_KEY
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
