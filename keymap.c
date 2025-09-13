@@ -671,20 +671,14 @@ static void sentence_end(tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
 
         // Double tapping TD_DOT produces
-        // ". <one-shot-shift>" i.e. dot, space and capitalize next letter.
+        // ". <one-shot shift>" i.e. dot, space and capitalize next letter.
         // This helps to quickly end a sentence and begin another one
         // without having to hit shift.
         case 2:
-            /* Check that Shift is inactive */
-            if (!(get_mods() & MOD_MASK_SHIFT)) {
-                tap_code(KC_SPC);
-                /* Internal code of OSM(MOD_LSFT) */
-                add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
-
-            } else {
-                // send ">" (KC_DOT + shift → ">")
-                tap_code(KC_DOT);
-            }
+            tap_code(KC_SPC);
+            // Calling one shot shift here produces unreliable results. More
+            // reliable results are achieved by calling one shot shift in
+            // sentence_end.
             break;
 
         // Since `sentence_end` is called on each tap
@@ -709,10 +703,14 @@ static void sentence_end(tap_dance_state_t *state, void *user_data) {
 
 void sentence_end_finished (tap_dance_state_t *state, void *user_data) {
     last_keycode = KC_DOT;
+    if (state->count == 2) {
+        /* Internal code of OSM(MOD_LSFT) */
+        add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
+    }
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [DOT_TD] = ACTION_TAP_DANCE_FN_ADVANCED(sentence_end, NULL, NULL),
+    [DOT_TD] = ACTION_TAP_DANCE_FN_ADVANCED(sentence_end, sentence_end_finished, NULL),
 };
 #endif
 
