@@ -281,7 +281,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return true;
 
     case KC_BSPC:
-        {
+    {
         static bool delkey_registered;
         if (record->event.pressed) {
             if (mod_state & MOD_MASK_SHIFT) {
