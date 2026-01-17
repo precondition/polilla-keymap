@@ -9,7 +9,7 @@
 
 #include "keymap_japanese.h"
 
-#include "version.h"
+#include "version.h" // For QK_VERS
 
 // All custom keycodes and aliases can be found in precondition_keymap.h
 #include "precondition_keymap.h"
