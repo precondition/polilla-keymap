@@ -238,7 +238,6 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
     }
 }
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
@@ -340,7 +339,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("->");
           }
       }
-      break;
+      return false;
 
     case G_DOWN:
         if (record->event.pressed) {
@@ -350,7 +349,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_J);
         }
-      break;
+        return false;
 
     case G_UP:
         if (record->event.pressed) {
@@ -360,7 +359,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_K);
         }
-      break;
+        return false;
 
     case G_HOME:
         if (record->event.pressed) {
@@ -370,7 +369,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code(KC_0);
         }
-      break;
+        return false;
 
     case G_END:
         if (record->event.pressed) {
@@ -380,54 +379,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_G);
             unregister_code16(KC_DLR);
         }
-        break;
+        return false;
 
     case GUILL_L:
-      if (record->event.pressed) {
-          tap_code(COMPOSE);
-          tap_code16(KC_LT);
-          tap_code16(KC_LT);
-          tap_code(COMPOSE);
-          tap_code(KC_SPACE);
-          tap_code(KC_SPACE);
-      }
-      break;
+        if (record->event.pressed) {
+            tap_code(COMPOSE);
+            tap_code16(KC_LT);
+            tap_code16(KC_LT);
+            tap_code(COMPOSE);
+            tap_code(KC_SPACE);
+            tap_code(KC_SPACE);
+        }
+        return false;
 
     case GUILL_R:
-      if (record->event.pressed) {
-          tap_code(COMPOSE);
-          tap_code(KC_SPACE);
-          tap_code(KC_SPACE);
-          tap_code(COMPOSE);
-          tap_code16(KC_GT);
-          tap_code16(KC_GT);
-      }
-      break;
+        if (record->event.pressed) {
+            tap_code(COMPOSE);
+            tap_code(KC_SPACE);
+            tap_code(KC_SPACE);
+            tap_code(COMPOSE);
+            tap_code16(KC_GT);
+            tap_code16(KC_GT);
+        }
+        return false;
 
     case UPDIR:
-      if (record->event.pressed) {
-          tap_code(KC_DOT);
-          tap_code(KC_DOT);
-          tap_code(KC_SLSH);
-          return false;
-      }
-      break;
+        if (record->event.pressed) {
+            tap_code(KC_DOT);
+            tap_code(KC_DOT);
+            tap_code(KC_SLSH);
+        }
+        return false;
 
     case O_BRACE:
-      if (record->event.pressed) {
-          tap_code16(KC_LEFT_CURLY_BRACE);
-          tap_code(KC_ENTER);
-          return false;
-      }
-      break;
+        if (record->event.pressed) {
+            tap_code16(KC_LEFT_CURLY_BRACE);
+            tap_code(KC_ENTER);
+        }
+        return false;
 
     case C_BRACE:
-      if (record->event.pressed) {
-          tap_code16(KC_RIGHT_CURLY_BRACE);
-          tap_code(KC_ENTER);
-          return false;
-      }
-      break;
+        if (record->event.pressed) {
+            tap_code16(KC_RIGHT_CURLY_BRACE);
+            tap_code(KC_ENTER);
+        }
+        return false;
 
     case O_BRQOT:
         if (record->event.pressed) {
@@ -460,10 +456,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case QK_VERS:
         if (record->event.pressed) {
-            SEND_STRING_DELAY(
+            SEND_STRING(
                     QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION "(" QMK_GIT_HASH ")" \
-                    ", Built on: " QMK_BUILDDATE,
-                    0);
+                    ", Built on: " QMK_BUILDDATE
+                    );
         }
         return false;
 
@@ -507,6 +503,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         return false;
+
     case B_UP:
         if (record->event.pressed) {
             tap_code16(TMUX_PREFIX_KEY);
@@ -621,7 +618,6 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_SPACE);
             }
             break;
-
     }
 }
 
@@ -665,7 +661,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 };
 #endif
 
-/// Tap Dances ///
 #ifdef TAP_DANCE_ENABLE
 static void sentence_end(tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
