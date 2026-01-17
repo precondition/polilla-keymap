@@ -310,10 +310,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code_delay(KC_GRV, 30);
+             if (base_dead_keys) {
+                tap_code(KC_GRV);
+                wait_ms(KEY_SEQ_DELAY);
+             } else {
+                 tap_code16(ALGR(KC_GRV));
+                 // If I am on US Intl. with AltGr dead keys, that means I am
+                 // typically on Linux, so I do not need to add a
+                 // `wait_ms(KEY_SEQ_DELAY)` to please Remote Desktop.
+             }
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
-             tap_code_delay(KC_A, 30);
+             tap_code(KC_A);
          }
          return false;
 
@@ -321,10 +329,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          if (record->event.pressed) {
              del_mods(MOD_MASK_SHIFT);
              del_oneshot_mods(MOD_MASK_SHIFT);
-             tap_code_delay(KC_GRV, 30);
+             if (base_dead_keys) {
+                 tap_code(KC_GRV);
+                 wait_ms(KEY_SEQ_DELAY);
+             } else {
+                 tap_code16(ALGR(KC_GRV));
+             }
              set_mods(mod_state);
              set_oneshot_mods(oneshot_mod_state);
-             tap_code_delay(KC_E, 30);
+             tap_code(KC_E);
          }
          return false;
 
@@ -447,7 +460,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case COUTLN:
         if (record->event.pressed) {
-            SEND_STRING_DELAY("std::cout <<  << \"\\n\";", 10);
+            if (base_dead_keys) {
+                // The double quotes will consume the space next to them.
+                SEND_STRING_DELAY("std::cout <<  << \" \\n\" ;", KEY_SEQ_DELAY);
+            } else {
+                SEND_STRING_DELAY("std::cout <<  << \"\\n\";", KEY_SEQ_DELAY);
+            }
             for (int i = 0; i < 9; ++i)  {
                 tap_code(KC_LEFT);
             }
@@ -563,27 +581,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
 
-    // Set a separate keycode for dead circumflex
     case DED_CIR:
+    {
+        const uint16_t dead_circumflex = base_dead_keys ? KC_CIRCUMFLEX : ALGR(KC_6);
         if (record->event.pressed) {
-            register_code16(KC_CIRCUMFLEX);
+            register_code16(dead_circumflex);
         } else {
-            unregister_code16(KC_CIRCUMFLEX);
+            unregister_code16(dead_circumflex);
         }
         return true;
+    }
 
     case DED_UML:
+    {
+        const uint16_t dead_umlaut = base_dead_keys ? KC_DOUBLE_QUOTE : ALGR(KC_DOUBLE_QUOTE);
         if (record->event.pressed) {
-            register_code16(KC_DOUBLE_QUOTE);
+            register_code16(dead_umlaut);
         } else {
-            unregister_code16(KC_DOUBLE_QUOTE);
+            unregister_code16(dead_umlaut);
         }
         return true;
+    }
 
     case C_CDILA:
+        // A simple `ALGR(KC_COMMA)` alias may go too fast for Remote Desktop
+        // Protocol on Windows, so it works better to override the keycode in
+        // order to add a `wait_ms` between the modifier press and the comma
+        // press. You may be tempted to think that increasing the
+        // `TAP_CODE_DELAY` in config.h would help for this but it does not
+        // because that only increases the time between the press and release
+        // of the same keycode without affecting the delay between the events
+        // of two different keycodes.
         if (record->event.pressed) {
             register_weak_mods(MOD_BIT(KC_RALT));
-            wait_ms(10);
+            wait_ms(KEY_SEQ_DELAY);
             register_code(KC_COMMA);
         } else {
             unregister_code(KC_COMMA);
@@ -593,9 +624,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
     case E_ACUTE:
+        // See C_CDILA comment.
         if (record->event.pressed) {
             register_weak_mods(MOD_BIT(KC_RALT));
-            wait_ms(10);
+            wait_ms(KEY_SEQ_DELAY);
             register_code(KC_E);
         } else {
             unregister_code(KC_E);
