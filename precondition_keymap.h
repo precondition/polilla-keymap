@@ -138,6 +138,8 @@ enum custom_keycodes {
     //  The same as KC_DOUBLE_QUOTE on US intl but setting it as a separate
     //  keycode helps to exclude it from `post_process_record_user`.
     DED_UML,
+    // Toggle `base_dead_keys` dynamically at run time.
+    BDED_TOG,
 };
 
 #ifdef TAP_DANCE_ENABLE
