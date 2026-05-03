@@ -654,7 +654,7 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_TILDE:
         case KC_GRAVE:
         case KC_CIRCUMFLEX:
-            if (base_dead_keys && record->event.pressed) {
+            if (base_dead_keys && record->event.pressed && !(get_mods() & MOD_RALT)) {
                 tap_code(KC_SPACE);
             }
             break;
