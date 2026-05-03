@@ -82,7 +82,7 @@ const uint16_t PROGMEM BSPC_I_T_COMBO[]   = {KC_BSPC,  HOME_I,  HOME_T,  COMBO_E
 const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
 const uint16_t PROGMEM Q_K_COMBO[]        = {KC_Q,     KC_K,    COMBO_END};
 const uint16_t PROGMEM W_A_COMBO[]        = {KC_W,     HOME_A,  COMBO_END};
-const uint16_t PROGMEM U_Y_COLN_COMBO[]   = {KC_U,     KC_Y,    KC_COLN, COMBO_END};
+const uint16_t PROGMEM U_Y_SCLN_COMBO[]   = {KC_U,     KC_Y,    KC_SCLN, COMBO_END};
 const uint16_t PROGMEM OS_SFT_COMBO[]     = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM REPEAT_X_COMBO[]   = {REPEAT,   KC_X,    COMBO_END};
 const uint16_t PROGMEM BSPC_E_COMBO[]     = {KC_BSPC,  HOME_E,  COMBO_END};
@@ -121,7 +121,7 @@ combo_t key_combos[] = {
     [DOTSLASH_UPDIR]  = COMBO_ACTION(DOT_SLASH_COMBO),
     [ZEROEIGHT_COMMA] = COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
     [EIGHTNINE_DOT]   = COMBO(EIGHT_NINE_COMBO, KC_DOT),
-    [UYCLN_INDEX]     = COMBO_ACTION(U_Y_COLN_COMBO),
+    [UYCLN_INDEX]     = COMBO_ACTION(U_Y_SCLN_COMBO),
     [PT_MOUSE]        = COMBO(P_T_COMBO, MOUSE),
 };
 
