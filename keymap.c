@@ -22,7 +22,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,MS_BTN1, COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
 
-                       BDED_TOG,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,JP_KANA
+                       BDED_TOG,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,JALO
+  ),
+
+  [_JALO] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        KC_J   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_F   , KC_M  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
+        REPEAT ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOENTER,OS_LSFT,HOME2_A,HOME2_I, TD_DOT,
+        KC_Q   , KC_ESC, KC_UP , KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_RGHT,KC_COLN,KC_COMM,
+
+                        _______,_______,NAV_TAB, KC_SPC,KC_DOWN, KC_LEFT,HOME2_E,LT(_SYM, KC_SLASH),_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -164,6 +173,7 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
         case OS_LSFT:
         case OS_RSFT:
         case REPEAT:
+        case KC_1 ... KC_0:
             // If chording mods, disable caps word
             if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
                 caps_word_disable();
@@ -643,6 +653,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
 
+
+    case SYM_COLN:
+        if (record->tap.count && record->event.pressed) {
+            if (mod_state & MOD_MASK_SHIFT || oneshot_mod_state & MOD_MASK_SHIFT) {
+                del_mods(MOD_MASK_SHIFT);
+                del_oneshot_mods(MOD_MASK_SHIFT);
+                tap_code(KC_SEMICOLON);
+                set_mods(mod_state);
+                set_oneshot_mods(oneshot_mod_state);
+            } else {
+                tap_code16(KC_COLON); // Send KC_DQUO on tap
+            }
+            return false;
+        }
+        break;
+
     }
     return true;
 };
@@ -751,10 +777,16 @@ tap_dance_action_t tap_dance_actions[] = {
 
 #ifdef KEY_OVERRIDE_ENABLE
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
+const key_override_t sym_colon_key_override = ko_make_basic(MOD_MASK_SHIFT, SYM_COLN, KC_SEMICOLON);
 const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
+const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), LT(_SYM, KC_SLASH), KC_BACKSLASH);
+const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
-    &slash_key_override
+    &sym_colon_key_override,
+    &slash_key_override,
+    &lt_slash_key_override,
+    &quote_key_override
 };
 #endif
