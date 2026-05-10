@@ -28,6 +28,7 @@ enum layer_names {
 #define BNAV OSL(_BNAV)
 #define JALO TG(_JALO)
 #define SYM_COLN LT(_SYM, KC_SCLN)
+#define SYM_SLSH LT(_SYM, KC_SLASH)
 
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSE MO(_MOUSE)

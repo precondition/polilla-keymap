@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         REPEAT ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOENTER,OS_LSFT,HOME2_A,HOME2_I, TD_DOT,
         KC_Q   , KC_ESC, KC_UP , KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_RGHT,KC_COLN,KC_COMM,
 
-                        _______,_______,NAV_TAB, KC_SPC,KC_DOWN, KC_LEFT,HOME2_E,LT(_SYM, KC_SLASH),_______,_______
+                        _______,_______,NAV_TAB, KC_SPC,KC_DOWN, KC_LEFT,HOME2_E,SYM_SLSH,_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -779,7 +779,7 @@ tap_dance_action_t tap_dance_actions[] = {
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
 const key_override_t sym_colon_key_override = ko_make_basic(MOD_MASK_SHIFT, SYM_COLN, KC_SEMICOLON);
 const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
-const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), LT(_SYM, KC_SLASH), KC_BACKSLASH);
+const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM_SLSH, KC_BACKSLASH);
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 
 const key_override_t *key_overrides[] = {
