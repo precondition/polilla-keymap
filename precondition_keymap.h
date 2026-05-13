@@ -163,3 +163,5 @@ enum {
 #else
 #define TD_DOT KC_DOT
 #endif
+
+bool caps_word_on;
