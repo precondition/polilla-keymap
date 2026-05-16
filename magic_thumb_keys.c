@@ -230,6 +230,16 @@ void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods) {
             last_summoned_keycode = KC_Y;
             break;
 
+        default:
+            const char *prev_keycode_str = get_u16_str(prev_keycode, ' ');
+            // Skip padding spaces
+            while (*prev_keycode_str == ' ') {
+                prev_keycode_str++;
+            }
+            send_string(prev_keycode_str);
+            tap_code16(KC_QUESTION);
+            last_summoned_keycode = KC_QUESTION;
+            break;
     }
 }
 
