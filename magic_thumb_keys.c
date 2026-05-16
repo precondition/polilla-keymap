@@ -21,8 +21,8 @@ void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods) {
             // rationale: avoid SFS.
             // ngram: "dat" (0.07028%), "tad" (0.00412%)
             // examples: "data", "date", "update", "stade"
-            tap_code(KC_E);
-            last_summoned_keycode = KC_E;
+            tap_code(KC_T);
+            last_summoned_keycode = KC_T;
             break;
 
         case KC_B:
@@ -129,6 +129,7 @@ void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods) {
             break;
 
         case KC_S:
+        case HOME2_S:
             // rationale: avoid SFB.
             // ngram: "sm" (0.02595%)
             // examples: "small", "smartphone", "smart", "smth", "gsm"
@@ -142,6 +143,7 @@ void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods) {
             break;
 
         case KC_T:
+        case HOME2_T:
             // rationale: avoid SFS.
             // ngram: "uta" (0.0130%), "tta" (0.00890%)
             // examples: "gotta", "permutation", "executable", "(je) mettais"
