@@ -673,6 +673,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         break;
 
+    case OS_LSFT:
+    case OS_RSFT:
+        // Double tap one-shot shift to enable caps word.
+        if (record->event.pressed && (record->tap.count > 1 || get_oneshot_mods() & MOD_BIT(KC_LSFT))) {
+            caps_word_enable();
+            return false;
+        }
+        return true;
+
     }
     return true;
 };
