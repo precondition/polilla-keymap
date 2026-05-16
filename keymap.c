@@ -188,6 +188,7 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     }
 }
 
+#ifndef REPEAT_KEY_ENABLE
 static uint16_t last_keycode = KC_NO;
 static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
     static uint8_t last_modifier = 0;
@@ -247,6 +248,7 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
         }
     }
 }
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
@@ -263,8 +265,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          get_keycode_string(keycode)
          );
 #endif
-    process_caps_word(keycode, record);
+#ifndef REPEAT_KEY_ENABLE
     process_repeat_key(keycode, record);
+#endif
+    process_caps_word(keycode, record);
 
     const uint8_t mod_state = get_mods();
     const uint8_t oneshot_mod_state = get_oneshot_mods();
@@ -763,7 +767,9 @@ static void sentence_end(tap_dance_state_t *state, void *user_data) {
 };
 
 void sentence_end_finished (tap_dance_state_t *state, void *user_data) {
+#ifndef REPEAT_KEY_ENABLE
     last_keycode = KC_DOT;
+#endif
     if (state->count == 2) {
         /* Internal code of OSM(MOD_LSFT) */
         add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
