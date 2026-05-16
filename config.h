@@ -29,9 +29,6 @@
 #define NO_PRINT
 #endif // !NO_PRINT
 
-#define FORCE_NKRO
-#define QMK_KEYS_PER_SCAN 6
-
 // Disable hardware lock switches support to free up space
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
