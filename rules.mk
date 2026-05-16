@@ -4,6 +4,7 @@ NKRO_ENABLE = no
 TAP_DANCE_ENABLE = no
 STENO_ENABLE = no
 KEY_OVERRIDE_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
 
 # Space savings
 LTO_ENABLE = yes
@@ -21,4 +22,8 @@ CFLAGS += -save-temps=obj
 # the associated config option has been enabled
 ifeq ($(strip $(COMBO_ENABLE)), yes)
 	INTROSPECTION_KEYMAP_C += combos.c
+endif
+
+ifeq ($(strip $(REPEAT_KEY_ENABLE)), yes)
+	SRC += magic_thumb_keys.c
 endif

@@ -27,11 +27,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_JALO] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
-        KC_J   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_F   , KC_M  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
-        REPEAT ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOENTER,OS_LSFT,HOME2_A,HOME2_I, TD_DOT,
-        KC_Q   , KC_ESC, KC_UP , KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_RGHT,KC_COLN,KC_COMM,
+        KC_J   , KC_P  , KC_C  , KC_M  , KC_L  , KC_B  ,                 TD_DOT , KC_U  , KC_O  ,  KC_Y ,KC_SLSH,KC_MINS,
+        KC_V   ,HOME2_N,HOME2_R,HOME2_S,HOME2_T, KC_G  ,                 KC_ESC ,HOME2_A,HOME2_E,HOME2_I,HOME2_H,KC_QUOT,
+        KC_COMM, KC_X  , KC_W  , KC_F  , KC_D  , KC_K  ,_______, _______,SYM    , QK_REP, KC_ENT,  KC_Q ,KC_COLN, KC_Z  ,
 
-                        _______,_______,NAV_TAB, KC_SPC,KC_DOWN, KC_LEFT,HOME2_E,SYM_SLSH,_______,_______
+                        _______,_______, NAV   , KC_SPC,MAGIC_L, MAGIC_R,KC_BSPC,OS_RSFT,_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM] = LAYOUT(
         KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                 KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
-           KC_X, KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
+        KC_X   , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
         GUILL_L,O_BRQOT,KC_LBRC,KC_RBRC,C_BRQOT,GUILL_R,                 O_BRACE,KC_LCBR,KC_LPRN,KC_RPRN,KC_RCBR,C_BRACE,
         KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC, PLOVER, _______,KC_CIRC,KC_AMPR,KC_ASTR,KC_EQL ,KC_PLUS, KC_GRV,
 
@@ -61,13 +61,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                         GAMING,_______,_______,_______,_______, KC_BRID,_______,_______,_______,_______
   ),
 
-    [_GNAV] = LAYOUT(
+    [_NAV_OVER] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
-        _______,_______,_______,_______,_______,_______,                 _______,_______, G_UP  ,_______,_______,_______,
-        _______,_______,_______,_______,_______,_______,                 G_HOME ,_______, G_DOWN,_______, G_END ,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,OS_LGUI,OS_LALT,OS_LCTL,OS_LSFT,  KC_G ,                 KC_LEFT,KC_DOWN, KC_UP ,KC_RGHT,KC_HOME, KC_END,
+        _______,_______,_______,_______,_______,_______,_______, _______,_______, KC_TAB,_______,_______,_______,_______,
+
+                        _______,_______,_______,_______,XXXXXXX, XXXXXXX,_______,  NUM  ,_______,_______
+    ),
+
+    [_NUM_OVER] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        KC_X   , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
 
-                        _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
+                        _______,_______,_______,_______,XXXXXXX, XXXXXXX,_______,_______,_______,_______
     ),
 
     [_BNAV] = LAYOUT(
@@ -250,6 +259,19 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 }
 #endif
 
+static void process_layer_auto_leave(uint16_t keycode, keyrecord_t* record) {
+    if (!record->event.pressed || (IS_LAYER_OFF(_NAV_OVER) && IS_LAYER_OFF(_NUM_OVER))) {
+        return;
+    }
+    const uint8_t topmost_layer_for_key = layer_switch_get_layer(record->event.key);
+    // KC_NO is the explicit layer cancel key. Better than something like
+    // KC_ESC because it reports nothing to the host OS.
+    if (keycode == KC_NO || (topmost_layer_for_key != _NAV_OVER && topmost_layer_for_key != _NUM_OVER)) {
+        layer_off(_NUM_OVER);
+        layer_off(_NAV_OVER);
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
@@ -269,6 +291,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     process_repeat_key(keycode, record);
 #endif
     process_caps_word(keycode, record);
+    process_layer_auto_leave(keycode, record);
 
     const uint8_t mod_state = get_mods();
     const uint8_t oneshot_mod_state = get_oneshot_mods();
@@ -681,6 +704,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
         return true;
+
+#ifdef REPEAT_KEY_ENABLE
+    case MAGIC_L:
+        if (record->event.pressed) {
+            if (get_repeat_key_count() > 0) {
+                tap_code(last_summoned_keycode);
+            } else {
+                process_magic_key_left(get_last_keycode(), get_last_mods());
+            }
+        }
+        return false;
+
+    case MAGIC_R:
+        if (record->event.pressed) {
+            if (get_repeat_key_count() > 0) {
+                tap_code(last_summoned_keycode);
+            } else {
+                process_magic_key_right(get_last_keycode(), get_last_mods());
+            }
+        }
+        return false;
+#endif
 
     }
     return true;

@@ -8,6 +8,8 @@ enum layer_names {
     _JALO,
     _SYM,
     _NAV,
+    _NAV_OVER,
+    _NUM_OVER,
     _GNAV,
     _BNAV,
 #ifdef MOUSEKEY_ENABLE
@@ -19,7 +21,8 @@ enum layer_names {
 };
 
 // Layer keys
-#define NAV MO(_NAV)
+#define NAV TG(_NAV_OVER)
+#define NUM TG(_NUM_OVER)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
 #define SYM MO(_SYM)
@@ -56,24 +59,20 @@ enum layer_names {
 #define HOME_R LALT_T(KC_R)
 #define HOME_S LSFT_T(KC_S)
 #define HOME_T LCTL_T(KC_T)
-#define HOME2_R LGUI_T(KC_R)
-#define HOME2_N LALT_T(KC_N)
-#define HOME2_S LSFT_T(KC_S)
-#define HOME2_T LCTL_T(KC_T)
+#define HOME2_N LGUI_T(KC_N)
+#define HOME2_R LALT_T(KC_R)
+#define HOME2_S LCTL_T(KC_S)
+#define HOME2_T LSFT_T(KC_T)
 
 // Right-hand home row mods
 #define HOME_O RGUI_T(KC_O)
 #define HOME_I LALT_T(KC_I)
 #define HOME_E RSFT_T(KC_E)
 #define HOME_N RCTL_T(KC_N)
-#define HOME2_E RSFT_T(KC_E)
-#define HOENTER RCTL_T(KC_ENTER)
-#define HOME2_A LALT_T(KC_A)
-#define HOME2_I RGUI_T(KC_I)
-
-// One Shot Shifts
-#define OS_LSFT OSM(MOD_LSFT)
-#define OS_RSFT OSM(MOD_RSFT)
+#define HOME2_A RSFT_T(KC_A)
+#define HOME2_E RCTL_T(KC_E)
+#define HOME2_I LALT_T(KC_I)
+#define HOME2_H RGUI_T(KC_H)
 
 // French accents
 // The other common grave accented letters are custom keycodes
@@ -152,6 +151,10 @@ enum custom_keycodes {
     DED_UML,
     // Toggle `base_dead_keys` dynamically at run time.
     BDED_TOG,
+    // Left magic key.
+    MAGIC_L,
+    // Right magic key.
+    MAGIC_R,
 };
 
 #ifdef TAP_DANCE_ENABLE
@@ -165,3 +168,10 @@ enum {
 #endif
 
 bool caps_word_on;
+
+// summoned by magic.
+static uint16_t last_summoned_keycode = KC_NO;
+
+void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods);
+void process_magic_key_right(uint16_t prev_keycode, uint8_t prev_mods);
+

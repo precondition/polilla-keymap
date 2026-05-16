@@ -38,6 +38,11 @@
 // macro/custom keycode.
 #define KEY_SEQ_DELAY 10
 
+// Save space on native repeat key feature.
+#define NO_ALT_REPEAT_KEY
+
+#define DUMMY_MOD_NEUTRALIZER_KEYCODE KC_F18
+
 // Shamelessly stolen mouse key settings from @pierrechevalier83 //
 
 // Set the mouse settings to a comfortable speed/accuracy trade-off
