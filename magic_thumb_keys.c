@@ -169,6 +169,15 @@ void process_magic_key_left(uint16_t prev_keycode, uint8_t prev_mods) {
             last_summoned_keycode = KC_A;
             break;
 
+        case KC_V:
+            // rationale: avoid SFB.
+            // ngram: "ven" (TODO)
+            // examples: "even", "haven't", "souvent", "peuvent", "given"
+            tap_code(KC_E);
+            tap_code(KC_N);
+            last_summoned_keycode = KC_N;
+            break;
+
         case KC_W:
             // rationale: avoid SFB.
             // ngram: "wr" (0.02176%)
