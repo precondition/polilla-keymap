@@ -7,6 +7,7 @@ enum layer_names {
     _GAMING,
     _JALO,
     _SYM,
+    _SYM2,
     _NAV,
     _NAV_OVER,
     _NUM_OVER,
@@ -21,11 +22,12 @@ enum layer_names {
 };
 
 // Layer keys
-#define NAV TG(_NAV_OVER)
-#define NUM TG(_NUM_OVER)
+#define NAV MO(_NAV)
+#define NAV_OV TG(_NAV_OVER)
+#define NUM_OV TG(_NUM_OVER)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
-#define SYM MO(_SYM)
+#define SYM OSL(_SYM2)
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define GAMING TG(_GAMING)
 #define BNAV OSL(_BNAV)
@@ -59,20 +61,21 @@ enum layer_names {
 #define HOME_R LALT_T(KC_R)
 #define HOME_S LSFT_T(KC_S)
 #define HOME_T LCTL_T(KC_T)
-#define HOME2_N LGUI_T(KC_N)
-#define HOME2_R LALT_T(KC_R)
-#define HOME2_S LCTL_T(KC_S)
-#define HOME2_T LSFT_T(KC_T)
+#define HOME2_R LGUI_T(KC_R)
+#define HOME2_N LALT_T(KC_N)
+#define HOME2_S LSFT_T(KC_S)
+#define HOME2_T LCTL_T(KC_T)
 
 // Right-hand home row mods
 #define HOME_O RGUI_T(KC_O)
 #define HOME_I LALT_T(KC_I)
 #define HOME_E RSFT_T(KC_E)
 #define HOME_N RCTL_T(KC_N)
-#define HOME2_A RSFT_T(KC_A)
-#define HOME2_E RCTL_T(KC_E)
-#define HOME2_I LALT_T(KC_I)
-#define HOME2_H RGUI_T(KC_H)
+#define HOME2_H RCTL_T(KC_H)
+#define HOMERET RCTL_T(KC_ENTER)
+#define HOME2_E RSFT_T(KC_E)
+#define HOME2_A LALT_T(KC_A)
+#define HOME2_I RGUI_T(KC_I)
 
 // French accents
 // The other common grave accented letters are custom keycodes

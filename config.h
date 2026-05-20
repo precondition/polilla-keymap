@@ -41,7 +41,7 @@
 // Save space on native repeat key feature.
 #define NO_ALT_REPEAT_KEY
 
-#define DUMMY_MOD_NEUTRALIZER_KEYCODE KC_F18
+#define DUMMY_MOD_NEUTRALIZER_KEYCODE KC_RIGHT_CTRL
 
 // Shamelessly stolen mouse key settings from @pierrechevalier83 //
 
