@@ -758,21 +758,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
 
-    case SYM_COLN:
-        if (record->tap.count && record->event.pressed) {
-            if (mod_state & MOD_MASK_SHIFT || oneshot_mod_state & MOD_MASK_SHIFT) {
-                del_mods(MOD_MASK_SHIFT);
-                del_oneshot_mods(MOD_MASK_SHIFT);
-                tap_code(KC_SEMICOLON);
-                set_mods(mod_state);
-                set_oneshot_mods(oneshot_mod_state);
-            } else {
-                tap_code16(KC_COLON); // Send KC_DQUO on tap
-            }
-            return false;
-        }
-        break;
-
     case OS_LSFT:
     case OS_RSFT:
         // Double tap one-shot shift to enable caps word.
