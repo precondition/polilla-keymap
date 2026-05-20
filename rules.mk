@@ -24,6 +24,4 @@ ifeq ($(strip $(COMBO_ENABLE)), yes)
 	INTROSPECTION_KEYMAP_C += combos.c
 endif
 
-ifeq ($(strip $(REPEAT_KEY_ENABLE)), yes)
-	SRC += magic_thumb_keys.c
-endif
+SRC += magic_thumb_keys.c
