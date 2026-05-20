@@ -769,6 +769,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = true;
         break;
 
+    case KC_X:
+        if (IS_LAYER_ON(_JALO) && record->event.pressed) {
+            if (last_keycode == KC_L) {
+                tap_code(KC_L);
+                retv = false;
+            }
+            break;
+        }
+        retv = true;
+        break;
 
 #ifdef REPEAT_KEY_ENABLE
     case MAGIC_L:
