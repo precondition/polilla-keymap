@@ -10,6 +10,7 @@ enum combo_events {
     // These let me type common words and n-grams
     // more quickly, in one single stroke.
     BSPCU_YOU,
+    BSPCW_WH,
     BSPCH_HERE,
     // I use the word "key" much more frequently than the common folk
     // and if you're reading this, you probably do too
@@ -50,6 +51,7 @@ uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM BSPC_U_COMBO[]     = {KC_BSPC,  KC_U,    COMBO_END};
 const uint16_t PROGMEM BSPC_N_COMBO[]     = {KC_BSPC,  HOME_N,  COMBO_END};
+const uint16_t PROGMEM BSPC_W_COMBO[]     = {KC_BSPC,  KC_W,    COMBO_END};
 const uint16_t PROGMEM BSPC_H_COMBO[]     = {KC_BSPC,  KC_H,    COMBO_END};
 const uint16_t PROGMEM BSPC_K_COMBO[]     = {KC_BSPC,  KC_K,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
@@ -70,6 +72,7 @@ const uint16_t PROGMEM I_DOT_COMBO[]      = {HOME_I,   TD_DOT,  COMBO_END};
 
 combo_t key_combos[] = {
     [BSPCU_YOU]       = COMBO_ACTION(BSPC_U_COMBO),
+    [BSPCW_WH]        = COMBO_ACTION(BSPC_W_COMBO),
     [BSPCH_HERE]      = COMBO_ACTION(BSPC_H_COMBO),
     [BSPCK_KEY]       = COMBO_ACTION(BSPC_K_COMBO),
     [HV_HAVE]         = COMBO_ACTION(H_V_COMBO),
@@ -137,9 +140,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         break;
 
-        case BSPCU_YOU:
+        case BSPCW_WH:
             if (pressed) {
-                SEND_STRING("you");
+                SEND_STRING("wh");
             }
         break;
 
