@@ -22,7 +22,6 @@ enum combo_events {
     // combinations of keys do not generate too many conflicts
     // in normal typing.
     HV_HAVE,
-    QK_QMK,
     WA_WHAT,
 
     /* Non-alphanumeric combos */
@@ -55,7 +54,6 @@ const uint16_t PROGMEM BSPC_W_COMBO[]     = {KC_BSPC,  KC_W,    COMBO_END};
 const uint16_t PROGMEM BSPC_H_COMBO[]     = {KC_BSPC,  KC_H,    COMBO_END};
 const uint16_t PROGMEM BSPC_K_COMBO[]     = {KC_BSPC,  KC_K,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
-const uint16_t PROGMEM Q_K_COMBO[]        = {KC_Q,     KC_K,    COMBO_END};
 const uint16_t PROGMEM W_A_COMBO[]        = {KC_W,     HOME_A,  COMBO_END};
 const uint16_t PROGMEM OS_SFT_COMBO[]     = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM REPEAT_X_COMBO[]   = {REPEAT,   KC_X,    COMBO_END};
@@ -76,7 +74,6 @@ combo_t key_combos[] = {
     [BSPCH_HERE]      = COMBO_ACTION(BSPC_H_COMBO),
     [BSPCK_KEY]       = COMBO_ACTION(BSPC_K_COMBO),
     [HV_HAVE]         = COMBO_ACTION(H_V_COMBO),
-    [QK_QMK]          = COMBO_ACTION(Q_K_COMBO),
     [WA_WHAT]         = COMBO_ACTION(W_A_COMBO),
     [OS_SFT_CAPS]     = COMBO(OS_SFT_COMBO, CAPS_WORD_LOCK),
     [REPEATX_BSLS]    = COMBO(REPEAT_X_COMBO, KC_BACKSLASH),
@@ -97,8 +94,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     // like UYCLN_INDEX more fluid
     // when I use them with home row mods.
     action_tapping_process((keyrecord_t){});
-    const uint8_t mod_state = get_mods();
-    const uint8_t oneshot_mod_state = get_oneshot_mods();
 #ifdef CONSOLE_ENABLE
     combo_t *combo = &key_combos[combo_index];
     uint8_t idx = 0;
@@ -126,18 +121,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
         break;
 
-        case QK_QMK:
+        case BSPCU_YOU:
             if (pressed) {
-                if (mod_state & MOD_MASK_SHIFT || oneshot_mod_state & MOD_MASK_SHIFT) {
-                    del_mods(MOD_MASK_SHIFT);
-                    del_oneshot_mods(MOD_MASK_SHIFT);
-                    SEND_STRING("QMK");
-                    set_mods(mod_state);
-                }
-                else {
-                    SEND_STRING("qmk");
-                }
-        }
+                SEND_STRING("you");
+            }
         break;
 
         case BSPCW_WH:
