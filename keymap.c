@@ -947,14 +947,12 @@ tap_dance_action_t tap_dance_actions[] = {
 
 #ifdef KEY_OVERRIDE_ENABLE
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
-const key_override_t sym_colon_key_override = ko_make_basic(MOD_MASK_SHIFT, SYM_COLN, KC_SEMICOLON);
 const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
 const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM_SLSH, KC_BACKSLASH);
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
-    &sym_colon_key_override,
     &slash_key_override,
     &lt_slash_key_override,
     &quote_key_override
