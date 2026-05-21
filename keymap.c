@@ -804,6 +804,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         retv = true;
         break;
+
+#ifdef REPEAT_KEY_ENABLE
+    case KC_O:
+    case KC_U:
+    case HOME2_E:
+    case HOME2_A:
+    case HOME2_I:
+        // Bypass the "l_n" skipgram by pressing it as "l_↻".
+        // "lin", "lan", "lon", etc. are way more frequent than "lii", "laa",
+        // "loo", ...
+        if (get_repeat_key_count() > 0) {
+            if (record->event.pressed && penultimate_keycode == KC_L) {
+                register_code(KC_N);
+                retv = false;
+            } else {
+                unregister_code(KC_N);
+                retv = true;
+            }
+            break;
+        }
 #endif
         retv = true;
         break;
