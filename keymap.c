@@ -780,13 +780,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = true;
         break;
 
-#ifdef REPEAT_KEY_ENABLE
     case MAGIC_L:
         if (record->event.pressed) {
             if (get_repeat_key_count() > 0) {
                 tap_code(last_summoned_keycode);
             } else {
-                process_magic_key_left(get_last_keycode(), get_last_mods());
+                // get_last_keycode() cannot be used here because at this
+                // point, get_last_keycode already points to MAGIC_L so we lost
+                // the info.
+                process_magic_key_left(last_keycode);
             }
         }
         retv = false;
@@ -797,7 +799,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (get_repeat_key_count() > 0) {
                 tap_code(last_summoned_keycode);
             } else {
-                process_magic_key_right(get_last_keycode(), get_last_mods());
+                process_magic_key_right(last_keycode);
             }
         }
         retv = true;
@@ -807,6 +809,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     }
+
+#ifdef REPEAT_KEY_ENABLE
+    if (record->event.pressed) {
+        penultimate_keycode = last_keycode;
+        last_keycode = get_last_keycode();
+    }
+#else
+    process_repeat_key(keycode, record);
+#endif
+
     return retv;
 };
 
@@ -901,9 +913,7 @@ static void sentence_end(tap_dance_state_t *state, void *user_data) {
 };
 
 void sentence_end_finished (tap_dance_state_t *state, void *user_data) {
-#ifndef REPEAT_KEY_ENABLE
     last_keycode = KC_DOT;
-#endif
     if (state->count == 2) {
         /* Internal code of OSM(MOD_LSFT) */
         add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
