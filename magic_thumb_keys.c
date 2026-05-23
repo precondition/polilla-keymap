@@ -122,6 +122,23 @@ void process_magic_key_left(uint16_t prev_keycode) {
             last_summoned_keycode = KC_H;
             break;
 
+        case KC_Y:
+            // rationale: avoid SFB.
+            // ngram: "ying␣" (TODO%)
+            // examples: "annoying␣",  "saying␣",  "buying␣"
+            /*
+             * "yi" is almost always followed by "ng" ("ying" makes up 0.68375%
+             * of all tetragrams starting with "yi"). Exceptions include
+             * "yikes" (0.04580%), "yield" (0.02181%) and "yank inner" Vim
+             * commands (0.24863%) like "yiw".
+             */
+            tap_code(KC_I);
+            tap_code(KC_N);
+            tap_code(KC_G);
+            tap_code(KC_SPACE);
+            last_summoned_keycode = KC_SPACE;
+            break;
+
         case KC_QUOTE:
             // rationale: avoid SFB.
             // ngram: "'m␣" (0.01094%)
@@ -215,7 +232,7 @@ void process_magic_key_right(uint16_t prev_keycode) {
 
         case KC_Y:
             // rationale: avoid SFB.
-            // ngram: "ying"
+            // ngram: "ying" (TODO%)
             // examples: "annoying",  "saying",  "buying"
             /*
              * "yi" is almost always followed by "ng" ("ying" makes up 0.68375%
