@@ -290,8 +290,14 @@ void process_magic_key_right(uint16_t prev_keycode) {
              * alleviate the "<MAGIC_L>␣" SFB. The "<MAGIC_L>_␣" SFS cannot be
              * bypassed though.
              */
-            tap_code(KC_SPACE);
-            last_summoned_keycode = KC_SPACE;
+            if (last_summoned_keycode == KC_SPACE) {
+                // Avoid the KC_G MAGIC_L KC_C SFS.
+                SEND_STRING("commit ");
+                last_summoned_keycode = KC_SPACE;
+            } else {
+                tap_code(KC_SPACE);
+                last_summoned_keycode = KC_SPACE;
+            }
             break;
 
     }
