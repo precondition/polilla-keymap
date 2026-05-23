@@ -950,11 +950,14 @@ const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON
 const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
 const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM_SLSH, KC_BACKSLASH);
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
+//const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
+//        MOD_MASK_SHIFT, KC_MINS, KC_EQUAL, ~0, ~MOD_MASK_SHIFT);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
     &slash_key_override,
     &lt_slash_key_override,
-    &quote_key_override
+    &quote_key_override,
+    //&minus_key_override
 };
 #endif
