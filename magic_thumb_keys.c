@@ -77,6 +77,14 @@ void process_magic_key_left(uint16_t prev_keycode) {
             last_summoned_keycode = KC_A;
             break;
 
+        case KC_P:
+            // rationale: avoid SFB.
+            // ngram: "pt" (0.06302%)
+            // examples: "compte",  "option",  "script",  "ptet",  "except"
+            tap_code(KC_T);
+            last_summoned_keycode = KC_T;
+            break;
+
         case KC_R:
         case HOME2_R:
             // rationale: avoid SFB and SKB.
