@@ -54,11 +54,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM2] = LAYOUT(
         KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                 KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
-        KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                 KC_CIRC,KC_AMPR,KC_ASTR,KC_EQL ,KC_PLUS, KC_GRV,
-        GUILL_L,O_BRQOT,KC_LBRC,KC_RBRC,C_BRQOT,GUILL_R,                 O_BRACE,KC_LCBR,KC_LPRN,KC_RPRN,KC_RCBR,C_BRACE,
-        KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC, PLOVER, _______,KC_CIRC,KC_AMPR, KC_Z  ,_______,KC_PLUS, KC_GRV,
+        _______,KC_LBRC,KC_RBRC,KC_MINS,KC_RABK,_______,                 _______,KC_TILD,O_BRACE,GUILL_L,C_BRACE,_______,
+        O_BRQOT,KC_CIRC, KC_GRV,KC_LPRN,KC_RPRN,KC_LABK,                 KC_HASH, KC_EQL,KC_BSLS,GUILL_R,KC_EXLM,C_BRQOT,
+        _______, KC_AT ,KC_LCBR,KC_RCBR,KC_PLUS,KC_PERC, PLOVER, _______,KC_AMPR, KC_DLR,KC_ASTR,_______,KC_PIPE,_______,
 
-                        _______,_______, NAV_OV,_______,_______, _______,_______,_______,KC_COMM, KC_DOT
+                        _______,_______, NAV_OV,_______,_______, _______,_______,A_GRAVE,_______,_______
   ),
 
   [_NAV] = LAYOUT(
