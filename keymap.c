@@ -28,8 +28,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_JALO] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         KC_Q   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_M   , KC_F  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
-        QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, TD_DOT,
-        KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,  SYM  ,KC_COLN,KC_COMM,
+        QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
+        KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,  SYM  ,KC_COLN, KC_Z  ,
 
                         _______,_______, NAV_OV, KC_SPC,MAGIC_L, MAGIC_R,HOME2_E,KC_SLSH,_______,_______
   ),
@@ -952,6 +952,7 @@ const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 //const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
 //        MOD_MASK_SHIFT, KC_MINS, KC_EQUAL, ~0, ~MOD_MASK_SHIFT);
+const key_override_t dot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COMMA);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
@@ -959,5 +960,6 @@ const key_override_t *key_overrides[] = {
     &lt_slash_key_override,
     &quote_key_override,
     //&minus_key_override
+    &dot_key_override,
 };
 #endif
