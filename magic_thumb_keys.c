@@ -229,6 +229,14 @@ void process_magic_key_right(uint16_t prev_keycode) {
             last_summoned_keycode = KC_G;
             break;
 
+        case KC_W:
+            // rationale: avoid ring-pinky outer row skip.
+            // ngram: "wo" (0.07580%)
+            // examples: "would",  "work",  "won't",  "word"
+            tap_code(KC_O);
+            last_summoned_keycode = KC_O;
+            break;
+
 
         case KC_Y:
             // rationale: avoid SFB.
