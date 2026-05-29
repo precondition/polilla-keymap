@@ -309,6 +309,54 @@ static void process_layer_auto_leave(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
+static int in_smart_square_brackets = 0;
+static bool in_smart_quoted_square_brackets = false;
+static void process_smart_square_brackets(uint16_t keycode, keyrecord_t* record) {
+    /* Automatically closes square brackets and (most importantly) moves the
+     * cursor forward, outside of the brackets. */
+    if (in_smart_square_brackets < 1 || !record->event.pressed) {
+        return;
+    }
+
+    const uint8_t mod_state = get_mods();
+    const uint8_t oneshot_mod_state = get_oneshot_mods();
+
+    if (keycode == KC_SPACE && last_oneshot_mods & MOD_MASK_SHIFT) {
+        return;  // do not break on underscore.
+    }
+
+    switch (keycode) {
+        case KC_SPACE:
+        case KC_ENTER:
+        case HOMERET:
+        case KC_DOT:
+        case KC_COMMA:
+            del_mods(MOD_MASK_SHIFT);
+            del_oneshot_mods(MOD_MASK_SHIFT);
+            if (in_smart_quoted_square_brackets) {
+                tap_code16(KC_DOUBLE_QUOTE);
+                in_smart_quoted_square_brackets = false;
+            }
+            for (; in_smart_square_brackets > 0; --in_smart_square_brackets) {
+                tap_code(KC_RIGHT_BRACKET);
+            }
+            set_mods(mod_state);
+            set_oneshot_mods(oneshot_mod_state);
+            break;
+
+        case KC_QUOTE:
+            in_smart_quoted_square_brackets = !in_smart_quoted_square_brackets;
+            break;
+
+        case KC_BACKSPACE:
+            if (last_keycode == O_BRQOT) {
+                in_smart_square_brackets -= 1;
+            }
+            break;
+
+    }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
@@ -328,6 +376,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     process_repeat_key(keycode, record);
 #endif
     process_caps_word(keycode, record);
+    process_smart_square_brackets(keycode, record);
 
     const uint8_t mod_state = get_mods();
     const uint8_t oneshot_mod_state = get_oneshot_mods();
@@ -534,10 +583,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case O_BRQOT:
         if (record->event.pressed) {
             tap_code(KC_LEFT_BRACKET);
-            tap_code16(KC_DOUBLE_QUOTE);
-            if (base_dead_keys) {
-                tap_code(KC_SPACE);
-            }
+            in_smart_square_brackets += 1;
+            //tap_code16(KC_DOUBLE_QUOTE);
+            //if (base_dead_keys) {
+            //    tap_code(KC_SPACE);
+            //}
         }
         retv = false;
         break;
