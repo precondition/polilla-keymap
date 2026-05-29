@@ -295,6 +295,16 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_DOUBLE_QUOTE;
             break;
 
+        case KC_N:
+        case HOME2_N:
+            // rationale: avoid double SFS.
+            // ngram: « onal » (0.01137%)
+            // examples: "personally",  "functionality",  "national",  "optional"
+            tap_code(KC_A);
+            tap_code(KC_L);
+            last_summoned_keycode = KC_L;
+            break;
+
         case KC_O:
             // rationale: avoid SFB.
             // ngram: « ow » (0.10844%)
