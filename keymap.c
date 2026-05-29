@@ -29,9 +29,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         KC_Q   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_M   , KC_F  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
-        KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,  SYM  ,KC_COLN, KC_Z  ,
+        KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN, KC_Z  ,
 
-                        _______,_______, NAV_OV, KC_SPC,MAGIC_L, MAGIC_R,HOME2_E,KC_SLSH,_______,_______
+                        _______,_______,OSL(_NAV), KC_SPC,LT(_ALTTABCP, MAGIC_L), MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -74,21 +74,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
       //_______,OS_LGUI,OS_LALT,OS_LSFT,HOMERET,_______,                 KC_LEFT,KC_DOWN, KC_UP ,KC_RGHT,KC_HOME, KC_END,
-        KC_HOME, KC_END,KC_LEFT, KC_UP ,KC_DOWN,KC_RGHT,                 GNAV   ,_______,_______,_______,_______,_______,
+        KC_HOME, KC_END,KC_LEFT, KC_UP ,KC_DOWN,KC_RGHT,                 GNAV_OV,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
 
-                        _______,_______,_______,_______,XXXXXXX, NUM_OV ,_______,_______,_______,_______
+                        _______,_______,_______,_______,_______, XXXXXXX ,_______,_______,_______,_______
     ),
 
     [_NUM_OVER] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
-        _______, KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
+        KC_X   , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______, KC_DOT,
         _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,KC_COMM,
 
-                        _______,_______,_______,_______,XXXXXXX, _______,_______,_______,_______,_______
+                        _______,_______,_______,_______,XXXXXXX, NUM_OV ,_______,_______,_______,_______
     ),
 
+    [_GNAV_OVER] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,C(KC_PGUP),KC_PGUP,KC_PGDN,C(KC_PGDN),                 _______,_______,_______,_______,_______,_______,
+        G_HOME , G_END ,_______, G_UP  , G_DOWN,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
+
+                        _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
+    ),
+
+    [_OSMS_OVER] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,OS_RCTL,OS_RSFT,OS_LALT,OS_RGUI,_______,
+        _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
+
+                        _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
+    ),
+
+    [_ALTTABCP] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        _______,OS_LALT,KC_TAB ,C(KC_C),S(KC_INS),C(KC_V),_______, _______,_______,_______,_______,_______,_______,_______,
+
+                        _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
+    ),
     [_GNAV] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         _______,_______,_______,_______,_______,_______,                 _______,_______, G_UP  ,_______,_______,_______,
@@ -280,11 +306,11 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
 #endif
 
 // Sorted from highest on the layer stack to lowest.
-static const unsigned int overlay_layers[] = { _NUM_OVER, _NAV_OVER };
+static const unsigned int overlay_layers[] = { _OSMS_OVER, _NUM_OVER, _NAV_OVER };
 #define NUM_OVERLAY_LAYERS (sizeof(overlay_layers) / sizeof(*overlay_layers))
 
 static void process_layer_auto_leave(uint16_t keycode, keyrecord_t* record) {
-    if (!record->event.pressed || (IS_LAYER_OFF(_NAV_OVER) && IS_LAYER_OFF(_NUM_OVER))) {
+    if (!record->event.pressed || keycode == NUM_OV || keycode == NAV_OV) {
         return;
     }
 
@@ -295,6 +321,7 @@ static void process_layer_auto_leave(uint16_t keycode, keyrecord_t* record) {
     const bool is_held_dual_role_mod = record->tap.count == 0 && (is_mod_tap || is_oneshot_mod);
 
     for (int i = 0; i < NUM_OVERLAY_LAYERS; ++i) {
+        if (IS_LAYER_OFF(overlay_layers[i])) { continue; }
         // KC_NO is the layer cancel key (reports nothing to the host OS).
         // Use `<` instead of `!=` to support stacked overlays.
         if (keycode == KC_NO || (topmost_layer_for_key < overlay_layers[i] && !is_held_dual_role_mod)) {
@@ -848,6 +875,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = false;
         break;
 
+    case LT(_ALTTABCP, MAGIC_L):
+        if (record->event.pressed && record->tap.count > 0) {
+            if (get_repeat_key_count() > 0) {
+                tap_code(last_summoned_keycode);
+            } else {
+                // get_last_keycode() cannot be used here because at this
+                // point, get_last_keycode already points to MAGIC_L so we lost
+                // the info.
+                process_magic_key_left(last_keycode, penultimate_keycode);
+            }
+            retv = false;
+        } else {
+            retv = true;
+        }
+        break;
+
     case MAGIC_R:
         if (record->event.pressed) {
             if (get_repeat_key_count() > 0) {
@@ -857,6 +900,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         retv = true;
+        break;
+
+    case NAV_OV:
+        if (record->event.pressed) {
+            layer_on(_NAV_OVER);
+            layer_on(_NUM_OVER);
+            layer_on(_OSMS_OVER);
+        }
+        retv = false;
+        break;
+
+    case NUM_OV:
+        // Do not disable the layer when releasing the key.
+        // There is another mechanism in place to leave the layer (the
+        // overlay auto-leave).
+        retv = record->event.pressed;
+        break;
+
+    case LALT:
+        if (record->event.pressed) {
+            register_code(KC_LALT);
+        } else {
+            unregister_code(KC_LALT);
+        }
+        retv = false;
         break;
 
 #ifdef REPEAT_KEY_ENABLE
@@ -929,7 +997,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             // Immediately select the hold action when another key is pressed.
-            return true;
+            return keycode != LT(_ALTTABCP, MAGIC_L);
         default:
             // Do not select the hold action when another key is pressed.
             return false;

@@ -11,6 +11,9 @@ enum layer_names {
     _NAV,
     _NAV_OVER,
     _NUM_OVER,
+    _GNAV_OVER,
+    _OSMS_OVER,
+    _ALTTABCP,
     _GNAV,
     _BNAV,
 #ifdef MOUSEKEY_ENABLE
@@ -23,10 +26,10 @@ enum layer_names {
 
 // Layer keys
 #define NAV MO(_NAV)
-#define NAV_OV TG(_NAV_OVER)
-#define NUM_OV TG(_NUM_OVER)
+#define NUM_OV MO(_NUM_OVER)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
+#define GNAV_OV OSL(_GNAV_OVER)
 #define SYM OSL(_SYM2)
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define GAMING TG(_GAMING)
@@ -158,6 +161,10 @@ enum custom_keycodes {
     MAGIC_L,
     // Right magic key.
     MAGIC_R,
+    // Literally just KC_LALT but without all the special handling that OSL &
+    // co. do with modifier keys.
+    LALT,
+    NAV_OV,
 };
 
 #ifdef TAP_DANCE_ENABLE
