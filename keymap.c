@@ -1006,7 +1006,7 @@ const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 //const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
 //        MOD_MASK_SHIFT, KC_MINS, KC_EQUAL, ~0, ~MOD_MASK_SHIFT);
-const key_override_t dot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_COMMA);
+const key_override_t dot_key_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COMMA, 1 << _JALO);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
