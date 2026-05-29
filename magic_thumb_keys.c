@@ -64,11 +64,10 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
         case KC_I:
         case HOME2_I:
             // rationale: avoid SFB.
-            // ngram: « ize » (0.03639%)
+            // ngram: « iz » (0.03639%)
             // examples: « size »,  « realize »,  « capitalize »,  « optimized »
             tap_code(KC_Z);
-            tap_code(KC_E);
-            last_summoned_keycode = KC_E;
+            last_summoned_keycode = KC_Z;
             break;
 
         case KC_N:
