@@ -967,7 +967,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef REPEAT_KEY_ENABLE
     if (record->event.pressed) {
         penultimate_keycode = last_keycode;
-        last_keycode = get_last_keycode();
+        if (get_repeat_key_count() < 1) {
+            last_keycode = get_last_keycode();
+        } else {
+            last_keycode = QK_REP;
+        }
     }
 #else
     process_repeat_key(keycode, record);
