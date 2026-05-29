@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         KC_X   , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
         _______,OS_LGUI,OS_LALT,OS_LSFT,OS_LCTL,_______,                 KC_LEFT,KC_DOWN, KC_UP ,KC_RGHT,KC_HOME, KC_END,
-        _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
+        _______,DOWN4  ,  DOWN2, DOWN3 , DOWN1 , DOWN5 ,_______, _______,  UP5  , UP1   ,  UP3  ,  UP2  ,  UP4  ,_______,
 
                         _______,_______,_______,_______,_______, TG(_NAV2) ,_______,_______,_______,_______
     ),
@@ -944,6 +944,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             register_code(KC_LALT);
         } else {
             unregister_code(KC_LALT);
+        }
+        retv = false;
+        break;
+
+    case DOWN1 ... DOWN5:
+        if (record->event.pressed) {
+            tap_code(KC_1 + (keycode - DOWN1));
+            tap_code(KC_DOWN);
+        }
+        retv = false;
+        break;
+
+    case UP1 ... UP5:
+        if (record->event.pressed) {
+            tap_code(KC_1 + (keycode - UP1));
+            tap_code(KC_UP);
         }
         retv = false;
         break;

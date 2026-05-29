@@ -166,6 +166,16 @@ enum custom_keycodes {
     // co. do with modifier keys.
     LALT,
     NAV_OV,
+    DOWN1,
+    DOWN2,
+    DOWN3,
+    DOWN4,
+    DOWN5,
+    UP1,
+    UP2,
+    UP3,
+    UP4,
+    UP5,
 };
 
 #ifdef TAP_DANCE_ENABLE
