@@ -206,6 +206,10 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
         case E_ACUTE:
         case E_GRAVE:
         case C_CDILA:
+        case MAGIC_L:
+        case LT(_ALTTABCP, MAGIC_L):
+        case LT(_ALTTABCP, MAGIC_L) & 0xFF:
+        case MAGIC_R:
             if (record->event.pressed) {
                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_disable();
