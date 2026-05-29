@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
         KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN, KC_Z  ,
 
-                        _______,_______,OSL(_NAV), KC_SPC,LT(_ALTTABCP, MAGIC_L), MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
+                        _______,_______,OSL(_NAV2), KC_SPC,LT(_ALTTABCP, MAGIC_L), MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -69,6 +69,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                          GAMING,_______,_______,_______,_______, KC_BRID,_______,_______,_______,_______
   ),
+
+    [_NAV2] = LAYOUT(
+        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+        KC_X   , KC_4  , KC_2  , KC_3  , KC_1  , KC_5  ,                 KC_6   , KC_0  , KC_8  , KC_9  , KC_7  ,KC_MINS,
+        _______,OS_LGUI,OS_LALT,OS_LSFT,OS_LCTL,_______,                 KC_LEFT,KC_DOWN, KC_UP ,KC_RGHT,KC_HOME, KC_END,
+        _______,_______,_______,_______,_______,_______,_______, _______,_______,_______,_______,_______,_______,_______,
+
+                        _______,_______,_______,_______,_______, TG(_NAV2) ,_______,_______,_______,_______
+    ),
 
     [_NAV_OVER] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,

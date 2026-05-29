@@ -9,6 +9,7 @@ enum layer_names {
     _SYM,
     _SYM2,
     _NAV,
+    _NAV2,
     _NAV_OVER,
     _NUM_OVER,
     _GNAV_OVER,
