@@ -12,9 +12,6 @@ enum combo_events {
     BSPCU_YOU,
     BSPCW_WH,
     BSPCH_HERE,
-    // I use the word "key" much more frequently than the common folk
-    // and if you're reading this, you probably do too
-    BSPCK_KEY,
 
     /* Other steno-lite combos */
     // Additional steno-lite combos for common words and n-grams
@@ -22,25 +19,14 @@ enum combo_events {
     // combinations of keys do not generate too many conflicts
     // in normal typing.
     HV_HAVE,
-    WA_WHAT,
 
     /* Non-alphanumeric combos */
     // Combos for which the output isn't one or more alphanumeric characters
     OS_SFT_CAPS,
     REPEATX_BSLS,
-    ZEROEIGHT_COMMA,
-    EIGHTNINE_DOT,
     PT_MOUSE,
 
-    // Vertical combos mimicking Vim arrows.
-    JM_LEFT,
-    LN_DOWN,
-    UE_UP,
-    YI_RIGHT,
-
-    // Vertical combos for home and end, inspired by the above cursor combos.
-    MK_HOME,
-    IDOT_END,
+    BV_Z,
 
     // This must be the last item in the enum.
     // This is used to automatically update the combo count.
@@ -49,43 +35,23 @@ enum combo_events {
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM BSPC_U_COMBO[]     = {KC_BSPC,  KC_U,    COMBO_END};
-const uint16_t PROGMEM BSPC_N_COMBO[]     = {KC_BSPC,  HOME_N,  COMBO_END};
 const uint16_t PROGMEM BSPC_W_COMBO[]     = {KC_BSPC,  KC_W,    COMBO_END};
 const uint16_t PROGMEM BSPC_H_COMBO[]     = {KC_BSPC,  KC_H,    COMBO_END};
-const uint16_t PROGMEM BSPC_K_COMBO[]     = {KC_BSPC,  KC_K,    COMBO_END};
 const uint16_t PROGMEM H_V_COMBO[]        = {KC_H,     KC_V,    COMBO_END};
-const uint16_t PROGMEM W_A_COMBO[]        = {KC_W,     HOME_A,  COMBO_END};
 const uint16_t PROGMEM OS_SFT_COMBO[]     = {OS_LSFT,  OS_RSFT, COMBO_END};
 const uint16_t PROGMEM REPEAT_X_COMBO[]   = {REPEAT,   KC_X,    COMBO_END};
-const uint16_t PROGMEM ZERO_EIGHT_COMBO[] = {KC_0,     KC_8,    COMBO_END};
-const uint16_t PROGMEM EIGHT_NINE_COMBO[] = {KC_8,     KC_9,    COMBO_END};
 const uint16_t PROGMEM P_T_COMBO[]        = {KC_P,     HOME_T,  COMBO_END};
-const uint16_t PROGMEM J_M_COMBO[]        = {KC_J,     KC_M,    COMBO_END};
-const uint16_t PROGMEM L_N_COMBO[]        = {KC_L,     HOME_N,  COMBO_END};
-const uint16_t PROGMEM U_E_COMBO[]        = {KC_U,     HOME_E,  COMBO_END};
-const uint16_t PROGMEM Y_I_COMBO[]        = {KC_Y,     HOME_I,  COMBO_END};
-const uint16_t PROGMEM SCLN_O_COMBO[]     = {KC_SCLN,  HOME_O,  COMBO_END};
-const uint16_t PROGMEM M_K_COMBO[]        = {KC_M,     KC_K,    COMBO_END};
-const uint16_t PROGMEM I_DOT_COMBO[]      = {HOME_I,   TD_DOT,  COMBO_END};
+const uint16_t PROGMEM B_V_COMBO[]        = {KC_B,     KC_V,    COMBO_END};
 
 combo_t key_combos[] = {
     [BSPCU_YOU]       = COMBO_ACTION(BSPC_U_COMBO),
     [BSPCW_WH]        = COMBO_ACTION(BSPC_W_COMBO),
     [BSPCH_HERE]      = COMBO_ACTION(BSPC_H_COMBO),
-    [BSPCK_KEY]       = COMBO_ACTION(BSPC_K_COMBO),
     [HV_HAVE]         = COMBO_ACTION(H_V_COMBO),
-    [WA_WHAT]         = COMBO_ACTION(W_A_COMBO),
     [OS_SFT_CAPS]     = COMBO(OS_SFT_COMBO, CAPS_WORD_LOCK),
     [REPEATX_BSLS]    = COMBO(REPEAT_X_COMBO, KC_BACKSLASH),
-    [ZEROEIGHT_COMMA] = COMBO(ZERO_EIGHT_COMBO, KC_COMMA),
-    [EIGHTNINE_DOT]   = COMBO(EIGHT_NINE_COMBO, KC_DOT),
     [PT_MOUSE]        = COMBO(P_T_COMBO, MOUSE),
-    [JM_LEFT]         = COMBO(J_M_COMBO, KC_LEFT),
-    [LN_DOWN]         = COMBO(L_N_COMBO, KC_DOWN),
-    [UE_UP]           = COMBO(U_E_COMBO, KC_UP),
-    [YI_RIGHT]        = COMBO(Y_I_COMBO, KC_RIGHT),
-    [MK_HOME]         = COMBO(M_K_COMBO, KC_HOME),
-    [IDOT_END]        = COMBO(I_DOT_COMBO, KC_END),
+    [BV_Z]            = COMBO(B_V_COMBO, KC_Z),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -136,18 +102,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case BSPCH_HERE:
             if (pressed) {
                 SEND_STRING("here");
-            }
-        break;
-
-        case BSPCK_KEY:
-            if (pressed) {
-                SEND_STRING("key");
-            }
-        break;
-
-        case WA_WHAT:
-            if (pressed) {
-                SEND_STRING("what");
             }
         break;
 
