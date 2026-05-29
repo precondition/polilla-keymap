@@ -287,6 +287,15 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_Y;
             break;
 
+        case KC_M:
+            // rationale: avoid SFS.
+            // ngram: m␣" (TODO%)
+            // examples: git commit -m "msg"
+            tap_code(KC_SPACE);
+            tap_code16(KC_DOUBLE_QUOTE);
+            last_summoned_keycode = KC_DOUBLE_QUOTE;
+            break;
+
         case KC_O:
             // rationale: avoid SFB.
             // ngram: "ow" (0.10844%)
