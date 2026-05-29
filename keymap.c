@@ -569,6 +569,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             tap_code16(KC_LEFT_CURLY_BRACE);
             tap_code(KC_ENTER);
+            tap_code(KC_ENTER);
+            tap_code(KC_UP);
+            tap_code(KC_TAB);
         }
         retv = false;
         break;
