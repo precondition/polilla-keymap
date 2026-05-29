@@ -396,9 +396,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case KC_SPC:
-        if (oneshot_mod_state & MOD_MASK_SHIFT) {
+        if (oneshot_mod_state & MOD_MASK_SHIFT || (get_repeat_key_count() > 0)) {
             if (record->event.pressed) {
-                tap_code(KC_MINS); // The one-shot shift will convert it to an underscore
+                //tap_code(KC_MINS); // The one-shot shift will convert it to an underscore
+                tap_code16(KC_UNDS); // Needed for proper QK_REP support.
             }
             retv = false;
             break;
