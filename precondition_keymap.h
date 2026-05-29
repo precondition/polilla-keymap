@@ -175,8 +175,8 @@ bool caps_word_on;
 // summoned by magic.
 uint16_t last_summoned_keycode;
 
-void process_magic_key_left(uint16_t prev_keycode);
-void process_magic_key_right(uint16_t prev_keycode);
+void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode);
+void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode);
 
 #ifdef REPEAT_KEY_ENABLE
 #define REPEAT QK_REP

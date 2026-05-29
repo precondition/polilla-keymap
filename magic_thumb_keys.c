@@ -13,7 +13,7 @@
  * etc.
  */
 
-void process_magic_key_left(uint16_t prev_keycode) {
+void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
     switch (prev_keycode) {
 
         case KC_A:
@@ -178,7 +178,7 @@ void process_magic_key_left(uint16_t prev_keycode) {
 }
 
 
-void process_magic_key_right(uint16_t prev_keycode) {
+void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
     switch (prev_keycode) {
 
         case KC_C:

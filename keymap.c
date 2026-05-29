@@ -842,7 +842,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // get_last_keycode() cannot be used here because at this
                 // point, get_last_keycode already points to MAGIC_L so we lost
                 // the info.
-                process_magic_key_left(last_keycode);
+                process_magic_key_left(last_keycode, penultimate_keycode);
             }
         }
         retv = false;
@@ -853,7 +853,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (get_repeat_key_count() > 0) {
                 tap_code(last_summoned_keycode);
             } else {
-                process_magic_key_right(last_keycode);
+                process_magic_key_right(last_keycode, penultimate_keycode);
             }
         }
         retv = true;
