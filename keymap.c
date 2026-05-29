@@ -54,11 +54,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYM2] = LAYOUT(
         KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                 KC_F6  , KC_F7 , KC_F8 , KC_F9 , KC_F10, KC_F11,
-        _______,KC_LBRC,KC_RBRC,KC_MINS,KC_RABK,_______,                 _______,KC_TILD,O_BRACE,GUILL_L,C_BRACE,_______,
-        O_BRQOT,KC_CIRC, KC_GRV,KC_LPRN,KC_RPRN,KC_LABK,                 KC_HASH, KC_EQL,KC_BSLS,GUILL_R,KC_EXLM,C_BRQOT,
-        _______, KC_AT ,KC_LCBR,KC_RCBR,KC_PLUS,KC_PERC, PLOVER, _______,KC_AMPR, KC_DLR,KC_ASTR,_______,KC_PIPE,_______,
+        _______,KC_HASH,KC_RBRC,KC_MINS,KC_RABK,KC_LABK,                 GUILL_L,KC_CIRC,O_BRQOT,KC_EXLM, LALT  ,C_BRQOT,
+        NUM_OV ,KC_LBRC, KC_GRV,KC_LPRN,KC_RPRN,KC_PERC,                 GUILL_R, KC_EQL,KC_ASTR, KC_DLR,A_GRAVE, NUM_OV,
+        _______, KC_AT ,KC_LCBR,KC_RCBR,KC_PLUS,_______, PLOVER, _______,  LALT ,KC_BSLS,KC_TILD,KC_PIPE,KC_AMPR,_______,
 
-                        _______,_______, NAV_OV,_______,_______, _______,_______,A_GRAVE,_______,_______
+                        _______,_______,OSL(_NAV),_______,_______, _______,_______,_______,_______,_______
   ),
 
   [_NAV] = LAYOUT(
