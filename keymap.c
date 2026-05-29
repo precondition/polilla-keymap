@@ -247,6 +247,7 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     }
 }
 
+static uint8_t last_oneshot_mods = 0;
 static uint16_t last_keycode = KC_NO;
 static uint16_t penultimate_keycode = KC_NO;
 #ifndef REPEAT_KEY_ENABLE
@@ -337,6 +338,12 @@ static void process_layer_auto_leave(uint16_t keycode, keyrecord_t* record) {
             // layers but tapping it should still auto-leave the layer.
             // However, holding the mod-tap should keep the layer on.
             layer_off(overlay_layers[i]);
+        }
+        if (overlay_layers[i] == _NUM_OVER) {
+            // Directly leave NUM overlay if the number is part of a keyboard shortcut.
+            if (KC_1 <= keycode && keycode <= KC_0 && (get_mods() || get_oneshot_mods() || last_oneshot_mods)) {
+                layer_off(overlay_layers[i]);
+            }
         }
     }
 }
@@ -965,6 +972,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #else
     process_repeat_key(keycode, record);
 #endif
+    last_oneshot_mods = oneshot_mod_state;
 
     return retv;
 };
