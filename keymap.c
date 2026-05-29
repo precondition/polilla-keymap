@@ -379,6 +379,7 @@ static void process_smart_square_brackets(uint16_t keycode, keyrecord_t* record)
         case HOMERET:
         case KC_DOT:
         case KC_COMMA:
+        case KC_ESC:
             del_mods(MOD_MASK_SHIFT);
             del_oneshot_mods(MOD_MASK_SHIFT);
             if (in_smart_quoted_square_brackets) {
