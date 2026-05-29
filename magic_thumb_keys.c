@@ -138,6 +138,14 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             last_summoned_keycode = KC_SPACE;
             break;
 
+        case KC_V:
+            // rationale: avoid SKS.
+            // ngram: Ctrl+(Shift+)V⏎
+            // examples: TODO
+            tap_code(KC_ENTER);
+            last_summoned_keycode = KC_ENTER;
+            break;
+
         case KC_W:
             // rationale: avoid lateral stretch.
             // ngram: "wh" (0.07922%)
