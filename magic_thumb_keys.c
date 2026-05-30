@@ -54,7 +54,7 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
         case KC_G:
             // rationale: reduce typing.
             // ngram: « git␣ » (0.30964%)
-            // examples: « git s », « git add », « git commit »
+            // examples: « git st », « git add », « git commit »
             tap_code(KC_I);
             tap_code(KC_T);
             tap_code(KC_SPACE);
