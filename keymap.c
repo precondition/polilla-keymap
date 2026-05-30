@@ -974,8 +974,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Bypass the "l_n" skipgram by pressing it as "l_↻".
         // "lin", "lan", "lon", etc. are way more frequent than "lii", "laa",
         // "loo", ...
+        // Another related problem is the "ll_n" skipgram. The L's are repeated
+        // so they are naturally typed as KC_L QK_REP but this means that once
+        // we reach the point at which we need to type "n", the
+        // penultimate_keycode is QK_REP (resolved as "l"), not KC_L.
+        // Two options are available:
+        //  1. KC_L QK_REP _ KC_N → left ring finger skip-2-gram l__n
+        //  2. KC_L QK_REP _ QK_REP → left pinky finger same key skipgram ↻_↻
+        //  Ideally, we would need to check if the antepenultimate keycode is
+        //  KC_L but that means adding yet another variable in SRAM...
         if (get_repeat_key_count() > 0) {
-            if (record->event.pressed && penultimate_keycode == KC_L) {
+            if (record->event.pressed && (penultimate_keycode == KC_L || penultimate_keycode == QK_REP)) {
                 register_code(KC_N);
                 retv = false;
             } else {
