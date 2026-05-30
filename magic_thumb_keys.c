@@ -355,11 +355,14 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             break;
 
         case KC_W:
-            // rationale: avoid ring-pinky outer row skip.
-            // ngram: « wo » (0.07580%)
-            // examples: « would »,  « work »,  « won't »,  « word »
+            // rationale: avoid ring-pinky outer row skip and SFS.
+            // ngram: « would » (0.07580%)
+            // examples: « would »,  « wouldn't »,  « won't »,  « word »
             tap_code(KC_O);
-            last_summoned_keycode = KC_O;
+            tap_code(KC_U);
+            tap_code(KC_L);
+            tap_code(KC_D);
+            last_summoned_keycode = KC_D;
             break;
 
         case KC_U:
