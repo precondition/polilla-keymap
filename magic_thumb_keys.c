@@ -429,6 +429,15 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_SPACE;
             break;
 
+        case QK_REP:
+            // rationale: avoid SFS.
+            // ngram: « ↻er » (TODO%)
+            // examples: TODO
+            tap_code(KC_E);
+            tap_code(KC_R);
+            last_summoned_keycode = KC_R;
+            break;
+
         case MAGIC_L:
         case LT(_ALTTABCP, MAGIC_L):
             // rationale: avoid SFB.
