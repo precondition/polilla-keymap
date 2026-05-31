@@ -50,6 +50,14 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             last_summoned_keycode = OSL(_SYM2);
             break;
 
+        case KC_F:
+            // rationale: avoid SFB.
+            // ngram: « f" » (TODO%)
+            // examples: « f"python interpolated f-string" »
+            tap_code16(KC_DOUBLE_QUOTE);
+            last_summoned_keycode = KC_DOUBLE_QUOTE;
+            break;
+
         case KC_G:
             // rationale: reduce typing.
             // ngram: « git␣ » (0.30964%)
