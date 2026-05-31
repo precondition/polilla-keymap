@@ -42,13 +42,12 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             break;
 
         case KC_E:
+        case HOME2_E:
             // rationale: avoid SFB.
             // ngram: « e<sym> » (0.10403%)
             // examples: TODO
-            tap_code(KC_I);
-            tap_code(KC_T);
-            tap_code(KC_SPACE);
-            last_summoned_keycode = KC_SPACE;
+            set_oneshot_layer(_SYM2, ONESHOT_START);
+            last_summoned_keycode = OSL(_SYM2);
             break;
 
         case KC_G:

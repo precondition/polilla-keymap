@@ -1007,6 +1007,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (QK_ONE_SHOT_LAYER <= last_summoned_keycode && last_summoned_keycode <= QK_ONE_SHOT_LAYER_MAX) {
+        clear_oneshot_layer_state(ONESHOT_PRESSED);
+        last_summoned_keycode = KC_NO;
+    }
     process_layer_auto_leave(keycode, record);
     switch (keycode) {
         case KC_QUOTE:
