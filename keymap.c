@@ -884,28 +884,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MAGIC_L:
-        if (record->event.pressed) {
-            if (get_repeat_key_count() > 0) {
-                tap_code(last_summoned_keycode);
-            } else {
-                // get_last_keycode() cannot be used here because at this
-                // point, get_last_keycode already points to MAGIC_L so we lost
-                // the info.
-                process_magic_key_left(last_keycode, penultimate_keycode);
-            }
-        }
-        retv = false;
-        break;
-
     case LT(_ALTTABCP, MAGIC_L):
-        if (record->event.pressed && record->tap.count > 0) {
-            if (get_repeat_key_count() > 0) {
-                tap_code(last_summoned_keycode);
-            } else {
-                // get_last_keycode() cannot be used here because at this
-                // point, get_last_keycode already points to MAGIC_L so we lost
-                // the info.
-                process_magic_key_left(last_keycode, penultimate_keycode);
+        if (record->tap.count > 0) {
+            if (record->event.pressed) {
+                // TODO: refactor.
+                if (get_repeat_key_count() > 0) {
+                    tap_code(last_summoned_keycode);
+                } else {
+                    // get_last_keycode() cannot be used here because at this
+                    // point, get_last_keycode already points to MAGIC_L so we lost
+                    // the info.
+                    process_magic_key_left(last_keycode, penultimate_keycode);
+                }
             }
             retv = false;
         } else {
