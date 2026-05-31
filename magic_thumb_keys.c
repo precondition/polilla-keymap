@@ -286,6 +286,16 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_Y;
             break;
 
+        case KC_J:
+            // rationale: avoid SFS-2.
+            // ngram: « jour » (TODO%)
+            // examples: « jour », « bonjour », « aujourd'hui », « journey »
+            tap_code(KC_O);
+            tap_code(KC_U);
+            tap_code(KC_R);
+            last_summoned_keycode = KC_R;
+            break;
+
         case KC_M:
             // rationale: avoid SFS.
             // ngram: « m␣" » (TODO%)
