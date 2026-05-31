@@ -463,9 +463,15 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
              */
             switch (last_summoned_keycode) {
                 case KC_SPACE:
-                    // Avoid the KC_G MAGIC_L KC_C SFS.
-                    SEND_STRING("commit ");
-                    last_summoned_keycode = KC_SPACE;
+                    if (prev_prev_keycode == KC_G) {
+                        // Avoid the KC_G MAGIC_L KC_C SFS.
+                        SEND_STRING("commit ");
+                        last_summoned_keycode = KC_SPACE;
+                    } else {
+                        // e.g., KC_T MAGIC_L MAGIC_R for "I creaTED THE ".
+                        SEND_STRING("the");
+                        last_summoned_keycode = KC_E;
+                    }
                     break;
                 default:
                     tap_code(KC_SPACE);
