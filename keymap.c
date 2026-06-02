@@ -970,10 +970,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Two options are available:
         //  1. KC_L QK_REP _ KC_N → left ring finger skip-2-gram l__n
         //  2. KC_L QK_REP _ QK_REP → left pinky finger same key skipgram ↻_↻
-        //  Ideally, we would need to check if the antepenultimate keycode is
-        //  KC_L but that means adding yet another variable in SRAM...
         if (get_repeat_key_count() > 0) {
-            if (record->event.pressed && (prev_keycodes[1] == KC_L || prev_keycodes[1] == QK_REP)) {
+            if (record->event.pressed && (prev_keycodes[1] == KC_L || (prev_keycodes[2] == KC_L && prev_keycodes[1] == QK_REP))) {
                 register_code(KC_N);
                 retv = false;
             } else {
