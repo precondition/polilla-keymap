@@ -319,20 +319,34 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_R;
             break;
 
+        case KC_L:
+            // rationale: avoid SFB.
+            // ngram: « ln » (TODO%)
+            // examples: « println »,  « ln(0) »,  « ulnar »,  « ln -s file symlink »,  « KC_COLN »
+            tap_code(KC_N);
+            last_summoned_keycode = KC_N;
+            break;
+
         case KC_M:
             // rationale: avoid SFS.
             // ngram: « m␣" » (TODO%)
             // examples: « git commit -m "msg" »
             tap_code(KC_SPACE);
             tap_code16(KC_DOUBLE_QUOTE);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
             last_summoned_keycode = KC_DOUBLE_QUOTE;
             break;
 
         case KC_N:
         case HOME2_N:
-            // rationale: avoid double SFS.
-            // ngram: « onal » (0.01137%)
-            // examples: "personally",  "functionality",  "national",  "optional"
+            // rationale: avoid SFS.
+            // ngram: « nal » (0.02550%)
+            // examples: "final",  "terminal",  "personally",  "original", "national"
+            /*
+             * Especially important to avoid the double SFS in « onal ».
+             */
             tap_code(KC_A);
             tap_code(KC_L);
             last_summoned_keycode = KC_L;
@@ -408,7 +422,7 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
 
         case KC_Y:
             // rationale: avoid SFB.
-            // ngram: « ying » (TODO%)
+            // ngram: « ying » (0.00561%)
             // examples: « annoying »,  « saying »,  « buying »
             /*
              * « yi » is almost always followed by « ng » (« ying » makes up 0.68375%
@@ -465,7 +479,7 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
         case QK_REP:
             // rationale: avoid SFS.
             // ngram: « ↻er » (TODO%)
-            // examples: TODO
+            // examples: « different »,  « better »,  « passer »,  « aller »,  « letter »
             tap_code(KC_E);
             tap_code(KC_R);
             last_summoned_keycode = KC_R;
