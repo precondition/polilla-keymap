@@ -178,15 +178,6 @@ enum custom_keycodes {
     UP5,
 };
 
-#ifdef TAP_DANCE_ENABLE
-enum {
-    DOT_TD = 0,
-};
-
-#define TD_DOT TD(DOT_TD)
-#else
-#define TD_DOT KC_DOT
-#endif
 
 bool caps_word_on;
 

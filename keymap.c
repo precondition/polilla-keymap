@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            UNDO, REDO  ,DED_CIR, BNAV  , KC_F4 , KC_F5 ,                 DED_UML, KC_GRV,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
         A_GRAVE, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_COLN,KC_MINS,
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
-           KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,MS_BTN1, COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
+           KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,MS_BTN1, COMPOSE,KC_K   , KC_H  ,KC_COMM, KC_DOT,KC_SLSH,ARROW_R,
 
                        BDED_TOG,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,JALO
   ),
@@ -38,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_1, KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                 DED_UML,DED_CIR,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
         KC_LALT, KC_Q  , KC_W  , KC_F  , KC_P  , KC_B  ,                 KC_J   , KC_L  , KC_U  , KC_Y  ,KC_SCLN,KC_MINS,
          KC_ESC, KC_A  , KC_R  , KC_S  , KC_T  , KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
-        KC_LCTL, KC_Z  , KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, TD_DOT,KC_SLSH,ARROW_R,
+        KC_LCTL, KC_Z  , KC_X  , KC_C  , KC_D  , KC_V  ,TG_MIC,  COMPOSE,KC_K   , KC_H  ,KC_COMM, KC_DOT,KC_SLSH,ARROW_R,
 
                          GAMING,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT, KC_GRV
   ),
@@ -286,11 +286,6 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 if (record->event.pressed) {
                     last_keycode = get_tap_kc(keycode);
-                }
-                break;
-            case TD_DOT:
-                if (record->event.pressed) {
-                    last_keycode = KC_DOT;
                 }
                 break;
             default:
@@ -1069,53 +1064,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 };
 #endif
 
-#ifdef TAP_DANCE_ENABLE
-static void sentence_end(tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-
-        // Double tapping TD_DOT produces
-        // ". <one-shot shift>" i.e. dot, space and capitalize next letter.
-        // This helps to quickly end a sentence and begin another one
-        // without having to hit shift.
-        case 2:
-            tap_code(KC_SPC);
-            // Calling one shot shift here produces unreliable results. More
-            // reliable results are achieved by calling one shot shift in
-            // sentence_end.
-            break;
-
-        // Since `sentence_end` is called on each tap
-        // and not at the end of the tapping term,
-        // the third tap needs to cancel the effects
-        // of the double tap in order to get the expected
-        // three dots ellipsis.
-        case 3:
-            // remove the added space of the double tap case
-            tap_code(KC_BSPC);
-            // replace the space with a second dot
-            tap_code(KC_DOT);
-            // tap the third dot
-            tap_code(KC_DOT);
-            break;
-
-        // send KC_DOT on every normal tap of TD_DOT
-        default:
-            tap_code(KC_DOT);
-    }
-};
-
-void sentence_end_finished (tap_dance_state_t *state, void *user_data) {
-    last_keycode = KC_DOT;
-    if (state->count == 2) {
-        /* Internal code of OSM(MOD_LSFT) */
-        add_oneshot_mods(MOD_BIT(KC_LEFT_SHIFT));
-    }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-    [DOT_TD] = ACTION_TAP_DANCE_FN_ADVANCED(sentence_end, sentence_end_finished, NULL),
-};
-#endif
 
 #ifdef KEY_OVERRIDE_ENABLE
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
