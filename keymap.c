@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_JALO] = LAYOUT(
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
-        KC_Q   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_M   , KC_F  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
+        KC_Q   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_F   , KC_M  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
         KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN, KC_Z  ,
 
