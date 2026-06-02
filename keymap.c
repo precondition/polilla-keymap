@@ -204,8 +204,14 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             // Get the base tapping keycode of a mod- or layer-tap key
             keycode = get_tap_kc(keycode);
             break;
-        default:
+
+        case MAGIC_R:
+        case LT(_ALTTABCP, MAGIC_R):
+        case MAGIC_L:
+        case LT(_ALTTABCP, MAGIC_L):
+            keycode = last_summoned_keycode;
             break;
+
     }
 
     switch (keycode) {
@@ -216,9 +222,6 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
         case E_GRAVE:
         case C_CDILA:
         case MAGIC_L:
-        case LT(_ALTTABCP, MAGIC_L):
-        case LT(_ALTTABCP, MAGIC_L) & 0xFF:
-        case MAGIC_R:
             if (record->event.pressed) {
                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_disable();
