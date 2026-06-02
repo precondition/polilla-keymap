@@ -224,6 +224,14 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             last_summoned_keycode = KC_ENTER;
             break;
 
+        case KC_COLN:
+            // rationale: avoid LSB and SFS.
+            // ngram: « :find␣ » (TODO%)
+            // examples: TODO
+            SEND_STRING("find ");
+            last_summoned_keycode = KC_SPACE;
+            break;
+
         case QK_REP:
             // rationale: avoid SFB.
             // ngram: « ↻r » (TODO%)
