@@ -179,10 +179,14 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
 
         case KC_Z:
             // rationale: avoid SFB.
-            // ngram: « zy » (0.00167%)
-            // examples: « crazy »,  « lazy »,  « fuzzy »,  « cozy »
-            tap_code(KC_Y);
-            last_summoned_keycode = KC_Y;
+            // ngram: « zi » (0.00167%)
+            // examples: « zip »,  « amazing »,  « fuzzing »,  « magazine », « squeezing »
+            /*
+             * « izi » as in « realizing » is not applicable because it is
+             * typed as KC_I MAGIC_R(z) KC_I.
+             */
+            tap_code(KC_I);
+            last_summoned_keycode = KC_I;
             break;
 
         case KC_QUOTE:
