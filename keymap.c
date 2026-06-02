@@ -956,6 +956,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
 #ifdef REPEAT_KEY_ENABLE
+    case KC_Y:
     case KC_O:
     case KC_U:
     case HOME2_E:
