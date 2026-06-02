@@ -244,12 +244,8 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
         case LT(_ALTTABCP, MAGIC_R):
             // rationale: avoid SFB.
             // ngram: « <MAGIC_R>e »
-            switch (last_summoned_keycode) {
-                default:
-                    tap_code(KC_E);
-                    last_summoned_keycode = KC_E;
-                    break;
-            }
+            tap_code(KC_E);
+            last_summoned_keycode = KC_E;
             break;
 
         //default:
