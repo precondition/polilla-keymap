@@ -199,3 +199,5 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode);
 #ifdef REPEAT_KEY_ENABLE
 #define REPEAT QK_REP
 #endif
+
+bool base_dead_keys;

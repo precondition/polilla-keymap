@@ -55,6 +55,9 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             // ngram: « f" » (TODO%)
             // examples: « f"python interpolated f-string" »
             tap_code16(KC_DOUBLE_QUOTE);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
             last_summoned_keycode = KC_DOUBLE_QUOTE;
             break;
 
