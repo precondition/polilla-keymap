@@ -476,6 +476,19 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_R;
             break;
 
+        case MAGIC_R:
+        case LT(_ALTTABCP, MAGIC_R):
+            // rationale: typing reduction and consistency.
+            // ngram: « ␣the » (TODO%)
+            // examples: « I'm the », « git commit the », « :find the »,
+            switch (last_summoned_keycode) {
+                case KC_SPACE:
+                    SEND_STRING("the");
+                    last_summoned_keycode = KC_SPACE;
+                    break;
+            }
+            break;
+
         case MAGIC_L:
         case LT(_ALTTABCP, MAGIC_L):
             // rationale: avoid SFB.
