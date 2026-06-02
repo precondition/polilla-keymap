@@ -436,19 +436,6 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             last_summoned_keycode = KC_G;
             break;
 
-        /*
-        case KC_SPACE:
-            // rationale: typing reduction.
-            // ngram: « ␣the␣ » (0.28211%)
-            // examples: « at the end », « on the right », « of the keyboard », « in the same »
-            tap_code(KC_T);
-            tap_code(KC_H);
-            tap_code(KC_E);
-            tap_code(KC_SPACE);
-            last_summoned_keycode = KC_SPACE;
-            break;
-        */
-
         case KC_SPACE:
             // rationale: typing reduction.
             // ngram: « ␣the » (0.27805%)
