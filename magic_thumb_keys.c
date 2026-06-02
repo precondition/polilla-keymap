@@ -245,7 +245,6 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             break;
 
         case MAGIC_R:
-        case LT(_ALTTABCP, MAGIC_R):
             // rationale: avoid SFB.
             // ngram: « <MAGIC_R>e »
             tap_code(KC_E);
@@ -477,7 +476,6 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             break;
 
         case MAGIC_R:
-        case LT(_ALTTABCP, MAGIC_R):
             // rationale: typing reduction and consistency.
             // ngram: « ␣the » (TODO%)
             // examples: « I'm the », « git commit the », « :find the »,
@@ -490,7 +488,6 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             break;
 
         case MAGIC_L:
-        case LT(_ALTTABCP, MAGIC_L):
             // rationale: avoid SFB.
             // ngram: « _<MAGIC_L>␣ », « __<MAGIC_L>␣ »
             /*

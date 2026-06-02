@@ -89,6 +89,9 @@ enum layer_names {
 
 #define TMUX_PREFIX_KEY C(KC_B)
 
+// The tap keycode will get entirely overridden by process_magic_left.
+#define MAGIC_L LT(_ALTTABCP, KC_COPY)
+
 enum custom_keycodes {
     ARROW_R = SAFE_RANGE,
     // g navigation to move through screen lines in Vim
@@ -158,8 +161,6 @@ enum custom_keycodes {
     DED_UML,
     // Toggle `base_dead_keys` dynamically at run time.
     BDED_TOG,
-    // Left magic key.
-    MAGIC_L,
     // Right magic key.
     MAGIC_R,
     // Literally just KC_LALT but without all the special handling that OSL &

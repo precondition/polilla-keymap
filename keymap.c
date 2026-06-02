@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
         KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN, KC_Z  ,
 
-                        _______,_______,OSL(_NAV), KC_SPC,LT(_ALTTABCP, MAGIC_L), MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
+                      _______,_______,OSL(_NAV), KC_SPC,MAGIC_L, MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
   ),
 
   [_GAMING] = LAYOUT(
@@ -198,8 +198,8 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     // The second switch has to be able to take this change into account.
     switch (keycode) {
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-        case QK_LAYER_TAP ...  LT(_ALTTABCP, MAGIC_L) - 1 :
-        case LT(_ALTTABCP, MAGIC_L) + 1 ... QK_LAYER_TAP_MAX:
+        case QK_LAYER_TAP ...  MAGIC_L - 1 :
+        case MAGIC_L + 1 ... QK_LAYER_TAP_MAX:
             // Earlier return if this has not been considered tapped yet
             if (record->tap.count == 0) { return; }
             // Get the base tapping keycode of a mod- or layer-tap key
@@ -208,7 +208,6 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
 
         case MAGIC_R:
         case MAGIC_L:
-        case LT(_ALTTABCP, MAGIC_L):
             keycode = last_summoned_keycode;
             break;
 
@@ -882,7 +881,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case MAGIC_L:
-    case LT(_ALTTABCP, MAGIC_L):
         if (record->tap.count > 0) {
             if (record->event.pressed) {
                 // TODO: refactor.
@@ -1042,7 +1040,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             // Immediately select the hold action when another key is pressed.
-            return keycode != LT(_ALTTABCP, MAGIC_L);
+            return keycode != MAGIC_L;
         default:
             // Do not select the hold action when another key is pressed.
             return false;
