@@ -258,9 +258,14 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     }
 }
 
+// The `prev_keycodes` array is sorted from most recent to least recent:
+// prev_keycodes[0] = last keycode
+// prev_keycodes[1] = penultimate keycode
+// prev_keycodes[2] = antepenultimate keycode
+#define PREV_KEYCODES_WINDOW_LENGTH 3
+static uint16_t prev_keycodes[PREV_KEYCODES_WINDOW_LENGTH] = { KC_NO };
 static uint8_t last_oneshot_mods = 0;
-static uint16_t last_keycode = KC_NO;
-static uint16_t penultimate_keycode = KC_NO;
+
 #ifndef REPEAT_KEY_ENABLE
 static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
     static uint8_t last_modifier = 0;
@@ -284,22 +289,22 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
             case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 if (record->event.pressed) {
-                    last_keycode = get_tap_kc(keycode);
+                    prev_keycodes[0] = get_tap_kc(keycode);
                 }
                 break;
             default:
                 if (record->event.pressed) {
-                    last_keycode = keycode;
+                    prev_keycodes[0] = keycode;
                 }
                 break;
         }
     } else { // keycode == REPEAT
         if (record->event.pressed) {
             register_mods(last_modifier);
-            register_code16(last_keycode);
+            register_code16(prev_keycodes[0]);
 
             if (base_dead_keys) {
-                switch (last_keycode) {
+                switch (prev_keycodes[0]) {
                     case KC_QUOTE:
                     case KC_DOUBLE_QUOTE:
                     case KC_TILDE:
@@ -310,7 +315,7 @@ static void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
             }
 
         } else {
-            unregister_code16(last_keycode);
+            unregister_code16(prev_keycodes[0]);
             unregister_mods(last_modifier);
         }
     }
@@ -395,7 +400,7 @@ static void process_smart_square_brackets(uint16_t keycode, keyrecord_t* record)
             break;
 
         case KC_BACKSPACE:
-            if (last_keycode == O_BRQOT) {
+            if (prev_keycodes[0] == O_BRQOT) {
                 in_smart_square_brackets -= 1;
             }
             break;
@@ -871,7 +876,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case KC_X:
         if (IS_LAYER_ON(_JALO) && record->event.pressed) {
-            if (last_keycode == KC_L) {
+            if (prev_keycodes[0] == KC_L) {
                 tap_code(KC_L);
                 retv = false;
             }
@@ -887,10 +892,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (get_repeat_key_count() > 0) {
                     tap_code(last_summoned_keycode);
                 } else {
-                    // get_last_keycode() cannot be used here because at this
-                    // point, get_last_keycode already points to MAGIC_L so we lost
-                    // the info.
-                    process_magic_key_left(last_keycode, penultimate_keycode);
+                    process_magic_key_left(prev_keycodes);
                 }
             }
             retv = false;
@@ -904,7 +906,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (get_repeat_key_count() > 0) {
                 tap_code(last_summoned_keycode);
             } else {
-                process_magic_key_right(last_keycode, penultimate_keycode);
+                process_magic_key_right(prev_keycodes);
             }
         }
         retv = true;
@@ -964,14 +966,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Another related problem is the "ll_n" skipgram. The L's are repeated
         // so they are naturally typed as KC_L QK_REP but this means that once
         // we reach the point at which we need to type "n", the
-        // penultimate_keycode is QK_REP (resolved as "l"), not KC_L.
+        // prev_keycodes[1] is QK_REP (resolved as "l"), not KC_L.
         // Two options are available:
         //  1. KC_L QK_REP _ KC_N → left ring finger skip-2-gram l__n
         //  2. KC_L QK_REP _ QK_REP → left pinky finger same key skipgram ↻_↻
         //  Ideally, we would need to check if the antepenultimate keycode is
         //  KC_L but that means adding yet another variable in SRAM...
         if (get_repeat_key_count() > 0) {
-            if (record->event.pressed && (penultimate_keycode == KC_L || penultimate_keycode == QK_REP)) {
+            if (record->event.pressed && (prev_keycodes[1] == KC_L || prev_keycodes[1] == QK_REP)) {
                 register_code(KC_N);
                 retv = false;
             } else {
@@ -988,11 +990,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef REPEAT_KEY_ENABLE
     if (record->event.pressed) {
-        penultimate_keycode = last_keycode;
+        // Right shift the contents of the array, except for the head.
+        // [ KC_C, KC_B, KC_A ] → [ KC_C, KC_C, KC_B ]
+        for (int i = PREV_KEYCODES_WINDOW_LENGTH - 1 ; i > 0 ; --i) {
+            prev_keycodes[i] = prev_keycodes[i - 1];
+        }
         if (get_repeat_key_count() < 1) {
-            last_keycode = get_last_keycode();
+            prev_keycodes[0] = get_last_keycode();
         } else {
-            last_keycode = QK_REP;
+            prev_keycodes[0] = QK_REP;
         }
     }
 #else

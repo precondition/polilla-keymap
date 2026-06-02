@@ -13,8 +13,8 @@
  * etc.
  */
 
-void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
-    switch (prev_keycode) {
+void process_magic_key_left(const uint16_t prev_keycodes[]) {
+    switch (prev_keycodes[0]) {
 
         case KC_A:
         case HOME2_A:
@@ -251,24 +251,12 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             last_summoned_keycode = KC_E;
             break;
 
-        //default:
-        //    // Report the unsupported leading key by typing out its key code in
-        //    // decimal format.
-        //    const char *prev_keycode_str = get_u16_str(prev_keycode, ' ');
-        //    // Skip padding spaces
-        //    while (*prev_keycode_str == ' ') {
-        //        prev_keycode_str++;
-        //    }
-        //    send_string(prev_keycode_str);
-        //    tap_code16(KC_QUESTION);
-        //    last_summoned_keycode = KC_QUESTION;
-        //    break;
     }
 }
 
 
-void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
-    switch (prev_keycode) {
+void process_magic_key_right(const uint16_t prev_keycodes[]) {
+    switch (prev_keycodes[0]) {
 
         case KC_A:
         case HOME2_A:
@@ -292,7 +280,7 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             // rationale: avoid SFB.
             // ngram: « gs » (0.01907%)
             // examples: « settings », « things », « strings », « mappings »
-            if (prev_prev_keycode == KC_SLASH) {
+            if (prev_keycodes[1] == KC_SLASH) {
                 // « :%s/re/p/gc »
                 tap_code(KC_C);
                 last_summoned_keycode = KC_C;
@@ -501,7 +489,7 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
              */
             switch (last_summoned_keycode) {
                 case KC_SPACE:
-                    if (prev_prev_keycode == KC_G) {
+                    if (prev_keycodes[1] == KC_G) {
                         // Avoid the KC_G MAGIC_L KC_C SFS.
                         SEND_STRING("commit ");
                         last_summoned_keycode = KC_SPACE;
