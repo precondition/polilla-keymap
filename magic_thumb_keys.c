@@ -213,6 +213,14 @@ void process_magic_key_left(uint16_t prev_keycode, uint16_t prev_prev_keycode) {
             last_summoned_keycode = KC_SEMICOLON;
             break;
 
+        case KC_LCBR:
+            // rationale: avoid SKB.
+            // ngram: « {⏎ » (TODO%)
+            // examples: TODO
+            tap_code(KC_ENTER);
+            last_summoned_keycode = KC_ENTER;
+            break;
+
         case QK_REP:
             // rationale: avoid SFB.
             // ngram: « ↻r » (TODO%)
