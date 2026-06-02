@@ -198,7 +198,8 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
     // The second switch has to be able to take this change into account.
     switch (keycode) {
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_LAYER_TAP ...  LT(_ALTTABCP, MAGIC_L) - 1 :
+        case LT(_ALTTABCP, MAGIC_L) + 1 ... QK_LAYER_TAP_MAX:
             // Earlier return if this has not been considered tapped yet
             if (record->tap.count == 0) { return; }
             // Get the base tapping keycode of a mod- or layer-tap key
@@ -206,7 +207,6 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             break;
 
         case MAGIC_R:
-        case LT(_ALTTABCP, MAGIC_R):
         case MAGIC_L:
         case LT(_ALTTABCP, MAGIC_L):
             keycode = last_summoned_keycode;
