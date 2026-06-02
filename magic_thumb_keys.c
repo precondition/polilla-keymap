@@ -290,6 +290,7 @@ void process_magic_key_right(uint16_t prev_keycode, uint16_t prev_prev_keycode) 
             // ngram: « gs » (0.01907%)
             // examples: « settings », « things », « strings », « mappings »
             if (prev_prev_keycode == KC_SLASH) {
+                // « :%s/re/p/gc »
                 tap_code(KC_C);
                 last_summoned_keycode = KC_C;
             } else {
