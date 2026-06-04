@@ -493,8 +493,12 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
              * constraints and design choices led R to occupy the same finger
              * as ↻. This magic rules fixes the deficiency.
              */
+            const bool is_preceded_by_the = prev_keycodes[1] == MAGIC_R && prev_keycodes[2] == KC_SPACE;
+            // to make it easier to type « there » without SFS.
             tap_code(KC_E);
-            tap_code(KC_E);
+            if (!is_preceded_by_the) {
+                tap_code(KC_E);
+            }
             last_summoned_keycode = KC_E;
             break;
 
