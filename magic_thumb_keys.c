@@ -391,6 +391,15 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_S;
             break;
 
+        case KC_D:
+            // rationale: avoid SFS.
+            // ngram: « dev » (TODO%)
+            // examples: « devoir »,  « devrait »,  « develop »,  « devant », « device »
+            tap_code(KC_E);
+            tap_code(KC_V);
+            last_summoned_keycode = KC_V;
+            break;
+
         case KC_G:
             // rationale: avoid SFB.
             // ngram: « gs » (0.01907%)
