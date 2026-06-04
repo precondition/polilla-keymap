@@ -408,6 +408,21 @@ static void process_smart_square_brackets(uint16_t keycode, keyrecord_t* record)
     }
 }
 
+static bool is_vowel(uint16_t keycode) {
+    switch (keycode) {
+        case KC_Y:
+        case KC_O:
+        case KC_U:
+        case HOME2_E:
+        case HOME2_A:
+        case HOME2_I:
+            return true;
+        default:
+            return false;
+    }
+}
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     const bool is_combo = record->event.type == COMBO_EVENT;
@@ -475,6 +490,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_mods(mod_state);
                 retv = false;
                 break;
+            } else {
+                // Bypass the "l_n" skipgram by pressing it as "l_⌫".
+                // "lin", "lan", "lon", etc. are way more frequent than "lii", "laa",
+                // "loo", ...
+                // Another related problem is the "ll_n" skipgram. The L's are repeated
+                // so they are naturally typed as KC_L QK_REP but this means that once
+                // we reach the point at which we need to type "n", the
+                // prev_keycodes[1] is QK_REP (resolved as "l"), not KC_L.
+                // Two options are available:
+                //  1. KC_L QK_REP _ KC_N → left ring finger skip-2-gram l__n
+                //  2. KC_L QK_REP _ KC_BACKSPACE → no issues
+                const bool is_l_n = is_vowel(prev_keycodes[0]) && prev_keycodes[1] == KC_L;
+                const bool is_ll_n = is_vowel(prev_keycodes[0]) && prev_keycodes[1] == QK_REP && prev_keycodes[2] == KC_L;
+                const bool is_l_nn = get_repeat_key_count() && is_vowel(prev_keycodes[1]) && prev_keycodes[2] == KC_L;
+                if (is_l_n || is_ll_n || is_l_nn) {
+                    tap_code(KC_N);
+                    last_summoned_keycode = KC_N;
+                    retv = false;
+                    break;
+                }
+        retv = true;
+        break;
+
             }
         } else {
             if (delkey_registered) {
