@@ -181,7 +181,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             break;
 
         case KC_U:
-            switch (prev_keycodes[1]) {
+            switch (penultimate_keycode) {
                 case KC_L:
                 case KC_N:
                 case HOME2_N:
@@ -343,6 +343,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
 
 
 void process_magic_key_right(const uint16_t prev_keycodes[]) {
+    const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
     switch (prev_keycodes[0]) {
 
         case KC_A:
