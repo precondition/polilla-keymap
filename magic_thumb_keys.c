@@ -14,15 +14,43 @@
  */
 
 void process_magic_key_left(const uint16_t prev_keycodes[]) {
+    const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
     switch (prev_keycodes[0]) {
 
         case KC_A:
         case HOME2_A:
-            // rationale: avoid SFS.
-            // ngram: « dat » (0.07028%), « tad » (0.00412%)
-            // examples: « data », « date », « update », « stade »
-            tap_code(KC_T);
-            last_summoned_keycode = KC_T;
+            switch (penultimate_keycode) {
+                case KC_C:
+                case KC_G:
+                    // rationale: avoid SFS.
+                    // ngram: « cas » (0.01724%), « gas » (0.00291%)
+                    // examples: « case »,  « cas »,  « cassé », « lowercase », « magasin »
+                    tap_code(KC_S);
+                    last_summoned_keycode = KC_S;
+                    break;
+
+                case KC_P:
+                case KC_K:
+                case KC_T:
+                case HOME2_T:
+                case KC_B:
+                case KC_D:
+                case KC_V:
+                    // rationale: avoid SFS.
+                    // ngram: « dat » (0.07028%), TODO
+                    // examples: « data », « date », « update », « stade »
+                    tap_code(KC_T);
+                    last_summoned_keycode = KC_T;
+                    break;
+
+                default:
+                    // rationale: avoid SFB.
+                    // ngram: « ao » (0.00980%)
+                    // examples: « août », « lmao »,  « chaos », « kaomoji »
+                    tap_code(KC_O);
+                    last_summoned_keycode = KC_O;
+                    break;
+            }
             break;
 
         case KC_B:
@@ -260,11 +288,38 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
 
         case KC_A:
         case HOME2_A:
-            // rationale: avoid SFS.
-            // ngram: « dat » (0.07028%), « tad » (0.00412%)
-            // examples: « data », « date », « update », « stade »
-            tap_code(KC_T);
-            last_summoned_keycode = KC_T;
+            switch (penultimate_keycode) {
+                case KC_C:
+                case KC_G:
+                    // rationale: avoid SFS.
+                    // ngram: « cas » (0.01724%), « gas » (0.00291%)
+                    // examples: « case »,  « cas »,  « cassé », « lowercase », « magasin »
+                    tap_code(KC_S);
+                    last_summoned_keycode = KC_S;
+                    break;
+
+                case KC_P:
+                case KC_K:
+                case KC_T:
+                case HOME2_T:
+                case KC_B:
+                case KC_D:
+                case KC_V:
+                    // rationale: avoid SFS.
+                    // ngram: « dat » (0.07028%), TODO
+                    // examples: « data », « date », « update », « stade »
+                    tap_code(KC_T);
+                    last_summoned_keycode = KC_T;
+                    break;
+
+                default:
+                    // rationale: avoid SFB.
+                    // ngram: « ao » (0.00980%)
+                    // examples: « août », « lmao »,  « chaos », « kaomoji »
+                    tap_code(KC_O);
+                    last_summoned_keycode = KC_O;
+                    break;
+            }
             break;
 
         case KC_C:
