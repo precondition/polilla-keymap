@@ -991,37 +991,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = false;
         break;
 
-#ifdef REPEAT_KEY_ENABLE
-    case KC_Y:
-    case KC_O:
-    case KC_U:
-    case HOME2_E:
-    case HOME2_A:
-    case HOME2_I:
-        // Bypass the "l_n" skipgram by pressing it as "l_↻".
-        // "lin", "lan", "lon", etc. are way more frequent than "lii", "laa",
-        // "loo", ...
-        // Another related problem is the "ll_n" skipgram. The L's are repeated
-        // so they are naturally typed as KC_L QK_REP but this means that once
-        // we reach the point at which we need to type "n", the
-        // prev_keycodes[1] is QK_REP (resolved as "l"), not KC_L.
-        // Two options are available:
-        //  1. KC_L QK_REP _ KC_N → left ring finger skip-2-gram l__n
-        //  2. KC_L QK_REP _ QK_REP → left pinky finger same key skipgram ↻_↻
-        if (get_repeat_key_count() > 0) {
-            if (record->event.pressed && (prev_keycodes[1] == KC_L || (prev_keycodes[2] == KC_L && prev_keycodes[1] == QK_REP))) {
-                register_code(KC_N);
-                retv = false;
-            } else {
-                unregister_code(KC_N);
-                retv = true;
-            }
-            break;
-        }
-#endif
-        retv = true;
-        break;
-
     }
 
 #ifdef REPEAT_KEY_ENABLE
