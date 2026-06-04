@@ -175,6 +175,60 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_SPACE;
             break;
 
+        case KC_U:
+            switch (prev_keycodes[1]) {
+                case KC_L:
+                case KC_N:
+                case HOME2_N:
+                    // rationale: avoid SFS.
+                    // ngram: « nul » (TODO%)
+                    // examples: « nul »,  « nulle »,  « null »,  « annulé »
+                    tap_code(KC_L);
+                    last_summoned_keycode = KC_L;
+                    break;
+
+                case KC_C:
+                case KC_G:
+                    // rationale: avoid SFS.
+                    // ngram: « cus » (TODO%), « gus » (TODO%)
+                    // examples: « custom »,  « focus », « excuse », « disgusted »
+                    tap_code(KC_S);
+                    last_summoned_keycode = KC_S;
+                    break;
+
+                case KC_S:
+                case HOME2_S:
+                    // rationale: avoid SFS.
+                    // ngram: « suc » (TODO%)
+                    // examples: « such »,  « succès »,  « successfully »,  « sucks »
+                    tap_code(KC_C);
+                    last_summoned_keycode = KC_C;
+                    break;
+
+                case KC_P:
+                case KC_K:
+                case KC_B:
+                case KC_D:
+                case KC_V:
+                    // rationale: avoid SFS.
+                    // ngram: « put » (0.10564%), « but », (0.03200%), « dut » (0.00250%)
+                    // examples: « but »,  « put »,  « input »,  « début »,  « computer », « dutch »
+                    tap_code(KC_T);
+                    last_summoned_keycode = KC_T;
+                    break;
+
+                case KC_T:
+                case HOME2_T:
+                    // rationale: avoid SFS.
+                    // ngram: « tud » (TODO%)
+                    // examples: « étudiants »,  « étudier »,  « student »,  « habitude »
+                    tap_code(KC_D);
+                    last_summoned_keycode = KC_D;
+                    break;
+
+            }
+            break;
+
         case KC_V:
             // rationale: avoid SKS.
             // ngram: Ctrl+(Shift+)V⏎
