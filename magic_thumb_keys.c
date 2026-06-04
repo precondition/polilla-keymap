@@ -4,6 +4,11 @@
 /* Magic rules version 1.0 */
 
 /*
+ * "Magic key" is AKL jargon (https://layouts.wiki/reference/terminology/magic/).
+ * Not to be confused with QMK magic keycodes (https://docs.qmk.fm/keycodes_magic)
+ */
+
+/*
  * Percentages are given relative to ngram class in a corpus composed of my
  * keylogs, and shell commands:
  * « 1 » (frequency percentage among all unigrams/monograms)
