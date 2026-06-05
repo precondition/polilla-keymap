@@ -76,6 +76,16 @@ static keypos_t get_closest_home_keypos(const keypos_t keypos) {
     return (keypos_t){.row = HOME_ROW, .col = keypos.col};
 }
 
+void summon_same_finger_home_key(const keypos_t keypos) {
+    const keypos_t home_keypos = get_closest_home_keypos(keypos);
+    const uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
+    if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
+        tap_code(GET_TAP_KC(home_keycode));
+    } else {
+        tap_code16(home_keycode);
+    }
+    last_summoned_keycode = home_keycode;
+}
 
 void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]) {
     const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
@@ -84,35 +94,22 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
         case KC_A:
         case HOME2_A:
             switch (penultimate_keycode) {
-                case KC_C:
-                case KC_G:
-                    // rationale: avoid SFS.
-                    // ngram: « cas » (0.01724%), « gas » (0.00291%)
-                    // examples: « case »,  « cas »,  « cassé », « lowercase », « magasin »
-                    tap_code(KC_S);
-                    last_summoned_keycode = KC_S;
-                    break;
-
-                case KC_P:
+                case KC_SPACE:
+                case KC_L:
+                case KC_M:
+                case KC_F:
+                case KC_H:
+                case KC_QUOTE:
                 case KC_K:
-                case KC_T:
-                case HOME2_T:
-                case KC_B:
-                case KC_D:
-                case KC_V:
-                    // rationale: avoid SFS.
-                    // ngram: « dat » (0.07028%), TODO
-                    // examples: « data », « date », « update », « stade »
-                    tap_code(KC_T);
-                    last_summoned_keycode = KC_T;
-                    break;
-
-                default:
                     // rationale: avoid SFB.
                     // ngram: « ao » (0.00980%)
                     // examples: « août », « lmao »,  « chaos », « kaomoji »
                     tap_code(KC_O);
                     last_summoned_keycode = KC_O;
+                    break;
+
+                default:
+                    summon_same_finger_home_key(prev_keypos[1]);
                     break;
             }
             break;
@@ -193,57 +190,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             break;
 
         case KC_U:
-            switch (penultimate_keycode) {
-                case KC_L:
-                case KC_N:
-                case HOME2_N:
-                    // rationale: avoid SFS.
-                    // ngram: « nul » (TODO%)
-                    // examples: « nul »,  « nulle »,  « null »,  « annulé »
-                    tap_code(KC_L);
-                    last_summoned_keycode = KC_L;
-                    break;
-
-                case KC_C:
-                case KC_G:
-                    // rationale: avoid SFS.
-                    // ngram: « cus » (TODO%), « gus » (TODO%)
-                    // examples: « custom »,  « focus », « excuse », « disgusted »
-                    tap_code(KC_S);
-                    last_summoned_keycode = KC_S;
-                    break;
-
-                case KC_S:
-                case HOME2_S:
-                    // rationale: avoid SFS.
-                    // ngram: « suc » (TODO%)
-                    // examples: « such »,  « succès »,  « successfully »,  « sucks »
-                    tap_code(KC_C);
-                    last_summoned_keycode = KC_C;
-                    break;
-
-                case KC_P:
-                case KC_K:
-                case KC_B:
-                case KC_D:
-                case KC_V:
-                    // rationale: avoid SFS.
-                    // ngram: « put » (0.10564%), « but », (0.03200%), « dut » (0.00250%)
-                    // examples: « but »,  « put »,  « input »,  « début »,  « computer », « dutch »
-                    tap_code(KC_T);
-                    last_summoned_keycode = KC_T;
-                    break;
-
-                case KC_T:
-                case HOME2_T:
-                    // rationale: avoid SFS.
-                    // ngram: « tud » (TODO%)
-                    // examples: « étudiants »,  « étudier »,  « student »,  « habitude »
-                    tap_code(KC_D);
-                    last_summoned_keycode = KC_D;
-                    break;
-
-            }
+            summon_same_finger_home_key(prev_keypos[1]);
             break;
 
         case KC_V:
@@ -294,14 +241,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             break;
 
         default:
-            const keypos_t home_keypos = get_closest_home_keypos(prev_keypos[0]);
-            uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
-            if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
-                tap_code(GET_TAP_KC(home_keycode));
-            } else { //if (QK_BASIC <= home_keycode && home_keycode <= QK_BASIC) {
-                tap_code16(home_keycode);
-            }
-            last_summoned_keycode = home_keycode;
+            summon_same_finger_home_key(prev_keypos[0]);
             break;
 
     }
@@ -315,35 +255,22 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
         case KC_A:
         case HOME2_A:
             switch (penultimate_keycode) {
-                case KC_C:
-                case KC_G:
-                    // rationale: avoid SFS.
-                    // ngram: « cas » (0.01724%), « gas » (0.00291%)
-                    // examples: « case »,  « cas »,  « cassé », « lowercase », « magasin »
-                    tap_code(KC_S);
-                    last_summoned_keycode = KC_S;
-                    break;
-
-                case KC_P:
+                case KC_SPACE:
+                case KC_L:
+                case KC_M:
+                case KC_F:
+                case KC_H:
+                case KC_QUOTE:
                 case KC_K:
-                case KC_T:
-                case HOME2_T:
-                case KC_B:
-                case KC_D:
-                case KC_V:
-                    // rationale: avoid SFS.
-                    // ngram: « dat » (0.07028%), TODO
-                    // examples: « data », « date », « update », « stade »
-                    tap_code(KC_T);
-                    last_summoned_keycode = KC_T;
-                    break;
-
-                default:
                     // rationale: avoid SFB.
                     // ngram: « ao » (0.00980%)
                     // examples: « août », « lmao »,  « chaos », « kaomoji »
                     tap_code(KC_O);
                     last_summoned_keycode = KC_O;
+                    break;
+
+                default:
+                    summon_same_finger_home_key(prev_keypos[1]);
                     break;
             }
             break;
@@ -481,57 +408,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             break;
 
         case KC_U:
-            switch (penultimate_keycode) {
-                case KC_L:
-                case KC_N:
-                case HOME2_N:
-                    // rationale: avoid SFS.
-                    // ngram: « nul » (TODO%)
-                    // examples: « nul »,  « nulle »,  « null »,  « annulé »
-                    tap_code(KC_L);
-                    last_summoned_keycode = KC_L;
-                    break;
-
-                case KC_C:
-                case KC_G:
-                    // rationale: avoid SFS.
-                    // ngram: « cus » (TODO%), « gus » (TODO%)
-                    // examples: « custom »,  « focus », « excuse », « disgusted »
-                    tap_code(KC_S);
-                    last_summoned_keycode = KC_S;
-                    break;
-
-                case KC_S:
-                case HOME2_S:
-                    // rationale: avoid SFS.
-                    // ngram: « suc » (TODO%)
-                    // examples: « such »,  « succès »,  « successfully »,  « sucks »
-                    tap_code(KC_C);
-                    last_summoned_keycode = KC_C;
-                    break;
-
-                case KC_P:
-                case KC_K:
-                case KC_B:
-                case KC_D:
-                case KC_V:
-                    // rationale: avoid SFS.
-                    // ngram: « put » (0.10564%), « but », (0.03200%), « dut » (0.00250%)
-                    // examples: « but »,  « put »,  « input »,  « début »,  « computer », « dutch »
-                    tap_code(KC_T);
-                    last_summoned_keycode = KC_T;
-                    break;
-
-                case KC_T:
-                case HOME2_T:
-                    // rationale: avoid SFS.
-                    // ngram: « tud » (TODO%)
-                    // examples: « étudiants »,  « étudier »,  « student »,  « habitude »
-                    tap_code(KC_D);
-                    last_summoned_keycode = KC_D;
-                    break;
-
-            }
+            summon_same_finger_home_key(prev_keypos[1]);
             break;
 
         case KC_Y:
@@ -613,14 +490,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             break;
 
         default:
-            const keypos_t home_keypos = get_closest_home_keypos(prev_keypos[0]);
-            uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
-            if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
-                tap_code(GET_TAP_KC(home_keycode));
-            } else { //if (QK_BASIC <= home_keycode && home_keycode <= QK_BASIC) {
-                tap_code16(home_keycode);
-            }
-            last_summoned_keycode = home_keycode;
+            summon_same_finger_home_key(prev_keypos[0]);
             break;
 
     }
