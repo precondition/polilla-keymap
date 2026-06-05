@@ -185,11 +185,15 @@ bool caps_word_on;
 // summoned by magic.
 uint16_t last_summoned_keycode;
 
-void process_magic_key_left(const uint16_t prev_keycodes[]);
-void process_magic_key_right(const uint16_t prev_keycodes[]);
+void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]);
+void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]);
 
 #ifdef REPEAT_KEY_ENABLE
 #define REPEAT QK_REP
 #endif
 
 bool base_dead_keys;
+
+// Used to extract the basic tapping keycode from a dual-role key.
+// Example: get_tap_kc(MT(MOD_RSFT, KC_E)) == KC_E
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF

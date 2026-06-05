@@ -18,7 +18,66 @@
  * etc.
  */
 
-void process_magic_key_left(const uint16_t prev_keycodes[]) {
+static keypos_t get_closest_home_keypos(const keypos_t keypos) {
+    /*  Matrix for polilla:
+     *              ┌──┐┌──┐┌──┐              ┌──┐┌──┐┌──┐
+     *  ┌──┐┌──┐┌──┐│03││04││05│              │06││07││08│┌──┐┌──┐┌──┐
+     *  │00││01││02│└──┘└──┘└──┘              └──┘└──┘└──┘│09││0A││0B│
+     *  └──┘└──┘└──┘┌──┐┌──┐┌──┐              ┌──┐┌──┐┌──┐└──┘└──┘└──┘
+     *  ┌──┐┌──┐┌──┐│13││14││15│              │16││17││18│┌──┐┌──┐┌──┐
+     *  │10││11││12│└──┘└──┘└──┘              └──┘└──┘└──┘│19││1A││1B│
+     *  └──┘└──┘└──┘┌──┐┌──┐┌──┐              ┌──┐┌──┐┌──┐└──┘└──┘└──┘
+     *  ┌──┐┌──┐┌──┐│23││24││25│              │26││27││28│┌──┐┌──┐┌──┐
+     *  │20││21││22│└──┘└──┘└──┘              └──┘└──┘└──┘│29││2A││2B│
+     *  └──┘└──┘└──┘┌──┐┌──┐┌──┐┌──┐      ┌──┐┌──┐┌──┐┌──┐└──┘└──┘└──┘
+     *  ┌──┐┌──┐┌──┐│33││34││35││45│      │46││36││37││38│┌──┐┌──┐┌──┐
+     *  │30││31││32│└──┘└──┘└──┘└──┘      └──┘└──┘└──┘└──┘│39││3A││3B│
+     *  └──┘└──┘└──┘┌──┐┌──┐┌──┐┌──┐      ┌──┐┌──┐┌──┐┌──┐└──┘└──┘└──┘
+     *          ┌──┐│41││42││43││44│      │47││48││49││4A│┌──┐
+     *          │40│└──┘└──┘└──┘│  │      │  │└──┘└──┘└──┘│4B│
+     *          └──┘            │  │      │  │            └──┘
+     *                          └──┘      └──┘
+     *
+     * ⚠️ The layout produced by the `qmk info -kb polilla --matrix` command and
+     * the reality do not match!
+     */
+    #define HOME_ROW 2
+
+    const bool is_left_thumb_keypos = (4 == keypos.row && 0 <= keypos.col && keypos.col <= 4);
+    const bool is_right_thumb_keypos =  (4 == keypos.row && 7 <= keypos.col && keypos.col <= 11);
+
+    if (is_left_thumb_keypos) {
+        return (keypos_t){.row = keypos.row, .col = 3};
+    }
+
+    if (is_right_thumb_keypos) {
+        return (keypos_t){.row = keypos.row, .col = 8};
+    }
+
+    const bool is_4F_key_pos = 4 == keypos.row && 5 == keypos.col;
+    const bool is_left_outer_col = 0 == keypos.col || 6 == keypos.col;
+    if (is_left_outer_col || is_4F_key_pos) {
+        return (keypos_t){.row = HOME_ROW, .col = keypos.col + 1};
+    }
+
+    const bool is_right_outer_col = 5 == keypos.col || 11 == keypos.col;
+    if (is_right_outer_col) {
+        return (keypos_t){.row = HOME_ROW, .col = keypos.col - 1};
+    }
+
+    // Deviate a bit from the reported function name.
+    // This must go after the outer col logic to avoid catching the non-resting
+    // key positions on home row.
+    const bool is_home_row = HOME_ROW == keypos.row;
+    if (is_home_row) {
+        return (keypos_t){.row = keypos.row - 1, .col = keypos.col};
+    }
+
+    return (keypos_t){.row = HOME_ROW, .col = keypos.col};
+}
+
+
+void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]) {
     const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
     switch (prev_keycodes[0]) {
 
@@ -66,14 +125,6 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_D;
             break;
 
-        case KC_C:
-            // rationale: avoid SFB.
-            // ngram: « cs » (0.03134%)
-            // examples: « trucs », « docs », « csv », « css », « ergonomics »
-            tap_code(KC_S);
-            last_summoned_keycode = KC_S;
-            break;
-
         case KC_E:
         case HOME2_E:
             // rationale: avoid SFB.
@@ -113,36 +164,6 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_Z;
             break;
 
-        case KC_N:
-        case HOME2_N:
-            // rationale: avoid SFB.
-            // ngram: « nl » (0.02438%)
-            // examples: « only », « unless », « enlever », « download »
-            /*
-             * « download » is a very interesting word because half of the
-             * letters can be typed with magic keys:
-             * KC_D, KC_O, MAGIC_R (w), KC_N, MAGIC_L (l), KC_O, MAGIC_R (a), KC_D
-             */
-            tap_code(KC_L);
-            last_summoned_keycode = KC_L;
-            break;
-
-        case KC_O:
-            // rationale: avoid SFB.
-            // ngram: « oa » (0.05211%)
-            // examples: « keyboard », « woah », « approach »
-            tap_code(KC_A);
-            last_summoned_keycode = KC_A;
-            break;
-
-        case KC_P:
-            // rationale: avoid SFB.
-            // ngram: « pt » (0.06302%)
-            // examples: « compte »,  « option »,  « script »,  « ptet »,  « except »
-            tap_code(KC_T);
-            last_summoned_keycode = KC_T;
-            break;
-
         case KC_Q:
             // rationale: TODO
             // ngram: « q! » (TODO%)
@@ -158,15 +179,6 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             // examples: « bizarre », « correct », « erreur », « array »
             tap_code(KC_R);
             last_summoned_keycode = KC_R;
-            break;
-
-        case KC_S:
-        case HOME2_S:
-            // rationale: avoid SFB.
-            // ngram: « sc » (0.08298%)
-            // examples: « Discord », « script », « screen », « scroll »
-            tap_code(KC_C);
-            last_summoned_keycode = KC_C;
             break;
 
         case KC_T:
@@ -250,55 +262,6 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_H;
             break;
 
-        case KC_Y:
-            // rationale: avoid SFB.
-            // ngram: « yi » (TODO%)
-            // examples: « annoying␣ »,  « saying␣ »,  « buying␣ »
-            /*
-             * « yi » is almost always followed by « ng » (« ying » makes up 0.68375%
-             * of all tetragrams starting with « yi »). Exceptions include
-             * « yikes » (0.04580%), « yield » (0.02181%) and « yank inner » Vim
-             * commands (0.24863%) like « yiw ».
-             */
-            tap_code(KC_I);
-            last_summoned_keycode = KC_I;
-            break;
-
-        case KC_Z:
-            // rationale: avoid SFB.
-            // ngram: « zi » (0.00167%)
-            // examples: « zip »,  « amazing »,  « fuzzing »,  « magazine », « squeezing »
-            /*
-             * « izi » as in « realizing » is not applicable because it is
-             * typed as KC_I MAGIC_R(z) KC_I.
-             */
-            tap_code(KC_I);
-            last_summoned_keycode = KC_I;
-            break;
-
-        case KC_QUOTE:
-            // rationale: avoid SFB.
-            // ngram: « '⏎ » and « "⏎ » (0.02988%)
-            // examples: « git commit -m "msg"⏎ », « vim 'copy\pasted\windows\path'⏎ »
-            tap_code16(KC_ENTER);
-            last_summoned_keycode = KC_ENTER;
-            break;
-
-
-        case KC_MINUS:
-            // rationale: avoid SFS.
-            // ngram: « <- » (0.00080%)
-            // examples: « <- »,  « <-- », « ANSI<->ISO »
-            /*
-             * I bet the frequency of « <- » goes way up for R programmers but I
-             * am not one.
-             */
-            tap_code(KC_BACKSPACE);
-            tap_code16(KC_LT);
-            tap_code16(KC_MINUS);
-            last_summoned_keycode = KC_MINUS;
-            break;
-
         case KC_RPRN:
             // rationale: reduce typing.
             // ngram: « ); » (TODO%)
@@ -323,14 +286,6 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_SPACE;
             break;
 
-        case QK_REP:
-            // rationale: avoid SFB.
-            // ngram: « ↻r » (TODO%)
-            // examples: TODO
-            tap_code(KC_R);
-            last_summoned_keycode = KC_R;
-            break;
-
         case MAGIC_R:
             // rationale: avoid SFB.
             // ngram: « <MAGIC_R>e »
@@ -338,11 +293,22 @@ void process_magic_key_left(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_E;
             break;
 
+        default:
+            const keypos_t home_keypos = get_closest_home_keypos(prev_keypos[0]);
+            uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
+            if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
+                tap_code(GET_TAP_KC(home_keycode));
+            } else { //if (QK_BASIC <= home_keycode && home_keycode <= QK_BASIC) {
+                tap_code16(home_keycode);
+            }
+            last_summoned_keycode = home_keycode;
+            break;
+
     }
 }
 
 
-void process_magic_key_right(const uint16_t prev_keycodes[]) {
+void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]) {
     const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
     switch (prev_keycodes[0]) {
 
@@ -434,14 +400,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_R;
             break;
 
-        case KC_L:
-            // rationale: avoid SFB.
-            // ngram: « ln » (TODO%)
-            // examples: « println »,  « ln(0) »,  « ulnar »,  « ln -s file symlink »,  « KC_COLN »
-            tap_code(KC_N);
-            last_summoned_keycode = KC_N;
-            break;
-
         case KC_M:
             // rationale: avoid SFS.
             // ngram: « m␣" » (TODO%)
@@ -511,15 +469,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
             last_summoned_keycode = KC_G;
             break;
 
-        case KC_T:
-        case HOME2_T:
-            // rationale: avoid SFB.
-            // ngram: « tp » (0.01311%)
-            // examples: « output »,  « smartphone »,  « stp » (s'il te plaît)
-            tap_code(KC_P);
-            last_summoned_keycode = KC_P;
-            break;
-
         case KC_W:
             // rationale: avoid ring-pinky outer row skip and SFS.
             // ngram: « would » (0.07580%)
@@ -532,11 +481,57 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
             break;
 
         case KC_U:
-            // rationale: avoid SFS.
-            // ngram: « put » (0.10564%), « but », (0.03200%), « dut » (0.00250%)
-            // examples: « but »,  « put »,  « input »,  « début »,  « computer », « dutch »
-            tap_code(KC_T);
-            last_summoned_keycode = KC_T;
+            switch (penultimate_keycode) {
+                case KC_L:
+                case KC_N:
+                case HOME2_N:
+                    // rationale: avoid SFS.
+                    // ngram: « nul » (TODO%)
+                    // examples: « nul »,  « nulle »,  « null »,  « annulé »
+                    tap_code(KC_L);
+                    last_summoned_keycode = KC_L;
+                    break;
+
+                case KC_C:
+                case KC_G:
+                    // rationale: avoid SFS.
+                    // ngram: « cus » (TODO%), « gus » (TODO%)
+                    // examples: « custom »,  « focus », « excuse », « disgusted »
+                    tap_code(KC_S);
+                    last_summoned_keycode = KC_S;
+                    break;
+
+                case KC_S:
+                case HOME2_S:
+                    // rationale: avoid SFS.
+                    // ngram: « suc » (TODO%)
+                    // examples: « such »,  « succès »,  « successfully »,  « sucks »
+                    tap_code(KC_C);
+                    last_summoned_keycode = KC_C;
+                    break;
+
+                case KC_P:
+                case KC_K:
+                case KC_B:
+                case KC_D:
+                case KC_V:
+                    // rationale: avoid SFS.
+                    // ngram: « put » (0.10564%), « but », (0.03200%), « dut » (0.00250%)
+                    // examples: « but »,  « put »,  « input »,  « début »,  « computer », « dutch »
+                    tap_code(KC_T);
+                    last_summoned_keycode = KC_T;
+                    break;
+
+                case KC_T:
+                case HOME2_T:
+                    // rationale: avoid SFS.
+                    // ngram: « tud » (TODO%)
+                    // examples: « étudiants »,  « étudier »,  « student »,  « habitude »
+                    tap_code(KC_D);
+                    last_summoned_keycode = KC_D;
+                    break;
+
+            }
             break;
 
         case KC_Y:
@@ -563,23 +558,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
             tap_code(KC_H);
             tap_code(KC_E);
             last_summoned_keycode = KC_E;
-            break;
-
-        case KC_MINUS:
-            // rationale: avoid SFS.
-            // ngram: « -> » (0.00541%)
-            // examples: « record->event.pressed »,  « def f(x: int) -> int: »
-            tap_code16(KC_GT);
-            last_summoned_keycode = KC_GT;
-            break;
-
-        case KC_QUOTE:
-            // rationale: avoid SFB.
-            // ngram: « 'm␣ » (0.01094%)
-            // examples: « I'm not »,  « I'm still »,  « I'm trying »
-            tap_code(KC_M);
-            tap_code(KC_SPACE);
-            last_summoned_keycode = KC_SPACE;
             break;
 
         case QK_REP:
@@ -632,6 +610,17 @@ void process_magic_key_right(const uint16_t prev_keycodes[]) {
                     last_summoned_keycode = KC_SPACE;
                     break;
             }
+            break;
+
+        default:
+            const keypos_t home_keypos = get_closest_home_keypos(prev_keypos[0]);
+            uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
+            if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
+                tap_code(GET_TAP_KC(home_keycode));
+            } else { //if (QK_BASIC <= home_keycode && home_keycode <= QK_BASIC) {
+                tap_code16(home_keycode);
+            }
+            last_summoned_keycode = home_keycode;
             break;
 
     }

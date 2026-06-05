@@ -262,8 +262,9 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
 // prev_keycodes[0] = last keycode
 // prev_keycodes[1] = penultimate keycode
 // prev_keycodes[2] = antepenultimate keycode
-#define PREV_KEYCODES_WINDOW_LENGTH 3
-static uint16_t prev_keycodes[PREV_KEYCODES_WINDOW_LENGTH] = { KC_NO };
+#define PREV_KEYS_WINDOW_LENGTH 3
+static uint16_t prev_keycodes[PREV_KEYS_WINDOW_LENGTH] = { KC_NO };
+static keypos_t prev_keypos[PREV_KEYS_WINDOW_LENGTH] = { 0 };
 static uint8_t last_oneshot_mods = 0;
 
 #ifndef REPEAT_KEY_ENABLE
@@ -930,7 +931,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (get_repeat_key_count() > 0) {
                     tap_code(last_summoned_keycode);
                 } else {
-                    process_magic_key_left(prev_keycodes);
+                    process_magic_key_left(prev_keycodes, prev_keypos);
                 }
             }
             retv = false;
@@ -944,7 +945,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (get_repeat_key_count() > 0) {
                 tap_code(last_summoned_keycode);
             } else {
-                process_magic_key_right(prev_keycodes);
+                process_magic_key_right(prev_keycodes, prev_keypos);
             }
         }
         retv = true;
@@ -997,9 +998,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         // Right shift the contents of the array, except for the head.
         // [ KC_C, KC_B, KC_A ] → [ KC_C, KC_C, KC_B ]
-        for (int i = PREV_KEYCODES_WINDOW_LENGTH - 1 ; i > 0 ; --i) {
+        for (int i = PREV_KEYS_WINDOW_LENGTH - 1 ; i > 0 ; --i) {
             prev_keycodes[i] = prev_keycodes[i - 1];
+            prev_keypos[i] = prev_keypos[i - 1];
         }
+        prev_keypos[0] = record->event.key;
         if (get_repeat_key_count() < 1) {
             prev_keycodes[0] = get_last_keycode();
         } else {
