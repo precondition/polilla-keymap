@@ -366,6 +366,12 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             // examples: « update »,  « pdf »,  « pdt »,  « dropdown »,  « pd.DataFrame »
             tap_code(KC_D);
             last_summoned_keycode = KC_D;
+            if (penultimate_keycode == KC_U) {
+                // Make typing « update » and « updating » more comfortable.
+                tap_code(KC_A);
+                tap_code(KC_T);
+                last_summoned_keycode = KC_T;
+            }
             break;
 
         case KC_R:
