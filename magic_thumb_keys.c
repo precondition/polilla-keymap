@@ -133,14 +133,27 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             break;
 
         case KC_F:
-            // rationale: avoid SFB.
-            // ngram: « f" » (TODO%)
-            // examples: « f"python interpolated f-string" »
-            tap_code16(KC_DOUBLE_QUOTE);
-            if (base_dead_keys) {
-                tap_code(KC_SPACE);
+            switch (penultimate_keycode) {
+                case KC_I:
+                case HOME2_I:
+                    // rationale: avoid SFS.
+                    // ngram: « ify » (0.00332%)
+                    // examples: « specify »,  « modify »,  « simplify »
+                    tap_code(KC_Y);
+                    last_summoned_keycode = KC_Y;
+                    break;
+
+                default:
+                    // rationale: avoid SFB.
+                    // ngram: « f" » (TODO%)
+                    // examples: « f"python interpolated f-string" »
+                    tap_code16(KC_DOUBLE_QUOTE);
+                    if (base_dead_keys) {
+                        tap_code(KC_SPACE);
+                    }
+                    last_summoned_keycode = KC_DOUBLE_QUOTE;
+                    break;
             }
-            last_summoned_keycode = KC_DOUBLE_QUOTE;
             break;
 
         case KC_G:
