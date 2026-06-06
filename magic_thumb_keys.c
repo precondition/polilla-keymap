@@ -81,10 +81,11 @@ void summon_same_finger_home_key(const keypos_t keypos) {
     const uint16_t home_keycode = keymap_key_to_keycode(layer_switch_get_layer(home_keypos), home_keypos);
     if (QK_MOD_TAP <= home_keycode && home_keycode <= QK_MOD_TAP_MAX) {
         tap_code(GET_TAP_KC(home_keycode));
+        last_summoned_keycode = GET_TAP_KC(home_keycode);
     } else {
         tap_code16(home_keycode);
+        last_summoned_keycode = home_keycode;
     }
-    last_summoned_keycode = home_keycode;
 }
 
 void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]) {

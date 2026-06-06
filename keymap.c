@@ -189,13 +189,14 @@ inline uint8_t get_tap_kc(uint16_t dual_role_key) {
     return dual_role_key & 0xFF;
 }
 
-static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
+static void process_caps_word(uint16_t keyc, const keyrecord_t *record) {
     // Nothing to process if caps_word isn't on
     if (!caps_word_on) { return; }
 
     // This switch(keycode) cannnot be fused with the second switch(keycode)
     // because this first switch conditionally changes the value of `keycode`.
     // The second switch has to be able to take this change into account.
+    uint16_t keycode = keycode ==  MAGIC_L || keycode == MAGIC_R ? last_summoned_keycode : keyc;
     switch (keycode) {
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
         case QK_LAYER_TAP ...  MAGIC_L - 1 :
@@ -204,11 +205,6 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             if (record->tap.count == 0) { return; }
             // Get the base tapping keycode of a mod- or layer-tap key
             keycode = get_tap_kc(keycode);
-            break;
-
-        case MAGIC_R:
-        case MAGIC_L:
-            keycode = last_summoned_keycode;
             break;
 
     }
@@ -221,6 +217,8 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
         case E_GRAVE:
         case C_CDILA:
         case MAGIC_L:
+        case MAGIC_R:
+        case GET_TAP_KC(MAGIC_L):
             if (record->event.pressed) {
                 if (get_oneshot_mods() & MOD_MASK_SHIFT) {
                     caps_word_disable();
@@ -243,7 +241,7 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
         case OS_RSFT:
         case REPEAT:
         case KC_1 ... KC_0:
-        case SYM:
+        case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
             // If chording mods, disable caps word
             if (record->event.pressed && (get_mods() != MOD_LSFT) && (get_mods() != 0)) {
                 caps_word_disable();
@@ -256,6 +254,11 @@ static void process_caps_word(uint16_t keycode, const keyrecord_t *record) {
             }
             break;
     }
+    //if (record->event.pressed) {
+    //    tap_code(KC_SPACE);
+    //    send_word(keycode);
+    //    tap_code(KC_SPACE);
+    //}
 }
 
 // The `prev_keycodes` array is sorted from most recent to least recent:
