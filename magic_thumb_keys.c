@@ -319,12 +319,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
 
         case KC_I:
         case HOME2_I:
-            // rationale: avoid SFS.
-            // ngram: « ity » (0.05076%)
-            // examples: « functionality »,  « ability »,  « community »
-            tap_code(KC_T);
-            tap_code(KC_Y);
-            last_summoned_keycode = KC_Y;
+            summon_same_finger_home_key(prev_keypos[1]);
             break;
 
         case KC_J:
@@ -410,6 +405,27 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             // examples: « msg », « disgusted »,  « disguised »
             tap_code(KC_G);
             last_summoned_keycode = KC_G;
+            break;
+
+        case KC_T:
+        case HOME2_T:
+            switch (penultimate_keycode) {
+                case KC_I:
+                case HOME2_I:
+                    // rationale: avoid SFS.
+                    // ngram: « ity » (0.05076%)
+                    // examples: « functionality »,  « ability »,  « community »
+                    /*
+                     * Way more useful than « itp ».
+                     */
+                    tap_code(KC_Y);
+                    last_summoned_keycode = KC_Y;
+                    break;
+
+                default:
+                    summon_same_finger_home_key(prev_keypos[0]);
+                    break;
+            }
             break;
 
         case KC_W:
