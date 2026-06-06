@@ -155,11 +155,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
 
         case KC_I:
         case HOME2_I:
-            // rationale: avoid SFB.
-            // ngram: « iz » (0.03639%)
-            // examples: « size »,  « realize »,  « capitalize »,  « optimized »
-            tap_code(KC_Z);
-            last_summoned_keycode = KC_Z;
+            summon_same_finger_home_key(prev_keypos[1]);
             break;
 
         case KC_Q:
