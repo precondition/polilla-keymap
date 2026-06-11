@@ -193,7 +193,7 @@ static void process_caps_word(uint16_t keyc, const keyrecord_t *record) {
     // This switch(keycode) cannnot be fused with the second switch(keycode)
     // because this first switch conditionally changes the value of `keycode`.
     // The second switch has to be able to take this change into account.
-    uint16_t keycode = keycode ==  MAGIC_L || keycode == MAGIC_R ? last_summoned_keycode : keyc;
+    uint16_t keycode = keyc ==  MAGIC_L || keyc == MAGIC_R ? last_summoned_keycode : keyc;
     switch (keycode) {
         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
         case QK_LAYER_TAP ...  MAGIC_L - 1 :
@@ -224,6 +224,8 @@ static void process_caps_word(uint16_t keyc, const keyrecord_t *record) {
                     caps_word_enable();
                 }
             }
+            break;
+
         // Keycodes that enable caps word but shouldn't get shifted
         case CAPS_WORD_LOCK:
         case DED_CIR:
@@ -244,6 +246,7 @@ static void process_caps_word(uint16_t keyc, const keyrecord_t *record) {
                 caps_word_disable();
             }
             break;
+
         default:
             // Any other keycode should automatically disable caps
             if (record->event.pressed && !(get_oneshot_mods() & MOD_MASK_SHIFT)) {
