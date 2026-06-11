@@ -995,6 +995,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = false;
         break;
 
+    // Adaptive swap: CP CK
+    // To eliminate the LSB on the common « ck » bigram.
+    case KC_P:
+        if (record->event.pressed && prev_keycodes[0] == KC_C) {
+            tap_code(KC_K);
+            retv = false;
+            break;
+        }
+        retv = true;
+        break;
+
+    case KC_K:
+        if (record->event.pressed && prev_keycodes[0] == KC_C) {
+            tap_code(KC_P);
+            retv = false;
+            break;
+        }
+        retv = true;
+        break;
+
     case QOTPAST:
         // Quoted paste.
         if (record->event.pressed) {
