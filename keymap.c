@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
         _______, KC_Y  ,_______,_______,KC_BSPC,_______,                 _______,_______,_______,_______,_______,_______,
         _______,C(KC_A),_______,_______,HOMERET,_______,                 _______,_______,_______,_______,_______,_______,
-        _______,OS_LALT,KC_TAB ,C(KC_C),S(KC_INS),C(KC_V),_______, _______,_______,_______,_______,_______,_______,_______,
+        _______,OS_LALT,KC_TAB ,C(KC_C),S(KC_INS),QOTPAST,_______, _______,_______,_______,_______,_______,_______,_______,
 
                         _______,_______,_______,_______,_______, _______,_______,_______,_______,_______
     ),
@@ -991,6 +991,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             tap_code(KC_1 + (keycode - UP1));
             tap_code(KC_UP);
+        }
+        retv = false;
+        break;
+
+    case QOTPAST:
+        // Quoted paste.
+        if (record->event.pressed) {
+            tap_code(KC_QUOTE);
+            wait_ms(KEY_SEQ_DELAY);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+                wait_ms(KEY_SEQ_DELAY);
+            }
+            tap_code16(S(KC_INS));
+            wait_ms(KEY_SEQ_DELAY);
+            tap_code(KC_QUOTE);
+            wait_ms(KEY_SEQ_DELAY);
+            if (base_dead_keys) {
+                tap_code(KC_SPACE);
+            }
         }
         retv = false;
         break;

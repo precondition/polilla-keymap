@@ -177,6 +177,10 @@ enum custom_keycodes {
     UP3,
     UP4,
     UP5,
+    // Quoted paste.
+    // Especially useful to paste Windows-style backslash file paths in a MSYS
+    // terminal.
+    QOTPAST,
 };
 
 
