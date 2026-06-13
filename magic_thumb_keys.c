@@ -269,6 +269,17 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             last_summoned_keycode = KC_SPACE;
             break;
 
+        case KC_PERCENT:
+            // rationale: reduce typing.
+            // ngram: « %s/\v//gc »
+            SEND_STRING("s/\\v//gc");
+            tap_code(KC_LEFT);
+            tap_code(KC_LEFT);
+            tap_code(KC_LEFT);
+            tap_code(KC_LEFT);
+            last_summoned_keycode = KC_LEFT;
+            break;
+
         case MAGIC_R:
             // rationale: avoid SFB.
             // ngram: « <MAGIC_R>e »
