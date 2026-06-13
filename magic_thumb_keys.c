@@ -234,6 +234,17 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             last_summoned_keycode = KC_O;
             break;
 
+        case KC_X:
+            // rationale: avoid SKB and SFB.
+            // ngram: « xx » (0.02115%)
+            // examples: « xx » (delete 2 chars in Vim), « xxd »,  « `xxx_ENABLE »
+            /*
+             * « xr » (0.00070%) < « xx » (0.02115%)
+             */
+            tap_code(KC_X);
+            last_summoned_keycode = KC_X;
+            break;
+
         case KC_RPRN:
             // rationale: reduce typing.
             // ngram: « ); » (TODO%)
@@ -443,6 +454,17 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
 
         case KC_U:
             summon_same_finger_home_key(prev_keypos[1]);
+            break;
+
+        case KC_X:
+            // rationale: avoid SKB and SFB.
+            // ngram: « xx » (0.02115%)
+            // examples: « xx » (delete 2 chars in Vim), « xxd »,  « `xxx_ENABLE »
+            /*
+             * « xr » (0.00070%) < « xx » (0.02115%)
+             */
+            tap_code(KC_X);
+            last_summoned_keycode = KC_X;
             break;
 
         case KC_Y:
