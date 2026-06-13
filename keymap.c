@@ -1065,7 +1065,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #else
     process_repeat_key(keycode, record);
 #endif
-    last_oneshot_mods = oneshot_mod_state;
+    if (record->event.pressed) {
+        last_oneshot_mods = oneshot_mod_state;
+    }
 
     return retv;
 };
