@@ -173,6 +173,19 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             summon_same_finger_home_key(prev_keypos[1]);
             break;
 
+        case KC_N:
+        case HOME2_N:
+            // rationale: avoid SFS.
+            // ngram: « nal » (0.02550%)
+            // examples: "final",  "terminal",  "personally",  "original", "national"
+            /*
+             * Especially important to avoid the double SFS in « onal ».
+             */
+            tap_code(KC_A);
+            tap_code(KC_L);
+            last_summoned_keycode = KC_L;
+            break;
+
         case KC_Q:
             // rationale: TODO
             // ngram: « q! » (TODO%)
@@ -344,19 +357,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
                 tap_code(KC_SPACE);
             }
             last_summoned_keycode = KC_DOUBLE_QUOTE;
-            break;
-
-        case KC_N:
-        case HOME2_N:
-            // rationale: avoid SFS.
-            // ngram: « nal » (0.02550%)
-            // examples: "final",  "terminal",  "personally",  "original", "national"
-            /*
-             * Especially important to avoid the double SFS in « onal ».
-             */
-            tap_code(KC_A);
-            tap_code(KC_L);
-            last_summoned_keycode = KC_L;
             break;
 
         case KC_O:
