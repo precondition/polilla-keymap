@@ -128,7 +128,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             // rationale: avoid SFB.
             // ngram: « e<sym> » (0.10403%)
             // examples: TODO
-            set_oneshot_layer(_SYM2, ONESHOT_START);
+            set_oneshot_layer(_SYM, ONESHOT_START);
             last_summoned_keycode = OSL(_SYM);
             break;
 
