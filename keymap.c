@@ -466,13 +466,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case KC_SPC:
-        if (oneshot_mod_state & MOD_MASK_SHIFT || (get_repeat_key_count() > 0)) {
-            if (record->event.pressed) {
-                //tap_code(KC_MINS); // The one-shot shift will convert it to an underscore
-                tap_code16(KC_UNDS); // Needed for proper QK_REP support.
+        if (record->event.pressed) {
+            if (oneshot_mod_state & MOD_MASK_SHIFT) {
+                tap_code(KC_MINS); // The one-shot shift will convert it to an underscore
+                //tap_code16(KC_UNDS); // Needed for proper QK_REP support.
+                retv = false;
+                break;
+            } else if (get_repeat_key_count() > 0) {
+                if (last_oneshot_mods || get_repeat_key_count() > 1) {
+                    tap_code16(KC_UNDS);
+                } else {
+                    // Terminal commands like « vim path/to/file », « chd
+                    // path/to/dir » caused regular right index finger SFS
+                    // because I typically use the Ctrl+T shell shortcut from
+                    // fzf to insert a file path in the console but both Ctrl
+                    // and KC_T/HOME_T are on index fingers. To work around
+                    // this, I came up with the idea of triggering the
+                    // __fzf_select() command by pressing KC_SPACE (home left
+                    // thumb) + QK_REP (outer left pinky). I never need to
+                    // repeat space and this has the added benefit of
+                    // eliminating a SFS *and* the need to hold down a (home
+                    // row) modifier key.
+                    tap_code16(C(KC_T));  // CTRL-T - Open fzf and paste the
+                                          // selected file path(s) into the
+                                          // command line
+                }
+                retv = false;
+                break;
             }
-            retv = false;
-            break;
         }
         retv = true;
         break;
