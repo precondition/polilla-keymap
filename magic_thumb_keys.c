@@ -481,7 +481,30 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             break;
 
         case KC_U:
-            summon_same_finger_home_key(prev_keypos[1]);
+            switch (prev_keycodes[1]) {
+                case KC_H:
+                case HOME2_H:
+                    // examples: « thumb »,  « human »,  « humain », « thumbnails »
+                    /*
+                     * The default rule would have produced « hu⏎ » which is not very helpful.
+                     */
+                    tap_code(KC_M);
+                    last_summoned_keycode = KC_M;
+                    break;
+
+                default:
+                    // examples: « but »,  « put »,  « custom »,  « input »,  « such »,  « dessus »
+                    summon_same_finger_home_key(prev_keypos[1]);
+                    break;
+            }
+            break;
+
+        case KC_V:
+            // rationale: avoid SFB.
+            // ngram: « vb »
+            // examples: « vb » (enter visual mode, go back once), « file.vb », « VB.NET », « VBA »
+            tap_code(KC_B);
+            last_summoned_keycode = KC_B;
             break;
 
         case KC_X:
