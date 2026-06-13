@@ -227,11 +227,11 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             break;
 
         case KC_W:
-            // rationale: avoid lateral stretch.
-            // ngram: « wh » (0.07922%)
-            // examples: « what », « when », « which », « why », « where »
-            tap_code(KC_H);
-            last_summoned_keycode = KC_H;
+            // rationale: avoid row skip scissor.
+            // ngram: « wo » (0.07773%)
+            // examples: « work »,  « two »,  « won't »,  « word »
+            tap_code(KC_O);
+            last_summoned_keycode = KC_O;
             break;
 
         case KC_RPRN:
