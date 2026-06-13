@@ -280,6 +280,15 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             last_summoned_keycode = KC_LEFT;
             break;
 
+        case KC_ESC:
+            // rationale: avoid SFS and reduce typing.
+            // ngram: « ⎋:x⏎ »
+            tap_code16(KC_COLON);
+            tap_code(KC_X);
+            tap_code(KC_ENTER);
+            last_summoned_keycode = KC_ENTER;
+            break;
+
         case MAGIC_R:
             // rationale: avoid SFB.
             // ngram: « <MAGIC_R>e »
@@ -492,6 +501,15 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             tap_code(KC_N);
             tap_code(KC_G);
             last_summoned_keycode = KC_G;
+            break;
+
+        case KC_ESC:
+            // rationale: avoid SFS and reduce typing.
+            // ngram: « ⎋:q⏎ »
+            tap_code16(KC_COLON);
+            tap_code(KC_Q);
+            tap_code(KC_ENTER);
+            last_summoned_keycode = KC_ENTER;
             break;
 
         case KC_SPACE:
