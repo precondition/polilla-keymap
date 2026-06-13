@@ -472,6 +472,14 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             last_summoned_keycode = KC_D;
             break;
 
+        case KC_Q:
+            // rationale: avoid SKB and SFB.
+            // ngram: « qq » (0.01282%)
+            // examples: « gqq » (format current line), « qqun »,  « qqch »,  « qqs »
+            tap_code(KC_Q);
+            last_summoned_keycode = KC_Q;
+            break;
+
         case KC_U:
             summon_same_finger_home_key(prev_keypos[1]);
             break;
