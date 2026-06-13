@@ -937,17 +937,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         retv = true;
         break;
 
-    case KC_X:
-        if (IS_LAYER_ON(_JALO) && record->event.pressed) {
-            if (prev_keycodes[0] == KC_L) {
-                tap_code(KC_L);
-                retv = false;
-            }
-            break;
-        }
-        retv = true;
-        break;
-
     case MAGIC_L:
         if (record->tap.count > 0) {
             if (record->event.pressed) {
