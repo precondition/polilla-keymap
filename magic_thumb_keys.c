@@ -125,12 +125,14 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
 
         case KC_E:
         case HOME2_E:
-            // rationale: avoid SFB.
+            // rationale: avoid SFS.
             // ngram: « e<sym> » (0.10403%)
             // examples: TODO
-            set_oneshot_layer(_SYM, ONESHOT_START);
-            last_summoned_keycode = OSL(_SYM);
+            //set_oneshot_layer(_SYM, ONESHOT_START);
+            //last_summoned_keycode = OSL(_SYM);
+            summon_same_finger_home_key(prev_keypos[1]);
             break;
+
 
         case KC_F:
             switch (penultimate_keycode) {
