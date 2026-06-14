@@ -1055,11 +1055,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             prev_keycodes[i] = prev_keycodes[i - 1];
             prev_keypos[i] = prev_keypos[i - 1];
         }
-        prev_keypos[0] = record->event.key;
         if (get_repeat_key_count() < 1) {
             prev_keycodes[0] = get_last_keycode();
+            prev_keypos[0] = get_last_record()->event.key;
         } else {
             prev_keycodes[0] = QK_REP;
+            prev_keypos[0] = record->event.key;
         }
     }
 #else
