@@ -554,12 +554,23 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             break;
 
         case QK_REP:
-            // rationale: avoid SFS.
-            // ngram: « ↻er » (TODO%)
-            // examples: « different »,  « better »,  « passer »,  « aller »,  « letter »
-            tap_code(KC_E);
-            tap_code(KC_R);
-            last_summoned_keycode = KC_R;
+            if (prev_keycodes[1] == KC_O) {
+                // rationale: avoid LSB.
+                // ngram: « o↻k » (0.01618%)
+                // examples: « look »,  « looks »,  « took »,  « notebook »,  « hook »
+                /*
+                 * « o↻er » (0.00000%) < « o↻k » (0.01618%)
+                 */
+                tap_code(KC_K);
+                last_summoned_keycode = KC_K;
+            } else {
+                // rationale: avoid SFS.
+                // ngram: « ↻er » (TODO%)
+                // examples: « different »,  « better »,  « passer »,  « aller »,  « letter »
+                tap_code(KC_E);
+                tap_code(KC_R);
+                last_summoned_keycode = KC_R;
+            }
             break;
 
         case MAGIC_R:
