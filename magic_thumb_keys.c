@@ -522,7 +522,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
 
         case KC_V:
             // rationale: avoid SFB.
-            // ngram: « vb »
+            // ngram: « vb » (TODO%)
             // examples: « vb » (enter visual mode, go back once), « file.vb », « VB.NET », « VBA »
             tap_code(KC_B);
             last_summoned_keycode = KC_B;
