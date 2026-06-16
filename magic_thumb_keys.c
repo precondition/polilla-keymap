@@ -125,14 +125,35 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
 
         case KC_E:
         case HOME2_E:
-            // rationale: avoid SFS.
-            // ngram: « e<sym> » (0.10403%)
-            // examples: TODO
-            //set_oneshot_layer(_SYM, ONESHOT_START);
-            //last_summoned_keycode = OSL(_SYM);
-            summon_same_finger_home_key(prev_keypos[1]);
-            break;
+            switch (penultimate_keycode) {
+                case KC_R:
+                case HOME2_R:
+                    /*
+                     * « rex » (0.00018%) < « req » (0.01271%)
+                     */
+                    tap_code(KC_Q);
+                    last_summoned_keycode = KC_Q;
+                    break;
 
+                case KC_V:
+                    // rationale: avoid SFS.
+                    // ngram: « ved␣ » (TODO%)
+                    // examples: « moved »,  « removed »,  « served »,  « solved »
+                    tap_code(KC_D);
+                    tap_code(KC_SPACE);
+                    last_summoned_keycode = KC_SPACE;
+                    break;
+
+                default:
+                    // rationale: avoid SFS.
+                    // ngram: « e<sym> » (0.10403%)
+                    // examples: TODO
+                    //set_oneshot_layer(_SYM, ONESHOT_START);
+                    //last_summoned_keycode = OSL(_SYM);
+                    summon_same_finger_home_key(prev_keypos[1]);
+                    break;
+            }
+            break;
 
         case KC_F:
             switch (penultimate_keycode) {
