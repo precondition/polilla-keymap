@@ -499,23 +499,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
 
     case KC_BSPC:
-    {
-        static bool delkey_registered;
         if (record->event.pressed) {
-            if (mod_state & MOD_MASK_SHIFT) {
-                // In case only one shift is held
-                // see https://stackoverflow.com/questions/1596668/logical-xor-operator-in-c
-                // This also means that in case of holding both shifts and pressing KC_BSPC,
-                // Shift+Delete is sent (useful in Firefox) since the shift modifiers aren't deleted.
-                if (!(mod_state & MOD_BIT(KC_LEFT_SHIFT)) != !(mod_state & MOD_BIT(KC_RIGHT_SHIFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                }
-                register_code(KC_DEL);
-                delkey_registered = true;
-                set_mods(mod_state);
-                retv = false;
-                break;
-            } else {
                 // Bypass the "l_n" skipgram by pressing it as "l_⌫".
                 // "lin", "lan", "lon", etc. are way more frequent than "lii", "laa",
                 // "loo", ...
@@ -535,21 +519,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     retv = false;
                     break;
                 }
-        retv = true;
-        break;
-
-            }
-        } else {
-            if (delkey_registered) {
-                unregister_code(KC_DEL);
-                delkey_registered = false;
-                retv = false;
-                break;
-            }
         }
         retv = true;
         break;
-    }
 
      case A_GRAVE:
          if (record->event.pressed) {
@@ -1141,13 +1113,16 @@ const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUO
 //const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
 //        MOD_MASK_SHIFT, KC_MINS, KC_EQUAL, ~0, ~MOD_MASK_SHIFT);
 const key_override_t dot_key_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COMMA, 1 << _JALO);
+// TODO: LShift+RShift+KC_BACKSPACE = Shift+KC_DELETE (to delete entries in Firefox)
+const key_override_t backspace_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BACKSPACE, KC_DELETE);
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
     &slash_key_override,
     &lt_slash_key_override,
     &quote_key_override,
-    //&minus_key_override
     &dot_key_override,
+    &backspace_key_override,
+    //&minus_key_override
 };
 #endif
