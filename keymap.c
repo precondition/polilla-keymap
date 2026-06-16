@@ -426,6 +426,15 @@ static bool is_vowel(uint16_t keycode) {
     }
 }
 
+static bool is_letter_keycode(uint16_t keycode) {
+    switch (keycode & 0xFF) {
+        case KC_A ... KC_Z:
+            return true;
+
+        default:
+            return false;
+    }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
@@ -1002,6 +1011,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_P:
         if (record->event.pressed && prev_keycodes[0] == KC_C) {
             tap_code(KC_K);
+            last_summoned_keycode = KC_K;
             retv = false;
             break;
         }
@@ -1011,6 +1021,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_K:
         if (record->event.pressed && prev_keycodes[0] == KC_C) {
             tap_code(KC_P);
+            last_summoned_keycode = KC_P;
+            retv = false;
+            break;
+        }
+        retv = true;
+        break;
+
+    // Adaptive swap: I_X I_Y
+    // To eliminate the SFS on the common « i_y » skipgram.
+    case KC_X:
+        if (record->event.pressed && is_letter_keycode(prev_keycodes[0]) && (GET_TAP_KC(prev_keycodes[1])) == KC_I) {
+            tap_code(KC_Y);
+            last_summoned_keycode = KC_Y;
+            retv = false;
+            break;
+        }
+        retv = true;
+        break;
+
+    case KC_Y:
+        if (record->event.pressed && is_letter_keycode(prev_keycodes[0]) && (GET_TAP_KC(prev_keycodes[1])) == KC_I) {
+            tap_code(KC_X);
+            last_summoned_keycode = KC_X;
             retv = false;
             break;
         }
