@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "precondition_keymap.h"
 
-/* Magic rules version 2.0 */
+/* Magic rules version 4.0 */
 
 /*
  * "Magic key" is AKL jargon (https://layouts.wiki/reference/terminology/magic/).
@@ -167,7 +167,20 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
 
         case KC_I:
         case HOME2_I:
-            summon_same_finger_home_key(prev_keypos[1]);
+            switch (penultimate_keycode) {
+                case KC_SPACE:
+                    // rationale: avoid SFS.
+                    // ngram: « ␣⇧I␣w »
+                    // examples: « I was »,  « I would »,  « I want »,  « I wonder », « I wish »
+                    tap_code(KC_SPACE);
+                    tap_code(KC_W);
+                    last_summoned_keycode = KC_W;
+                    break;
+
+                default:
+                    summon_same_finger_home_key(prev_keypos[1]);
+                    break;
+            }
             break;
 
         case KC_N:
@@ -242,6 +255,21 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             last_summoned_keycode = KC_X;
             break;
 
+        case KC_Z:
+            // rationale: avoid SFB.
+            // ngram: « zt » (0.00007%)
+            // examples: « zt » (reposition current line at top of the window, see :help scroll-cursor)
+            /*
+             * The frequency of the bigram might look abysmally small but
+             * that's because I never used vim folds before my job. Obviously,
+             * I cannot run a key logger on my work computer without raising
+             * alarms in the IT department so I cannot gather more
+             * representative figures.
+             */
+            tap_code(KC_T);
+            last_summoned_keycode = KC_T;
+            break;
+
         case KC_RPRN:
             // rationale: reduce typing.
             // ngram: « ); » (TODO%)
@@ -277,6 +305,15 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
             last_summoned_keycode = KC_LEFT;
             break;
 
+        case KC_TILDE:
+            // rationale: typing reduction.
+            // ngram: « ~/. » (0.00291%)
+            // examples: « ~/.vimrc », « ~/.config »
+            tap_code(KC_SLASH);
+            tap_code(KC_DOT);
+            last_summoned_keycode = KC_DOT;
+            break;
+
         case KC_ESC:
             // rationale: avoid SFS and reduce typing.
             // ngram: « ⎋:x⏎ »
@@ -303,6 +340,7 @@ void process_magic_key_left(const uint16_t prev_keycodes[], const keypos_t prev_
 
 void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev_keypos[]) {
     const uint16_t penultimate_keycode = prev_keycodes[1] == MAGIC_L || prev_keycodes[1] == MAGIC_R ? last_summoned_keycode : prev_keycodes[1];
+    const bool is_preceded_by_the = prev_keycodes[1] == MAGIC_R && prev_keycodes[2] == KC_SPACE;
     switch (prev_keycodes[0]) {
 
         case KC_A:
@@ -386,7 +424,28 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
 
         case KC_I:
         case HOME2_I:
-            summon_same_finger_home_key(prev_keypos[1]);
+            switch (penultimate_keycode) {
+                case KC_H:
+                    // rationale: avoid SFS.
+                    // ngram: « hif »
+                    // examples: « shift », « Ctrl+Shift », « chiffre »
+                    tap_code(KC_F);
+                    last_summoned_keycode = KC_F;
+                    break;
+
+                case KC_G:
+                    // rationale: avoid SFS.
+                    // ngram: « gic »
+                    // examples: « logic »,  « magic »,  « logical »,  « logiciel »
+                    tap_code(KC_C);
+                    last_summoned_keycode = KC_C;
+                    break;
+
+                default:
+                    // rationale: avoid SFS.
+                    summon_same_finger_home_key(prev_keypos[1]);
+                    break;
+            }
             break;
 
         case KC_J:
@@ -397,6 +456,27 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             tap_code(KC_U);
             tap_code(KC_R);
             last_summoned_keycode = KC_R;
+            break;
+
+        case KC_N:
+        case HOME2_N:
+            switch (penultimate_keycode) {
+                case KC_A:
+                case HOME2_A:
+                    // rationale: avoid SFS.
+                    // ngram: « ano » (TODO%)
+                    // examples: « another »,  « piano »,  « anonyme »,  « nano »
+                    tap_code(KC_O);
+                    last_summoned_keycode = KC_O;
+                    break;
+
+                default:
+                    // rationale: avoid SFB:
+                    // ngram: « nl » (TODO%)
+                    // examples: « only »,  « unless »,  « online »,  « enlever »,  « unlikely »
+                    summon_same_finger_home_key(prev_keypos[0]);
+                    break;
+            }
             break;
 
         case KC_M:
@@ -429,7 +509,8 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
                 // Make typing « update » and « updating » more comfortable.
                 tap_code(KC_A);
                 tap_code(KC_T);
-                last_summoned_keycode = KC_T;
+                tap_code(KC_E);
+                last_summoned_keycode = KC_E;
             }
             break;
 
@@ -443,7 +524,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
              * constraints and design choices led R to occupy the same finger
              * as ↻. This magic rules fixes the deficiency.
              */
-            const bool is_preceded_by_the = prev_keycodes[1] == MAGIC_R && prev_keycodes[2] == KC_SPACE;
             // to make it easier to type « there » without SFS.
             tap_code(KC_E);
             if (!is_preceded_by_the) {
@@ -457,25 +537,19 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             // rationale: avoid SFB.
             // ngram: « sg » (0.00539%)
             // examples: « msg », « disgusted »,  « disguised »
-            tap_code(KC_G);
-            last_summoned_keycode = KC_G;
+            if (is_preceded_by_the) {
+                // to make it easier to type « these » without SFS.
+                tap_code(KC_E);
+                last_summoned_keycode = KC_E;
+            } else {
+                tap_code(KC_G);
+                last_summoned_keycode = KC_G;
+            }
             break;
 
         case KC_T:
         case HOME2_T:
             switch (penultimate_keycode) {
-                case KC_I:
-                case HOME2_I:
-                    // rationale: avoid SFS.
-                    // ngram: « ity » (0.05076%)
-                    // examples: « functionality »,  « ability »,  « community »
-                    /*
-                     * Way more useful than « itp ».
-                     */
-                    tap_code(KC_Y);
-                    last_summoned_keycode = KC_Y;
-                    break;
-
                 default:
                     summon_same_finger_home_key(prev_keypos[0]);
                     break;
@@ -485,7 +559,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
         case KC_W:
             // rationale: avoid ring-pinky outer row skip and SFS.
             // ngram: « would » (0.07580%)
-            // examples: « would »,  « wouldn't »,  « won't »,  « word »
+            // examples: « would »,  « wouldn't »
             tap_code(KC_O);
             tap_code(KC_U);
             tap_code(KC_L);
@@ -504,7 +578,6 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
         case KC_U:
             switch (prev_keycodes[1]) {
                 case KC_H:
-                case HOME2_H:
                     // examples: « thumb »,  « human »,  « humain », « thumbnails »
                     /*
                      * The default rule would have produced « hu⏎ » which is not very helpful.
@@ -514,6 +587,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
                     break;
 
                 default:
+                    // rationale: avoid SFS.
                     // examples: « but »,  « put »,  « custom »,  « input »,  « such »,  « dessus »
                     summon_same_finger_home_key(prev_keypos[1]);
                     break;
@@ -531,7 +605,7 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
         case KC_X:
             // rationale: avoid SKB and SFB.
             // ngram: « xx » (0.02115%)
-            // examples: « xx » (delete 2 chars in Vim), « xxd »,  « `xxx_ENABLE »
+            // examples: « xx » (delete 2 chars in Vim), « xxd »,  « xxx_ENABLE »
             /*
              * « xr » (0.00070%) < « xx » (0.02115%)
              */
@@ -555,6 +629,37 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             last_summoned_keycode = KC_G;
             break;
 
+        case KC_Z:
+            // rationale: avoid SFB.
+            // ngram: « zb » (0.00012%)
+            // examples: « zb » (reposition current line at bottom of the window, see :help scroll-cursor)
+            /*
+             * The frequency of the bigram might look abysmally small but
+             * that's because I never used vim folds before my job. Obviously,
+             * I cannot run a key logger on my work computer without raising
+             * alarms in the IT department so I cannot gather more
+             * representative figures.
+             */
+            tap_code(KC_B);
+            last_summoned_keycode = KC_B;
+            break;
+
+        case KC_DOT:
+            // rationale: avoid ring-pinky LSB.
+            // ngram: « ./ » (0.04388%)
+            // examples: « ./program »,  « ./hid_listen »,  « require('./config.json'); »
+            tap_code(KC_SLASH);
+            last_summoned_keycode = KC_SLASH;
+            break;
+
+        case KC_QUOTE:
+            // rationale: avoid SFB.
+            // ngram: « 'h » (0.00944%)
+            // examples: « aujourd'hui »,  « l'histoire »,  « l'heure »,  « l'hypothèse »
+            tap_code(KC_H);
+            last_summoned_keycode = KC_H;
+            break;
+
         case KC_ESC:
             // rationale: avoid SFS and reduce typing.
             // ngram: « ⎋:q⏎ »
@@ -575,33 +680,50 @@ void process_magic_key_right(const uint16_t prev_keycodes[], const keypos_t prev
             break;
 
         case QK_REP:
-            if (prev_keycodes[1] == KC_O) {
-                // rationale: avoid LSB.
-                // ngram: « o↻k » (0.01618%)
-                // examples: « look »,  « looks »,  « took »,  « notebook »,  « hook »
-                /*
-                 * « o↻er » (0.00000%) < « o↻k » (0.01618%)
-                 */
-                tap_code(KC_K);
-                last_summoned_keycode = KC_K;
-            } else {
-                // rationale: avoid SFS.
-                // ngram: « ↻er » (TODO%)
-                // examples: « different »,  « better »,  « passer »,  « aller »,  « letter »
-                tap_code(KC_E);
-                tap_code(KC_R);
-                last_summoned_keycode = KC_R;
+            switch (penultimate_keycode) {
+                case KC_O:
+                    // rationale: avoid LSB.
+                    // ngram: « o↻k » (0.01618%)
+                    // examples: « look »,  « looks »,  « took »,  « notebook »,  « hook »
+                    /*
+                     * « o↻er » (0.00000%) < « o↻k » (0.01618%)
+                     */
+                    tap_code(KC_K);
+                    last_summoned_keycode = KC_K;
+                    break;
+
+                case KC_DOT:
+                    // rationale: avoid ring-pinky LSS.
+                    // ngram: « ../ » (TODO%)
+                    // examples: « cd ../ », « ../my_script.sh », « cp ../out.xml ../before.xml »
+                    tap_code(KC_SLASH);
+                    last_summoned_keycode = KC_SLASH;
+                    break;
+
+                default:
+                    // rationale: avoid SFS.
+                    // ngram: « ↻er » (TODO%)
+                    // examples: « different »,  « better »,  « passer »,  « aller »,  « letter »
+                    tap_code(KC_E);
+                    tap_code(KC_R);
+                    last_summoned_keycode = KC_R;
+                    break;
             }
             break;
 
         case MAGIC_R:
             // rationale: typing reduction and consistency.
             // ngram: « ␣the » (TODO%)
-            // examples: « I'm the », « git commit the », « :find the »,
+            // examples: « git commit the », « :find the »,
             switch (last_summoned_keycode) {
                 case KC_SPACE:
                     SEND_STRING("the");
                     last_summoned_keycode = KC_SPACE;
+                    break;
+
+                default:
+                    tap_code(KC_E);
+                    last_summoned_keycode = KC_E;
                     break;
             }
             break;
