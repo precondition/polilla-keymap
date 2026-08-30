@@ -19,11 +19,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_ESC, HOME_A, HOME_R, HOME_S, HOME_T, KC_G  ,                 KC_M   , HOME_N, HOME_E, HOME_I, HOME_O,KC_QUOT,
            KC_Z, REPEAT, KC_X  , KC_C  , KC_D  , KC_V  ,MS_BTN1, COMPOSE,KC_K   , KC_H  ,KC_COMM, KC_DOT,KC_SLSH,ARROW_R,
 
-                       BDED_TOG,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,JALO
+                       BDED_TOG,C_CDILA,NAV_TAB, KC_SPC,OS_LSFT, OS_RSFT,KC_BSPC,SYM_ENT,KC_RALT,XYLOCUP
   ),
 
-  [_JALO] = LAYOUT(
-        _______,_______,_______,_______,_______,_______,                 _______,_______,_______,_______,_______,_______,
+  [_XYLOCUP] = LAYOUT(
+           UNDO, REDO  ,DED_CIR, BNAV  , KC_F4 , KC_F5 ,                 DED_UML,COMPOSE,E_GRAVE,E_ACUTE, KC_F10, KC_F11,
         KC_Q   , KC_X  , KC_L  , KC_C  , KC_P  , KC_K  ,                 KC_F   , KC_M  , KC_U  ,  KC_O ,  KC_Y ,KC_MINS,
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
         KC_J   , KC_ESC,NAV_TAB, KC_G  , KC_D  , KC_V  ,_______, _______,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN,KC_DQUO,
@@ -1143,7 +1143,7 @@ const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON
 const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
 const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM_SLSH, KC_BACKSLASH);
 const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
-const key_override_t dot_key_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COMMA, 1 << _JALO);
+const key_override_t dot_key_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COMMA, 1 << _XYLOCUP);
 const key_override_t shift_ins_key_override = ko_make_basic(MOD_MASK_SHIFT, S(KC_INS), C(S(KC_V)));
 //const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
 //        MOD_MASK_SHIFT, KC_MINS, KC_EQUAL, ~0, ~MOD_MASK_SHIFT);

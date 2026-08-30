@@ -4,8 +4,8 @@
 
 enum layer_names {
     _COLEMAK_DH,
+    _XYLOCUP,
     _GAMING,
-    _JALO,
     _SYM,
     _SYM2,
     _NAV,
@@ -35,7 +35,7 @@ enum layer_names {
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define GAMING TG(_GAMING)
 #define BNAV OSL(_BNAV)
-#define JALO TG(_JALO)
+#define XYLOCUP TG(_XYLOCUP)
 #define SYM_COLN LT(_SYM, KC_SCLN)
 #define SYM_SLSH LT(_SYM, KC_SLASH)
 
