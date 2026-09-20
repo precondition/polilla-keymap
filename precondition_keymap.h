@@ -10,6 +10,7 @@ enum layer_names {
     _SYM2,
     _NAV,
     _NAV2,
+    _NAV3,
     _NAV_OVER,
     _NUM_OVER,
     _GNAV_OVER,
@@ -77,7 +78,7 @@ enum layer_names {
 #define HOME_N RCTL_T(KC_N)
 #define HOME2_H RCTL_T(KC_H)
 #define HOMERET RCTL_T(KC_ENTER)
-#define HOME2_E RSFT_T(KC_E)
+#define HOME2_E LT(_NAV3, KC_E)
 #define HOME2_A LALT_T(KC_A)
 #define HOME2_I RGUI_T(KC_I)
 
