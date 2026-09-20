@@ -10,9 +10,6 @@
 //#define QUICK_TAP_TERM_PER_KEY
 #define QUICK_TAP_TERM 60
 
-// Other settings //
-#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
-
 #define COMBO_TERM 30
 
 // Use the native int size for STM for layer size to save up on firmware space
