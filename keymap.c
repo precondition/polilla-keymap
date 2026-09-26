@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_REP ,HOME2_R,HOME2_N,HOME2_S,HOME2_T, KC_B  ,                 KC_H   ,HOMERET,OS_RSFT,HOME2_A,HOME2_I, KC_DOT,
  KC_J   , KC_ESC,RALT_T(KC_TAB), KC_G  , KC_D  , KC_V  ,MS_BTN1, MS_BTN2,KC_QUOT,KC_BSPC, KC_W  ,KC_SLSH,KC_COLN,CAPS_WORD_LOCK,
 
-                      _______,_______,OSL(_NAV), KC_SPC,MAGIC_L, MAGIC_R,HOME2_E,OSL(_SYM),_______,_______
+                      BDED_TOG,C_CDILA,OSL(_NAV), KC_SPC,MAGIC_L, MAGIC_R,HOME2_E,OSL(_SYM),S(KC_W),XYLOCUP
   ),
 
   [_GAMING] = LAYOUT(
