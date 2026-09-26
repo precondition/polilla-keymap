@@ -1203,9 +1203,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef KEY_OVERRIDE_ENABLE
 const key_override_t colon_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
-const key_override_t slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_SLASH, KC_BACKSLASH);
-const key_override_t lt_slash_key_override = ko_make_basic(MOD_BIT(KC_LALT), SYM_SLSH, KC_BACKSLASH);
-const key_override_t quote_key_override = ko_make_basic(MOD_BIT(KC_LALT), KC_QUOTE, KC_GRAVE);
 const key_override_t dot_key_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_DOT, KC_COMMA, 1 << _XYLOCUP);
 const key_override_t shift_ins_key_override = ko_make_basic(MOD_MASK_SHIFT, S(KC_INS), C(S(KC_V)));
 const key_override_t minus_key_override = ko_make_with_layers_and_negmods(
@@ -1215,9 +1212,6 @@ const key_override_t backspace_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_B
 
 const key_override_t *key_overrides[] = {
     &colon_key_override,
-    &slash_key_override,
-    &lt_slash_key_override,
-    &quote_key_override,
     &dot_key_override,
     &shift_ins_key_override,
     &backspace_key_override,
