@@ -575,10 +575,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           if ((mod_state|oneshot_mod_state) & MOD_MASK_SHIFT) {
             del_mods(MOD_MASK_SHIFT);
             del_oneshot_mods(MOD_MASK_SHIFT);
-            SEND_STRING("=>");
+            tap_code(KC_EQUAL);
+            tap_code16(KC_GT);
             set_mods(mod_state);
           } else {
-            SEND_STRING("->");
+            tap_code(KC_MINUS);
+            tap_code16(KC_GT);
           }
       }
       retv = false;
@@ -705,11 +707,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case COUTLN:
         if (record->event.pressed) {
-            if (base_dead_keys) {
-                // The double quotes will consume the space next to them.
-                SEND_STRING_DELAY("std::cout <<  << \" \\n\" ;", KEY_SEQ_DELAY);
-            } else {
-                SEND_STRING_DELAY("std::cout <<  << \"\\n\";", KEY_SEQ_DELAY);
+            // Not SEND_STRING: it pulls in QMK's send_string code and its
+            // ASCII-to-keycode lookup table, which is too much flash for the
+            // STM32F042. Once the firmware grows into the emulated EEPROM pages,
+            // the keyboard becomes unresponsive. Replacing every SEND_STRING
+            // saved ≈670 bytes.
+            // With dead keys, the double quotes consume the space next to them.
+            static const uint16_t dead_keys_keycodes[] = {
+                // « std::cout <<  << " \n" ; »
+                KC_S, KC_T, KC_D, KC_COLN, KC_COLN, KC_C, KC_O, KC_U, KC_T, KC_SPC,
+                KC_LT, KC_LT, KC_SPC, KC_SPC, KC_LT, KC_LT, KC_SPC,
+                KC_DQUO, KC_SPC, KC_BSLS, KC_N, KC_DQUO, KC_SPC, KC_SCLN, KC_NO
+            };
+            static const uint16_t keycodes[] = {
+                // « std::cout <<  << "\n"; »
+                KC_S, KC_T, KC_D, KC_COLN, KC_COLN, KC_C, KC_O, KC_U, KC_T, KC_SPC,
+                KC_LT, KC_LT, KC_SPC, KC_SPC, KC_LT, KC_LT, KC_SPC,
+                KC_DQUO, KC_BSLS, KC_N, KC_DQUO, KC_SCLN, KC_NO
+            };
+            for (const uint16_t *kc = base_dead_keys ? dead_keys_keycodes : keycodes; *kc != KC_NO; ++kc) {
+                tap_code16(*kc);
+                wait_ms(KEY_SEQ_DELAY);
             }
             for (int i = 0; i < 9; ++i)  {
                 tap_code(KC_LEFT);
