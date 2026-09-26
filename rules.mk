@@ -25,3 +25,9 @@ ifeq ($(strip $(COMBO_ENABLE)), yes)
 endif
 
 SRC += magic_thumb_keys.c
+
+# Fail the build if the firmware grows into the flash pages of the emulated
+# EEPROM (see eeprom_size_guard.ld).
+ifneq ($(strip $(EEPROM_DRIVER)), transient)
+	EXTRALDFLAGS += $(KEYMAP_PATH)/eeprom_size_guard.ld
+endif
