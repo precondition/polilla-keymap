@@ -85,17 +85,17 @@ enum layer_names {
 #define PASTE S(KC_INS)
 
 // Left-hand home row mods
-#define HOME2_R LGUI_T(KC_R)
-#define HOME2_N LALT_T(KC_N)
-#define HOME2_S LSFT_T(KC_S)
-#define HOME2_T LCTL_T(KC_T)
+#define HOME_R LGUI_T(KC_R)
+#define HOME_N LALT_T(KC_N)
+#define HOME_S LSFT_T(KC_S)
+#define HOME_T LCTL_T(KC_T)
 
 // Right-hand home row mods
-#define HOME2_H RCTL_T(KC_H)
+#define HOME_H RCTL_T(KC_H)
 #define HOMERET RCTL_T(KC_ENTER)
-#define HOME2_E LT(_NAV3, KC_E)
-#define HOME2_A LALT_T(KC_A)
-#define HOME2_I RGUI_T(KC_I)
+#define HOME_E LT(_NAV3, KC_E)
+#define HOME_A LALT_T(KC_A)
+#define HOME_I RGUI_T(KC_I)
 
 // French accents
 // The other common grave accented letters are custom keycodes
