@@ -3,7 +3,6 @@
 #include QMK_KEYBOARD_H
 
 enum layer_names {
-    _COLEMAK_DH,
     _XYLOCUP,
     _GAMING,
     _SYM,
@@ -86,10 +85,6 @@ enum layer_names {
 #define PASTE S(KC_INS)
 
 // Left-hand home row mods
-#define HOME_A LGUI_T(KC_A)
-#define HOME_R LALT_T(KC_R)
-#define HOME_S LSFT_T(KC_S)
-#define HOME_T LCTL_T(KC_T)
 #define HOME2_R LGUI_T(KC_R)
 #define HOME2_N LALT_T(KC_N)
 #define HOME2_S LSFT_T(KC_S)
