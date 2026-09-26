@@ -91,10 +91,6 @@ enum layer_names {
 #define HOME2_T LCTL_T(KC_T)
 
 // Right-hand home row mods
-#define HOME_O RGUI_T(KC_O)
-#define HOME_I LALT_T(KC_I)
-#define HOME_E RSFT_T(KC_E)
-#define HOME_N RCTL_T(KC_N)
 #define HOME2_H RCTL_T(KC_H)
 #define HOMERET RCTL_T(KC_ENTER)
 #define HOME2_E LT(_NAV3, KC_E)
