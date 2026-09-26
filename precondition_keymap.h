@@ -28,20 +28,12 @@ enum layer_names {
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define GNAV MO(_GNAV)
 #define GNAV_OV OSL(_GNAV_OVER)
-#define SYM OSL(_SYM2)
 #define SYM_ENT LT(_SYM, KC_ENT)
 #define GAMING TG(_GAMING)
 #define BNAV OSL(_BNAV)
 #define XYLOCUP TG(_XYLOCUP)
-#define SYM_COLN LT(_SYM, KC_SCLN)
-#define SYM_SLSH LT(_SYM, KC_SLASH)
 
-#ifdef MOUSEKEY_ENABLE
-#    define MOUSE MO(_MOUSE)
-#    define MS_CAPS LT(_MOUSE, KC_CAPS)
-#else
-#    define MOUSE KC_TRNS
-#    define MS_CAPS KC_CAPS
+#ifndef MOUSEKEY_ENABLE
 // Keep the _MOUSE layer (it also holds non-mouse keys and MAGIC_L relies on
 // it) but make its mouse keycodes fall through to the layer below.
 // The QMK keycodes enum is already defined by QMK_KEYBOARD_H at this point, so
@@ -91,7 +83,6 @@ enum layer_names {
 #define HOME_T LCTL_T(KC_T)
 
 // Right-hand home row mods
-#define HOME_H RCTL_T(KC_H)
 #define HOMERET RCTL_T(KC_ENTER)
 #define HOME_E LT(_NAV3, KC_E)
 #define HOME_A LALT_T(KC_A)
@@ -118,24 +109,14 @@ enum custom_keycodes {
     // « French quotation marks »
     GUILL_R,
     GUILL_L,
-    // Macro to refer to the parent directory in Linux ../
-    UPDIR,
     // French grave accented letters
     E_GRAVE,
     A_GRAVE,
-    // Macro for
-    // std::cout << | << "\n";
-    // (with | representing the cursor position)
-    COUTLN,
     REPEAT,
     // "Opening brace"
     // Macro for
     // {<enter>
     O_BRACE,
-    // "Closing brace"
-    // Macro for
-    // }<enter>
-    C_BRACE,
     CAPS_WORD_LOCK,
     // "Opening Bracket-Quote"
     // Macro for
