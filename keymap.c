@@ -156,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_P4 , KC_P2 , KC_P3 , KC_P1 , KC_P5 ,                 KC_P6  , KC_P0 , KC_P8 , KC_P9 , KC_P7 ,_______,
         _______, KC_Y  ,_______,_______,KC_BSPC,_______,                 _______,KC_WBAK,  MS_UP,KC_WFWD,_______,_______,
         _______,C(KC_A),KC_LALT,KC_LSFT,HOMERET,_______,                 _______,MS_LEFT,MS_DOWN,MS_RGHT,_______,_______,
-        _______,KC_LALT,KC_TAB ,C(KC_C),S(KC_INS),QOTPAST,_______, _______,_______,MS_BTN3,MS_WHLU,MS_WHLD,_______,QK_VERS,
+        _______,KC_LALT,KC_TAB ,C(KC_C), PASTE ,QOTPAST,_______, _______,_______,MS_BTN3,MS_WHLU,MS_WHLD,_______,QK_VERS,
 
                         _______,_______,_______,_______,_______, MS_BTN3,MS_BTN1,MS_BTN2,_______,_______
     )
