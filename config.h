@@ -30,6 +30,12 @@
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
 
+// tap_code(KC_CAPS) blocks for TAP_HOLD_CAPS_DELAY (default 80ms) while the
+// matrix isn't scanned, so a key tapped quickly after toggling CAPS_WORD_LOCK
+// gets dropped (e.g. "DMS" → "MS"). The 80ms default is only needed by macOS,
+// which ignores very short Caps Lock taps; Linux is fine with a short delay.
+#define TAP_HOLD_CAPS_DELAY 10
+
 // Custom (i.e. not part of QMK core) config to define the delay to wait for
 // before pressing the next key in a sequence of keys defined as a part of a
 // macro/custom keycode.
