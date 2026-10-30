@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "precondition_keymap.h"
 
-/* Magic rules version 5.0 */
+/* Magic rules version 6.0 */
 
 /*
  * "Magic key" is AKL jargon (https://layouts.wiki/reference/terminology/magic/).
@@ -82,6 +82,12 @@ void process_magic_key_left(void) {
             }
             break;
 
+        case KC_C:
+            summon_same_finger_home_key(prev_keypos(0));
+            tap_code(KC_SPACE);
+            last_summoned_keycode = KC_SPACE;
+            break;
+
         case KC_E:
         case HOME_E:
             switch (penultimate_keycode) {
@@ -132,9 +138,14 @@ void process_magic_key_left(void) {
             const bool is_after_shortcut = prev_mods[1] & ~(MOD_MASK_SHIFT | MOD_BIT(KC_RALT));
             switch (is_after_shortcut ? KC_NO : GET_TAP_KC(penultimate_keycode)) {
 
-                case KC_A ... KC_Z:
-                case KC_1 ... KC_0:
-                case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+                case KC_A: // « args »
+                case KC_E: // « begs »
+                case KC_U: // « bugs »
+                case KC_I: // « configs »
+                case KC_O: // « logs »
+                case KC_M: // « imgs »
+                case KC_N: // « things »
+                case KC_R: // « args »
                     // rationale: avoid SFB.
                     // ngram: « gs␣ » (0.009239%)
                     // examples: « things in », « settings and », « main(args string[]) »
@@ -204,8 +215,10 @@ void process_magic_key_left(void) {
             switch (penultimate_keycode) {
                 case KC_T:
                 case HOME_T:
+                case KC_L:
                     /*
                      * « top » (0.015466%) > « toa » (0.000580%)
+                     * « lon » (0.02627%) > « loa » (0.0092%)
                      */
                     summon_same_finger_home_key(prev_keypos(1));
                     break;
@@ -400,7 +413,6 @@ void process_magic_key_right(void) {
         case HOME_A:
             switch (penultimate_keycode) {
                 case KC_SPACE:
-                case KC_L:
                 case KC_M:
                 case KC_F:
                 case KC_H:
