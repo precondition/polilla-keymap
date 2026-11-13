@@ -36,16 +36,22 @@
 // which ignores very short Caps Lock taps; Linux is fine with a short delay.
 #define TAP_HOLD_CAPS_DELAY 10
 
-// Custom (i.e. not part of QMK core) config to define the delay to wait for
-// before pressing the next key in a sequence of keys defined as a part of a
-// macro/custom keycode.
-#define KEY_SEQ_DELAY 10
-
 // Save space on native repeat key feature.
 #define NO_ALT_REPEAT_KEY
 
 #define DUMMY_MOD_NEUTRALIZER_KEYCODE KC_RIGHT_CTRL
 #define MODS_TO_NEUTRALIZE { MOD_BIT(KC_LEFT_ALT), MOD_BIT(KC_LEFT_GUI), MOD_BIT(KC_LEFT_ALT)|MOD_BIT(KC_LEFT_SHIFT), MOD_BIT(KC_LEFT_ALT)|MOD_BIT(KC_RIGHT_SHIFT)  }
+
+// Custom config settings that are not part of QMK core. //
+
+// Define the delay to wait for before pressing the next key in a sequence of
+// keys defined as a part of a macro/custom keycode.
+#define KEY_SEQ_DELAY 10
+
+// The second key must be pressed within ADAPTIVE_KEY_TERM milliseconds of the
+// last input activity for the adaptive key functionality to take effect.
+// Applies to adaptive swaps as well.
+#define ADAPTIVE_KEY_TERM 809
 
 // Shamelessly stolen mouse key settings from @pierrechevalier83 //
 
