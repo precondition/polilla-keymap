@@ -218,5 +218,5 @@ void process_magic_key_right(void);
 bool base_dead_keys;
 
 // Used to extract the basic tapping keycode from a dual-role key.
-// Example: get_tap_kc(MT(MOD_RSFT, KC_E)) == KC_E
-#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+// Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
+#define GET_TAP_KC(dual_role_key) ((dual_role_key) & 0xFF)
